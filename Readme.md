@@ -8,7 +8,7 @@
 
 ## Налаштування розширення конфігурації сервісу обміну обміну
 
-1. Завантажити останній реліз розширення [sabatexPactumContragent.1.0.1.cfe](https://github.com/sabatex/Pactum/releases/download/v1.0.1/sabatexPactumContragent.1.0.1.cfe)
+1. Завантажити останній реліз розширення [SabatexExchange-BAS](https://github.com/sabatex/SabatexExchange-BAS/releases/download/3.0.0-rc5/SabatexExchange.3.0.0-rc5-.cfe.zip)
 2. Запустити конфігуратор BAS.
 3. Перейти до меню розширень -> Конфігурація/Розширення конфігурації
 4. Додати нове розширення (вказавши призначення Адаптація). Зачекати створення розширення ... ![Зображення нового розширення](/images/new%201c8%20extensions.png)
