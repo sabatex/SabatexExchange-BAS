@@ -1,0 +1,160 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<Form xmlns="http://v8.1c.ru/8.3/xcf/logform" xmlns:app="http://v8.1c.ru/8.2/managed-application/core" xmlns:cfg="http://v8.1c.ru/8.1/data/enterprise/current-config" xmlns:dcscor="http://v8.1c.ru/8.1/data-composition-system/core" xmlns:dcsset="http://v8.1c.ru/8.1/data-composition-system/settings" xmlns:ent="http://v8.1c.ru/8.1/data/enterprise" xmlns:lf="http://v8.1c.ru/8.2/managed-application/logform" xmlns:style="http://v8.1c.ru/8.1/data/ui/style" xmlns:sys="http://v8.1c.ru/8.1/data/ui/fonts/system" xmlns:v8="http://v8.1c.ru/8.1/data/core" xmlns:v8ui="http://v8.1c.ru/8.1/data/ui" xmlns:web="http://v8.1c.ru/8.1/data/ui/colors/web" xmlns:win="http://v8.1c.ru/8.1/data/ui/colors/windows" xmlns:xr="http://v8.1c.ru/8.3/xcf/readable" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="2.9">
+	<CommandBarLocation>None</CommandBarLocation>
+	<CommandSet>
+		<ExcludedCommand>ChangeHistory</ExcludedCommand>
+		<ExcludedCommand>Copy</ExcludedCommand>
+		<ExcludedCommand>Reread</ExcludedCommand>
+		<ExcludedCommand>RestoreValues</ExcludedCommand>
+		<ExcludedCommand>SaveValues</ExcludedCommand>
+		<ExcludedCommand>Write</ExcludedCommand>
+		<ExcludedCommand>WriteAndClose</ExcludedCommand>
+	</CommandSet>
+	<AutoCommandBar name="FormCommandBar" id="-1"/>
+	<ChildItems>
+		<Pages name="Pages" id="34">
+			<Title>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Pages</v8:content>
+				</v8:item>
+			</Title>
+			<ToolTip>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Pages</v8:content>
+				</v8:item>
+			</ToolTip>
+			<ExtendedTooltip name="PagesExtendedTooltip" id="35"/>
+			<ChildItems>
+				<Page name="MainPage" id="40">
+					<Title>
+						<v8:item>
+							<v8:lang>uk</v8:lang>
+							<v8:content>Main page</v8:content>
+						</v8:item>
+					</Title>
+					<ToolTip>
+						<v8:item>
+							<v8:lang>uk</v8:lang>
+							<v8:content>Main page</v8:content>
+						</v8:item>
+					</ToolTip>
+					<ExtendedTooltip name="MainPageExtendedTooltip" id="41"/>
+					<ChildItems>
+						<LabelField name="sender" id="1">
+							<DataPath>Record.sender</DataPath>
+							<ReadOnly>true</ReadOnly>
+							<ContextMenu name="senderContextMenu" id="2"/>
+							<ExtendedTooltip name="senderExtendedTooltip" id="3"/>
+						</LabelField>
+						<LabelField name="destination" id="31">
+							<DataPath>Record.destination</DataPath>
+							<ReadOnly>true</ReadOnly>
+							<ContextMenu name="destinationContextMenu" id="32"/>
+							<ExtendedTooltip name="destinationExtendedTooltip" id="33"/>
+						</LabelField>
+						<InputField name="Id" id="4">
+							<DataPath>Record.Id</DataPath>
+							<ReadOnly>true</ReadOnly>
+							<ContextMenu name="IdContextMenu" id="5"/>
+							<ExtendedTooltip name="IdExtendedTooltip" id="6"/>
+						</InputField>
+						<InputField name="objectId" id="7">
+							<DataPath>Record.objectId</DataPath>
+							<ReadOnly>true</ReadOnly>
+							<ContextMenu name="objectIdContextMenu" id="8"/>
+							<ExtendedTooltip name="objectIdExtendedTooltip" id="9"/>
+						</InputField>
+						<InputField name="objectType" id="10">
+							<DataPath>Record.objectType</DataPath>
+							<ReadOnly>true</ReadOnly>
+							<ContextMenu name="objectTypeContextMenu" id="11"/>
+							<ExtendedTooltip name="objectTypeExtendedTooltip" id="12"/>
+						</InputField>
+						<InputField name="senderDateStamp" id="19">
+							<DataPath>Record.senderDateStamp</DataPath>
+							<ReadOnly>true</ReadOnly>
+							<ContextMenu name="senderDateStampContextMenu" id="20"/>
+							<ExtendedTooltip name="senderDateStampExtendedTooltip" id="21"/>
+						</InputField>
+						<InputField name="serverDateStamp" id="22">
+							<DataPath>Record.serverDateStamp</DataPath>
+							<ReadOnly>true</ReadOnly>
+							<ContextMenu name="serverDateStampContextMenu" id="23"/>
+							<ExtendedTooltip name="serverDateStampExtendedTooltip" id="24"/>
+						</InputField>
+						<InputField name="levelLive" id="25">
+							<DataPath>Record.levelLive</DataPath>
+							<ReadOnly>true</ReadOnly>
+							<ContextMenu name="levelLiveContextMenu" id="26"/>
+							<ExtendedTooltip name="levelLiveExtendedTooltip" id="27"/>
+						</InputField>
+						<InputField name="dateStamp" id="28">
+							<DataPath>Record.dateStamp</DataPath>
+							<ReadOnly>true</ReadOnly>
+							<ContextMenu name="dateStampContextMenu" id="29"/>
+							<ExtendedTooltip name="dateStampExtendedTooltip" id="30"/>
+						</InputField>
+					</ChildItems>
+				</Page>
+				<Page name="LogPage" id="36">
+					<Title>
+						<v8:item>
+							<v8:lang>uk</v8:lang>
+							<v8:content>Log page</v8:content>
+						</v8:item>
+					</Title>
+					<ToolTip>
+						<v8:item>
+							<v8:lang>uk</v8:lang>
+							<v8:content>Log page</v8:content>
+						</v8:item>
+					</ToolTip>
+					<ExtendedTooltip name="LogPageExtendedTooltip" id="37"/>
+					<ChildItems>
+						<InputField name="Log" id="16">
+							<DataPath>Record.Log</DataPath>
+							<ReadOnly>true</ReadOnly>
+							<MultiLine>true</MultiLine>
+							<ContextMenu name="LogContextMenu" id="17"/>
+							<ExtendedTooltip name="LogExtendedTooltip" id="18"/>
+						</InputField>
+					</ChildItems>
+				</Page>
+				<Page name="ObjectPage" id="38">
+					<Title>
+						<v8:item>
+							<v8:lang>uk</v8:lang>
+							<v8:content>Object page</v8:content>
+						</v8:item>
+					</Title>
+					<ToolTip>
+						<v8:item>
+							<v8:lang>uk</v8:lang>
+							<v8:content>Object page</v8:content>
+						</v8:item>
+					</ToolTip>
+					<ExtendedTooltip name="ObjectPageExtendedTooltip" id="39"/>
+					<ChildItems>
+						<InputField name="objectAsText" id="13">
+							<DataPath>Record.objectAsText</DataPath>
+							<ReadOnly>true</ReadOnly>
+							<MultiLine>true</MultiLine>
+							<ContextMenu name="objectAsTextContextMenu" id="14"/>
+							<ExtendedTooltip name="objectAsTextExtendedTooltip" id="15"/>
+						</InputField>
+					</ChildItems>
+				</Page>
+			</ChildItems>
+		</Pages>
+	</ChildItems>
+	<Attributes>
+		<Attribute name="Record" id="1">
+			<Type>
+				<v8:Type>cfg:InformationRegisterRecordManager.sabatexExchangeUnresolvedObjects</v8:Type>
+			</Type>
+			<MainAttribute>true</MainAttribute>
+		</Attribute>
+	</Attributes>
+</Form>
