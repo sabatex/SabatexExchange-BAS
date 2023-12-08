@@ -4,6 +4,7 @@
 // 1C 8.2.16 compatible
 // version 3.0.0-rc6
 
+#region CommonFunctions
 function DigitStrCompare(str1,str2)
 	val1 = Число(str1);
 	val2 = Число(str2);
@@ -23,8 +24,8 @@ endfunction
 //  - 1   ver1 > ver2
 //  - -1  ver1 < ver2
 function VersionCompare(ver1,ver2) export
-	ver1arr = Sabatex.StringSplit(ver1,".",false);
-	ver2arr = Sabatex.StringSplit(ver2,".",false);
+	ver1arr = StringSplit(ver1,".",false);
+	ver2arr = StringSplit(ver2,".",false);
 	if ver1arr.Количество() <> 3 then
 		raise "Арнумент 1 не того формату ver1=" + ver1 + " шаблон 0.0.0";
 	endif;	
@@ -62,15 +63,60 @@ endfunction
 // Перевірка на пустий UUID
 //  - value (UUID or string)
 function IsEmptyUUID(value) export
-	if TypeOf(value) = Typeof("UUID") then
+	if TypeOf(value) = type("UUID") then
 		return value = GetEmptyUUID();
-	elsif TypeOf(value) = Typeof("string") then
+	elsif TypeOf(value) = type("string") then
 		return new UUID(value) = GetEmptyUUID();
 	else
 		raise("Неправильний тип value");
 	endif;	
 endfunction	
+function DateAddDay(value,count = 1) export
+	return value + count*86400;
+endfunction
 
+function DateAddHour(value,count = 1) export
+	return value + count*3600;
+endfunction	
+
+function DateAddMinute(value,count = 1) export
+	return value + count*60;
+endfunction	
+
+function StringStartWith(value,searchString) export
+	return StrFind(value,searchString)=1;
+endfunction
+
+function StringSplit(value,delimiter=";",includeEmpty=true) export
+	
+	if StrLen(delimiter) <> 1 then
+		raise "Роздільник має бути тільки 1 символ.";
+	endif;	
+	
+	result = new array;
+	position = 1;
+	success = true;
+	while success do
+		nextPosition =  StrFind(value,delimiter,position);
+		if nextPosition = 0 then
+			success = false;
+			continue;
+		endif;
+		count =  nextPosition - position;
+		if count = 0 then
+			if includeEmpty then
+				result.Add("");
+			endif;	
+			position = position + 1;
+			continue;
+		endif;
+		result.Add(Mid(value,position,count));
+		position = position + count +1;
+	enddo;
+	return result;
+endfunction	
+
+#endregion
 
 #region ExchangeConfig
 
@@ -104,25 +150,27 @@ procedure SetNodeConfig(nodeConfig) export
 	SetConfigValue("Host",ValueOrDefault(nodeConfig["Host"],"sabatex.francecentral.cloudapp.azure.com"));
 	SetConfigValue("Port",ValueOrDefault(nodeConfig["Port"],443));
 	SetConfigValue("password",ValueOrDefault(nodeConfig["password"],""));
+	SetConfigValue("ObjectDifferNames",ValueOrDefault(nodeConfig["ObjectDifferNames"],"{}"));
 endprocedure
 
 function GetDestinationNodes()
 		Query = new Query;
 		Query.Text = 
-			"ВЫБРАТЬ
-			|	sabatexNodeConfig.NodeName КАК NodeName,
-			|	sabatexNodeConfig.destinationId КАК destinationId,
-			|	sabatexNodeConfig.isActive КАК isActive,
-			|	sabatexNodeConfig.Take КАК Take,
-			|	sabatexNodeConfig.LogLevel КАК LogLevel,
-			|	sabatexNodeConfig.updateCatalogs КАК updateCatalogs,
-			|	sabatexNodeConfig.incomingParser КАК incomingParser,
-			|	sabatexNodeConfig.useObjectCashe КАК useObjectCashe,
-			|	sabatexNodeConfig.IsQueryEnable КАК IsQueryEnable
-			|ИЗ
-			|	РегистрСведений.sabatexNodeConfig КАК sabatexNodeConfig
-			|ГДЕ
-			|	sabatexNodeConfig.isActive = ИСТИНА";
+			"SELECT
+			|	sabatexNodeConfig.NodeName AS NodeName,
+			|	sabatexNodeConfig.destinationId AS destinationId,
+			|	sabatexNodeConfig.isActive AS isActive,
+			|	sabatexNodeConfig.Take AS Take,
+			|	sabatexNodeConfig.LogLevel AS LogLevel,
+			|	sabatexNodeConfig.updateCatalogs AS updateCatalogs,
+			|	sabatexNodeConfig.incomingParser AS incomingParser,
+			|	sabatexNodeConfig.useObjectCashe AS useObjectCashe,
+			|	sabatexNodeConfig.IsQueryEnable AS IsQueryEnable,
+			|	sabatexNodeConfig.ObjectDifferNames AS ObjectDifferNames
+			|FROM
+			|	InformationRegister.sabatexNodeConfig AS sabatexNodeConfig
+			|WHERE
+			|	sabatexNodeConfig.isActive = TRUE";
 	
 			return Query.Execute().Выгрузить();
 endfunction
@@ -165,12 +213,19 @@ function GetConfig(destinationNode)
 		//	config.Take = 50;	
 		//endif;
 
-		//
-		//if not config.Property("MapDifferObjects") then
-		//	config.Insert("MapDifferObjects",new structure);
-		//	config.MapDifferObjects.Insert("Forward",new map);
-		//	config.MapDifferObjects.Insert("Backward",new map);
-		//endif;	
+    
+	config.Insert("MapDifferObjects",new structure);
+	config.MapDifferObjects.Insert("Forward",new map);
+	config.MapDifferObjects.Insert("Backward",new map);
+	try
+		dfNames = Deserialize(destinationNode.ObjectDifferNames);
+		for each v in dfNames do
+			config.MapDifferObjects.Forward.Insert(v.Key,v.Value);
+	        config.MapDifferObjects.Backward.Insert(v.Value,v.Key);
+		enddo;
+	except
+		raise "Помилка зчитування параметру обміну JSON  Список обэктів з різними назвами";
+	endtry;
 	
 	
 	config.Insert("ExportObjects",0);
@@ -658,7 +713,8 @@ endfunction
 // objectId - string 
 // objectType - empty for complex type, string справочник.номнклатура,...
 // success - bool (set false if error)
-function GetObjectRef(conf,знач objectId,знач objectType, success) export
+// attributeName - if defined object find by attribute
+function GetObjectRef(conf,знач objectId,знач objectType, success,attributeName=undefined) export
 	// complex type
 	if typeof(objectId) = type("Map") then
 		complexObjectId = "";
@@ -680,11 +736,15 @@ function GetObjectRef(conf,знач objectId,знач objectType, success) expor
 		return undefined;
 	endif;
 	
-	if ObjectId = "00000000-0000-0000-0000-000000000000" then
+	if IsEmptyUUID(ObjectId) then
 		return objectManager.EmptyRef();	
 	endif;
 	
-	result = objectManager.GetRef(new UUID(objectId));
+	if attributeName = undefined then
+		result = objectManager.GetRef(new UUID(objectId));
+	else
+		result = objectManager.FindByAttribute(attributeName,new UUID(objectId));
+	endif;	
 
 	if result.GetObject() = undefined then
 		destinationFullName = GetDestinationObjectName(conf, objectType);
@@ -696,6 +756,31 @@ function GetObjectRef(conf,знач objectId,знач objectType, success) expor
 	return result;
 endfunction	
 #endregion
+
+#region Helpers
+function GetSameEnumValue(conf,enumName,enumValueName,success) export
+	try
+		x= Enums[enumName];
+	except
+		success = false;
+		LogError(conf,"Помилка отримання перерахування конфігурації - "+enumName);
+		return Enums.AllRefsType();
+	endtry;
+	if enumValueName = "" then
+		return Enums.AllRefsType();
+	endif;	
+	try
+		return x[enumValueName];
+	except
+		success = false;
+		LogError(conf,"Помилка отримання зжначення - "+enumValueName+" - з перерахування конфігурації - "+enumName);
+		return x.EmptyRef();
+		
+	endtry;
+endfunction
+
+#endregion
+
 
 #region ExchangeObjects
 // Register object in cashe for send to destination
@@ -983,9 +1068,9 @@ procedure DoQueriedObjects(conf)
 			objectId = item["objectId"];
 			objectType = Upper(item["objectType"]);
 			object = undefined;
-			if Sabatex.StringStartWith(objectType,upper("справочник")) then
+			if StringStartWith(objectType,upper("справочник")) then
 				object = GetCatalogById(conf,GetObjectTypeKind(conf,objectType),objectId);
-			elsif Sabatex.StringStartWith(objectType,upper("документ")) then
+			elsif StringStartWith(objectType,upper("документ")) then
 				object = GetDocumentById(conf,GetObjectTypeKind(conf,objectType),objectId);
 			else
 				// get extended query

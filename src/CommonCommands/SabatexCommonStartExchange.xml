@@ -1,34 +1,25 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <MetaDataObject xmlns="http://v8.1c.ru/8.3/MDClasses" xmlns:app="http://v8.1c.ru/8.2/managed-application/core" xmlns:cfg="http://v8.1c.ru/8.1/data/enterprise/current-config" xmlns:cmi="http://v8.1c.ru/8.2/managed-application/cmi" xmlns:ent="http://v8.1c.ru/8.1/data/enterprise" xmlns:lf="http://v8.1c.ru/8.2/managed-application/logform" xmlns:style="http://v8.1c.ru/8.1/data/ui/style" xmlns:sys="http://v8.1c.ru/8.1/data/ui/fonts/system" xmlns:v8="http://v8.1c.ru/8.1/data/core" xmlns:v8ui="http://v8.1c.ru/8.1/data/ui" xmlns:web="http://v8.1c.ru/8.1/data/ui/colors/web" xmlns:win="http://v8.1c.ru/8.1/data/ui/colors/windows" xmlns:xen="http://v8.1c.ru/8.3/xcf/enums" xmlns:xpr="http://v8.1c.ru/8.3/xcf/predef" xmlns:xr="http://v8.1c.ru/8.3/xcf/readable" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="2.9">
-	<DataProcessor uuid="ebed5392-3782-4fe1-8cf5-8108685102b4">
-		<InternalInfo>
-			<xr:GeneratedType name="DataProcessorObject.ManualExchange" category="Object">
-				<xr:TypeId>2f3ab248-91ff-4ac3-8a1c-aff6bfa34c6c</xr:TypeId>
-				<xr:ValueId>3952c442-c30b-4df3-bde0-c99ab1b9d7bf</xr:ValueId>
-			</xr:GeneratedType>
-			<xr:GeneratedType name="DataProcessorManager.ManualExchange" category="Manager">
-				<xr:TypeId>299b4cf4-9ad4-4be1-b16c-99b515b2c30c</xr:TypeId>
-				<xr:ValueId>34d850e4-4f57-49d3-9628-e4d1e709bde5</xr:ValueId>
-			</xr:GeneratedType>
-		</InternalInfo>
+	<CommonCommand uuid="311ff686-857e-4ec5-8db7-f0aa0f99bb56">
 		<Properties>
-			<Name>ManualExchange</Name>
+			<Name>SabatexCommonStartExchange</Name>
 			<Synonym>
 				<v8:item>
 					<v8:lang>uk</v8:lang>
-					<v8:content>Manual exchange</v8:content>
+					<v8:content>Запустити обмін з сервером sabatex</v8:content>
 				</v8:item>
 			</Synonym>
 			<Comment/>
-			<UseStandardCommands>true</UseStandardCommands>
-			<DefaultForm>DataProcessor.ManualExchange.Form.Form</DefaultForm>
-			<AuxiliaryForm/>
+			<Group>ActionsPanelTools</Group>
+			<Representation>Text</Representation>
+			<ToolTip/>
+			<Picture/>
+			<Shortcut/>
 			<IncludeHelpInContents>false</IncludeHelpInContents>
-			<ExtendedPresentation/>
-			<Explanation/>
+			<CommandParameterType/>
+			<ParameterUseMode>Single</ParameterUseMode>
+			<ModifiesData>false</ModifiesData>
+			<OnMainServerUnavalableBehavior>Auto</OnMainServerUnavalableBehavior>
 		</Properties>
-		<ChildObjects>
-			<Form>Form</Form>
-		</ChildObjects>
-	</DataProcessor>
+	</CommonCommand>
 </MetaDataObject>

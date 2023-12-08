@@ -47,7 +47,7 @@
 			</UsePurposes>
 			<ScriptVariant>English</ScriptVariant>
 			<Vendor>sabatex</Vendor>
-			<Version>3.0,0-rc6</Version>
+			<Version>3.0.0-rc8</Version>
 			<DefaultLanguage>Language.Украинский</DefaultLanguage>
 			<BriefInformation/>
 			<DetailedInformation/>
@@ -68,11 +68,9 @@
 		</Properties>
 		<ChildObjects>
 			<Language>Украинский</Language>
-			<Subsystem>SabatexExchange</Subsystem>
-			<Role>sabatexExchange</Role>
+			<Subsystem>Администрирование</Subsystem>
 			<CommonModule>SabatexExchange</CommonModule>
-			<CommonModule>Sabatex</CommonModule>
-			<DataProcessor>ManualExchange</DataProcessor>
+			<CommonCommand>SabatexCommonStartExchange</CommonCommand>
 			<InformationRegister>SabatexIExchangeConfig</InformationRegister>
 			<InformationRegister>sabatexExchangeUnresolvedObjects</InformationRegister>
 			<InformationRegister>sabatexExchangeObject</InformationRegister>

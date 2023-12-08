@@ -1,15 +1,12 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <ConfigDumpInfo xmlns="http://v8.1c.ru/8.3/xcf/dumpinfo" xmlns:xen="http://v8.1c.ru/8.3/xcf/enums" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" format="Hierarchical" version="2.9">
 	<ConfigVersions>
-		<Metadata name="CommonModule.Sabatex" id="36ee2b28-c014-43cc-9b9d-970799ee3d99" configVersion="cf988a536b4329cf996e63aafa7144ac44b97147"/>
-		<Metadata name="CommonModule.Sabatex.Module" id="36ee2b28-c014-43cc-9b9d-970799ee3d99.0" configVersion="783b52c83627b2b0685df6775ed827d68713b2e2"/>
+		<Metadata name="CommonCommand.SabatexCommonStartExchange" id="311ff686-857e-4ec5-8db7-f0aa0f99bb56" configVersion="39a1683b63c4cfe7fb5c281958896a9f6e408ed2"/>
+		<Metadata name="CommonCommand.SabatexCommonStartExchange.CommandModule" id="311ff686-857e-4ec5-8db7-f0aa0f99bb56.2" configVersion="05d80e044422966e206cdac418016e34aacbfbd6"/>
 		<Metadata name="CommonModule.SabatexExchange" id="eaa5f3c5-7c51-4f83-b3e2-4a065491de85" configVersion="17793b03eace00f4b3968c2da31d4de34101caaa"/>
-		<Metadata name="CommonModule.SabatexExchange.Module" id="eaa5f3c5-7c51-4f83-b3e2-4a065491de85.0" configVersion="c5269ba749d0769fc101dc6303ab66dde7911b4f"/>
-		<Metadata name="Configuration.SabatexExchange" id="2a67a443-4d1e-4953-bc8a-967898b9f865" configVersion="1f8845d41b6915836895639ee2ab084d524f3056"/>
-		<Metadata name="Configuration.SabatexExchange.ManagedApplicationModule" id="13685d31-beba-438c-b131-4bb071a2072c.6" configVersion="89485dee0101a6b0d0bea137e8c8c2e7516492b9"/>
-		<Metadata name="DataProcessor.ManualExchange" id="ebed5392-3782-4fe1-8cf5-8108685102b4" configVersion="d3abd25024b2913d67fc646adfae8cddec7d5eac"/>
-		<Metadata name="DataProcessor.ManualExchange.Form.Form" id="1293514c-a52f-405b-8306-6763efdf0118" configVersion="beefab53329edef7d0de612080c3858578a1d7de"/>
-		<Metadata name="DataProcessor.ManualExchange.Form.Form.Form" id="1293514c-a52f-405b-8306-6763efdf0118.0" configVersion="1d66f6e74639af215deb172b4a86dae9001f036e"/>
+		<Metadata name="CommonModule.SabatexExchange.Module" id="eaa5f3c5-7c51-4f83-b3e2-4a065491de85.0" configVersion="b00d54176545de44d875caec9f61e4a9c7c036d3"/>
+		<Metadata name="Configuration.SabatexExchange" id="2a67a443-4d1e-4953-bc8a-967898b9f865" configVersion="80a00fa43dce2de72f7204f56ccc044fc911608d"/>
+		<Metadata name="Configuration.SabatexExchange.ManagedApplicationModule" id="13685d31-beba-438c-b131-4bb071a2072c.6" configVersion="a58636808230fcf24d7cbf995316df84e6a6f1c4"/>
 		<Metadata name="InformationRegister.SabatexIExchangeConfig" id="213e2d0c-5ed2-4fa9-b8ab-a9987fcc8d95" configVersion="89e35c6fae59310097b091f4ca1b7490d9fe94cf">
 			<Metadata name="InformationRegister.SabatexIExchangeConfig.Dimension.Key" id="ccf33e0d-ac6c-4b3e-8775-811746719e6a"/>
 			<Metadata name="InformationRegister.SabatexIExchangeConfig.Resource.Value" id="f2669bc5-e747-4578-baac-5a9f73fed124"/>
@@ -41,7 +38,7 @@
 		<Metadata name="InformationRegister.sabatexExchangeUnresolvedObjects.Form.RecordForm" id="d72cf9ab-f94b-4f20-82ca-1bc7dfc5b42f" configVersion="e316796e0418cfb68222e21464624d1faefdff57"/>
 		<Metadata name="InformationRegister.sabatexExchangeUnresolvedObjects.Form.RecordForm.Form" id="d72cf9ab-f94b-4f20-82ca-1bc7dfc5b42f.0" configVersion="54c180fa2b8c7d96c70384b6dc6c9c0f73c0d922"/>
 		<Metadata name="InformationRegister.sabatexExchangeUnresolvedObjects.ManagerModule" id="a3fff70a-46cc-4e11-a74d-bf613690274a.2" configVersion="196c92178a70c3824b5d0015ac8642a471707207"/>
-		<Metadata name="InformationRegister.sabatexNodeConfig" id="c698a8e8-9fc2-480b-bd3f-96bae0e5279c" configVersion="16c29c513f9926cb1b8155ea6b97b46eb547511a">
+		<Metadata name="InformationRegister.sabatexNodeConfig" id="c698a8e8-9fc2-480b-bd3f-96bae0e5279c" configVersion="49029ed93596bf827ae84fc7a4a3871dc95f6b6b">
 			<Metadata name="InformationRegister.sabatexNodeConfig.Dimension.NodeName" id="178476bc-4fc6-4f61-9362-732e89c12b00"/>
 			<Metadata name="InformationRegister.sabatexNodeConfig.Resource.destinationId" id="498f1b50-c0dc-400d-9fa5-c68980eaa772"/>
 			<Metadata name="InformationRegister.sabatexNodeConfig.Resource.Take" id="4e0916b4-45f8-48d8-8e09-fafa7659d58a"/>
@@ -49,6 +46,7 @@
 			<Metadata name="InformationRegister.sabatexNodeConfig.Resource.updateCatalogs" id="5f534f93-9d50-4286-aed2-881de2310650"/>
 			<Metadata name="InformationRegister.sabatexNodeConfig.Resource.incomingParser" id="bfc48e56-2ce5-4b48-b947-757f2e74c8e0"/>
 			<Metadata name="InformationRegister.sabatexNodeConfig.Resource.LogLevel" id="c1ad8f66-c3fe-4be6-9250-3080edb8632e"/>
+			<Metadata name="InformationRegister.sabatexNodeConfig.Resource.ObjectDifferNames" id="dc9d3f33-fd3f-421f-8e80-cb6392f8f299"/>
 			<Metadata name="InformationRegister.sabatexNodeConfig.Resource.IsQueryEnable" id="e10b33bd-4a8b-4956-9467-87cb09097a51"/>
 			<Metadata name="InformationRegister.sabatexNodeConfig.Resource.isActive" id="f2a4ad1b-0cc4-4cb3-a8f4-2882e24e14d3"/>
 		</Metadata>
@@ -57,8 +55,6 @@
 		<Metadata name="InformationRegister.sabatexNodeConfig.Help" id="c698a8e8-9fc2-480b-bd3f-96bae0e5279c.0" configVersion="0653689b87b00a5ddb9c218a95b7c700a89da81a"/>
 		<Metadata name="InformationRegister.sabatexNodeConfig.ManagerModule" id="c698a8e8-9fc2-480b-bd3f-96bae0e5279c.2" configVersion="9262feac0b3df1de4b7069ce3315dfc55c62f41d"/>
 		<Metadata name="Language.Украинский" id="443d43b2-5115-4552-8816-e65ef915c499" configVersion="16002541f686f3edc9224a85013f8f3042552400"/>
-		<Metadata name="Role.sabatexExchange" id="dd63f3c6-50c9-47a8-a658-dca10c361cae" configVersion="7841e001355b9983ff1008c8981a1f6b038b1e50"/>
-		<Metadata name="Role.sabatexExchange.Rights" id="dd63f3c6-50c9-47a8-a658-dca10c361cae.0" configVersion="18a67ee98079054156aa00878d878c794f273e4e"/>
-		<Metadata name="Subsystem.SabatexExchange" id="150f5ea0-4f9d-4a3a-960d-c58a57b08412" configVersion="e7e23f03fb3acdbefc0ec00212f0791b87c597a3"/>
+		<Metadata name="Subsystem.Администрирование" id="ba718318-a006-4596-8dc1-22437e5ed01d" configVersion="5c9867db75cd52dff7481e80e530a41db04e042a"/>
 	</ConfigVersions>
 </ConfigDumpInfo>
