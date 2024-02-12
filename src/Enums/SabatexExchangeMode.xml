@@ -1,0 +1,67 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<MetaDataObject xmlns="http://v8.1c.ru/8.3/MDClasses" xmlns:app="http://v8.1c.ru/8.2/managed-application/core" xmlns:cfg="http://v8.1c.ru/8.1/data/enterprise/current-config" xmlns:cmi="http://v8.1c.ru/8.2/managed-application/cmi" xmlns:ent="http://v8.1c.ru/8.1/data/enterprise" xmlns:lf="http://v8.1c.ru/8.2/managed-application/logform" xmlns:style="http://v8.1c.ru/8.1/data/ui/style" xmlns:sys="http://v8.1c.ru/8.1/data/ui/fonts/system" xmlns:v8="http://v8.1c.ru/8.1/data/core" xmlns:v8ui="http://v8.1c.ru/8.1/data/ui" xmlns:web="http://v8.1c.ru/8.1/data/ui/colors/web" xmlns:win="http://v8.1c.ru/8.1/data/ui/colors/windows" xmlns:xen="http://v8.1c.ru/8.3/xcf/enums" xmlns:xpr="http://v8.1c.ru/8.3/xcf/predef" xmlns:xr="http://v8.1c.ru/8.3/xcf/readable" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="2.12">
+	<Enum uuid="91f24846-0f72-483a-be76-33e094b2ef24">
+		<InternalInfo>
+			<xr:GeneratedType name="EnumRef.SabatexExchangeMode" category="Ref">
+				<xr:TypeId>652ce91c-721d-4af5-b96f-f5880a2b765e</xr:TypeId>
+				<xr:ValueId>b472b2c2-517f-47a7-b634-2c8f4847e7cc</xr:ValueId>
+			</xr:GeneratedType>
+			<xr:GeneratedType name="EnumManager.SabatexExchangeMode" category="Manager">
+				<xr:TypeId>c386d33a-3b67-4998-a865-d0ea02472220</xr:TypeId>
+				<xr:ValueId>a5aa9fc5-abe9-4478-9393-191a199f8098</xr:ValueId>
+			</xr:GeneratedType>
+			<xr:GeneratedType name="EnumList.SabatexExchangeMode" category="List">
+				<xr:TypeId>d2d810cb-664f-496f-b9f3-ceefe980715d</xr:TypeId>
+				<xr:ValueId>1c09b35f-9f1e-4c80-9746-e80e96e3ff97</xr:ValueId>
+			</xr:GeneratedType>
+		</InternalInfo>
+		<Properties>
+			<Name>SabatexExchangeMode</Name>
+			<Synonym>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Режим обміну</v8:content>
+				</v8:item>
+			</Synonym>
+			<Comment/>
+			<UseStandardCommands>false</UseStandardCommands>
+			<Characteristics/>
+			<QuickChoice>true</QuickChoice>
+			<ChoiceMode>BothWays</ChoiceMode>
+			<DefaultListForm/>
+			<DefaultChoiceForm/>
+			<AuxiliaryListForm/>
+			<AuxiliaryChoiceForm/>
+			<ListPresentation/>
+			<ExtendedListPresentation/>
+			<Explanation/>
+			<ChoiceHistoryOnInput>Auto</ChoiceHistoryOnInput>
+		</Properties>
+		<ChildObjects>
+			<EnumValue uuid="9722e7b5-6029-4688-b746-d649b777c4e6">
+				<Properties>
+					<Name>Auto</Name>
+					<Synonym>
+						<v8:item>
+							<v8:lang>uk</v8:lang>
+							<v8:content>Auto</v8:content>
+						</v8:item>
+					</Synonym>
+					<Comment/>
+				</Properties>
+			</EnumValue>
+			<EnumValue uuid="2d91d3c3-5b85-4ae8-a722-ddb393f00877">
+				<Properties>
+					<Name>Manual</Name>
+					<Synonym>
+						<v8:item>
+							<v8:lang>uk</v8:lang>
+							<v8:content>Manual</v8:content>
+						</v8:item>
+					</Synonym>
+					<Comment/>
+				</Properties>
+			</EnumValue>
+		</ChildObjects>
+	</Enum>
+</MetaDataObject>

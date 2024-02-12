@@ -1,6 +1,6 @@
 ﻿&AtServer
 Procedure DoExchangeAtServer(error)
-	SabatexExchange.ExchangeProcess(error);
+	SabatexExchange.ExchangeProcess(Enums.SabatexExchangeMode.Manual,error);
 EndProcedure
 
 &AtClient

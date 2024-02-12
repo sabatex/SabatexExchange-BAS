@@ -7,7 +7,7 @@
 	nodeConfig.Insert("Host",Host);
 	nodeConfig.Insert("Port",Port);
 	nodeConfig.Insert("password",password);
-	SabatexExchange.SetNodeConfig(nodeConfig);
+	SabatexExchange.SetHostConfig(nodeConfig);
 КонецПроцедуры
 
 &НаКлиенте

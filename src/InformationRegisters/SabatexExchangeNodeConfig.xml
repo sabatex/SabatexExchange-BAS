@@ -1,38 +1,38 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
-<MetaDataObject xmlns="http://v8.1c.ru/8.3/MDClasses" xmlns:app="http://v8.1c.ru/8.2/managed-application/core" xmlns:cfg="http://v8.1c.ru/8.1/data/enterprise/current-config" xmlns:cmi="http://v8.1c.ru/8.2/managed-application/cmi" xmlns:ent="http://v8.1c.ru/8.1/data/enterprise" xmlns:lf="http://v8.1c.ru/8.2/managed-application/logform" xmlns:style="http://v8.1c.ru/8.1/data/ui/style" xmlns:sys="http://v8.1c.ru/8.1/data/ui/fonts/system" xmlns:v8="http://v8.1c.ru/8.1/data/core" xmlns:v8ui="http://v8.1c.ru/8.1/data/ui" xmlns:web="http://v8.1c.ru/8.1/data/ui/colors/web" xmlns:win="http://v8.1c.ru/8.1/data/ui/colors/windows" xmlns:xen="http://v8.1c.ru/8.3/xcf/enums" xmlns:xpr="http://v8.1c.ru/8.3/xcf/predef" xmlns:xr="http://v8.1c.ru/8.3/xcf/readable" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="2.9">
+<MetaDataObject xmlns="http://v8.1c.ru/8.3/MDClasses" xmlns:app="http://v8.1c.ru/8.2/managed-application/core" xmlns:cfg="http://v8.1c.ru/8.1/data/enterprise/current-config" xmlns:cmi="http://v8.1c.ru/8.2/managed-application/cmi" xmlns:ent="http://v8.1c.ru/8.1/data/enterprise" xmlns:lf="http://v8.1c.ru/8.2/managed-application/logform" xmlns:style="http://v8.1c.ru/8.1/data/ui/style" xmlns:sys="http://v8.1c.ru/8.1/data/ui/fonts/system" xmlns:v8="http://v8.1c.ru/8.1/data/core" xmlns:v8ui="http://v8.1c.ru/8.1/data/ui" xmlns:web="http://v8.1c.ru/8.1/data/ui/colors/web" xmlns:win="http://v8.1c.ru/8.1/data/ui/colors/windows" xmlns:xen="http://v8.1c.ru/8.3/xcf/enums" xmlns:xpr="http://v8.1c.ru/8.3/xcf/predef" xmlns:xr="http://v8.1c.ru/8.3/xcf/readable" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="2.12">
 	<InformationRegister uuid="c698a8e8-9fc2-480b-bd3f-96bae0e5279c">
 		<InternalInfo>
-			<xr:GeneratedType name="InformationRegisterRecord.SabatexNodeConfig" category="Record">
+			<xr:GeneratedType name="InformationRegisterRecord.SabatexExchangeNodeConfig" category="Record">
 				<xr:TypeId>4c0416e3-8a41-4c51-9b85-e6aba356c79c</xr:TypeId>
 				<xr:ValueId>e72fc310-b442-41f8-91d1-e651cc7b884b</xr:ValueId>
 			</xr:GeneratedType>
-			<xr:GeneratedType name="InformationRegisterManager.SabatexNodeConfig" category="Manager">
+			<xr:GeneratedType name="InformationRegisterManager.SabatexExchangeNodeConfig" category="Manager">
 				<xr:TypeId>f9edb21a-2fd7-4d35-94a9-1138e376073c</xr:TypeId>
 				<xr:ValueId>72130593-7291-4f91-9a28-4fc1e075ff32</xr:ValueId>
 			</xr:GeneratedType>
-			<xr:GeneratedType name="InformationRegisterSelection.SabatexNodeConfig" category="Selection">
+			<xr:GeneratedType name="InformationRegisterSelection.SabatexExchangeNodeConfig" category="Selection">
 				<xr:TypeId>8fc7458f-de6e-407d-8f1a-7f3b4bccd72c</xr:TypeId>
 				<xr:ValueId>1e6cf302-4639-4c2d-89a1-5f2cf7cca28d</xr:ValueId>
 			</xr:GeneratedType>
-			<xr:GeneratedType name="InformationRegisterList.SabatexNodeConfig" category="List">
+			<xr:GeneratedType name="InformationRegisterList.SabatexExchangeNodeConfig" category="List">
 				<xr:TypeId>e53b9137-15b6-4bf0-9112-4cc5faa60097</xr:TypeId>
 				<xr:ValueId>bc387be1-4243-4f9f-94c5-1dcac50f4c21</xr:ValueId>
 			</xr:GeneratedType>
-			<xr:GeneratedType name="InformationRegisterRecordSet.SabatexNodeConfig" category="RecordSet">
+			<xr:GeneratedType name="InformationRegisterRecordSet.SabatexExchangeNodeConfig" category="RecordSet">
 				<xr:TypeId>fffe4dfa-4ed4-41b9-acf5-5605e81453ee</xr:TypeId>
 				<xr:ValueId>bdd89166-f728-4a24-9c6f-2407c758bd9f</xr:ValueId>
 			</xr:GeneratedType>
-			<xr:GeneratedType name="InformationRegisterRecordKey.SabatexNodeConfig" category="RecordKey">
+			<xr:GeneratedType name="InformationRegisterRecordKey.SabatexExchangeNodeConfig" category="RecordKey">
 				<xr:TypeId>2da5a5e2-0b4d-4b7d-9a8b-c8f97754ffd5</xr:TypeId>
 				<xr:ValueId>02abd34d-14f0-4279-b336-80012c4a6e15</xr:ValueId>
 			</xr:GeneratedType>
-			<xr:GeneratedType name="InformationRegisterRecordManager.SabatexNodeConfig" category="RecordManager">
+			<xr:GeneratedType name="InformationRegisterRecordManager.SabatexExchangeNodeConfig" category="RecordManager">
 				<xr:TypeId>ab02348b-81a8-469f-ae93-e79f2a26c129</xr:TypeId>
 				<xr:ValueId>a4f2adc2-f88e-4b19-b730-9426cf9f6846</xr:ValueId>
 			</xr:GeneratedType>
 		</InternalInfo>
 		<Properties>
-			<Name>SabatexNodeConfig</Name>
+			<Name>SabatexExchangeNodeConfig</Name>
 			<Synonym>
 				<v8:item>
 					<v8:lang>uk</v8:lang>
@@ -42,8 +42,8 @@
 			<Comment>Configuration for exchange</Comment>
 			<UseStandardCommands>true</UseStandardCommands>
 			<EditType>InDialog</EditType>
-			<DefaultRecordForm>InformationRegister.SabatexNodeConfig.Form.RecordForm</DefaultRecordForm>
-			<DefaultListForm>InformationRegister.SabatexNodeConfig.Form.ListForm</DefaultListForm>
+			<DefaultRecordForm>InformationRegister.SabatexExchangeNodeConfig.Form.RecordForm</DefaultRecordForm>
+			<DefaultListForm>InformationRegister.SabatexExchangeNodeConfig.Form.ListForm</DefaultListForm>
 			<AuxiliaryRecordForm/>
 			<AuxiliaryListForm/>
 			<StandardAttributes>
@@ -416,7 +416,7 @@
 					<MinValue xsi:nil="true"/>
 					<MaxValue xsi:nil="true"/>
 					<FillFromFillingValue>false</FillFromFillingValue>
-					<FillValue xsi:type="xs:string">sabatexExchange.IncomingDefaultParser</FillValue>
+					<FillValue xsi:type="xs:string">UserDefinedModuleDemo</FillValue>
 					<FillChecking>DontCheck</FillChecking>
 					<ChoiceFoldersAndItems>Items</ChoiceFoldersAndItems>
 					<ChoiceParameterLinks/>
@@ -542,6 +542,45 @@
 					<MaxValue xsi:nil="true"/>
 					<FillFromFillingValue>false</FillFromFillingValue>
 					<FillValue xsi:type="xs:string"/>
+					<FillChecking>DontCheck</FillChecking>
+					<ChoiceFoldersAndItems>Items</ChoiceFoldersAndItems>
+					<ChoiceParameterLinks/>
+					<ChoiceParameters/>
+					<QuickChoice>Auto</QuickChoice>
+					<CreateOnInput>Auto</CreateOnInput>
+					<ChoiceForm/>
+					<LinkByType/>
+					<ChoiceHistoryOnInput>Auto</ChoiceHistoryOnInput>
+					<Indexing>DontIndex</Indexing>
+					<FullTextSearch>Use</FullTextSearch>
+					<DataHistory>Use</DataHistory>
+				</Properties>
+			</Resource>
+			<Resource uuid="e364ded7-b844-4cd0-aae7-61fbfb3adbf9">
+				<Properties>
+					<Name>ExchangeMode</Name>
+					<Synonym>
+						<v8:item>
+							<v8:lang>uk</v8:lang>
+							<v8:content>Exchange mode</v8:content>
+						</v8:item>
+					</Synonym>
+					<Comment/>
+					<Type>
+						<v8:Type>cfg:EnumRef.SabatexExchangeMode</v8:Type>
+					</Type>
+					<PasswordMode>false</PasswordMode>
+					<Format/>
+					<EditFormat/>
+					<ToolTip/>
+					<MarkNegatives>false</MarkNegatives>
+					<Mask/>
+					<MultiLine>false</MultiLine>
+					<ExtendedEdit>false</ExtendedEdit>
+					<MinValue xsi:nil="true"/>
+					<MaxValue xsi:nil="true"/>
+					<FillFromFillingValue>false</FillFromFillingValue>
+					<FillValue xsi:type="xr:DesignTimeRef">Enum.SabatexExchangeMode.EnumValue.Auto</FillValue>
 					<FillChecking>DontCheck</FillChecking>
 					<ChoiceFoldersAndItems>Items</ChoiceFoldersAndItems>
 					<ChoiceParameterLinks/>
