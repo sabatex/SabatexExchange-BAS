@@ -1,6 +1,6 @@
 ﻿&AtServer
-Procedure DoExchangeAtServer()
-	SabatexExchange.ExchangeProcess();
+Procedure DoExchangeAtServer(error)
+	SabatexExchange.ExchangeProcess(error);
 EndProcedure
 
 &AtClient
@@ -8,7 +8,8 @@ Procedure CommandProcessing(CommandParameter, CommandExecuteParameters)
 	//Вставити вміст обробника.
 	//FormParameters = New Structure("", );
 	//OpenForm("CommonForm.", FormParameters, CommandExecuteParameters.Source, CommandExecuteParameters.Uniqueness, CommandExecuteParameters.Window, CommandExecuteParameters.URL);
-	DoExchangeAtServer();
-	ShowMessageBox(,"Ообмін з сервером sabatex завершено",5);
-	
+	result = "";
+	DoExchangeAtServer(result);
+	message = "Ообмін з сервером sabatex завершено" + Символы.ПС + result;
+	ShowMessageBox(,message,20);
 EndProcedure

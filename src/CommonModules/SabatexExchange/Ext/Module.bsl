@@ -4,45 +4,16 @@
 // 1C 8.2.16 compatible
 // version 3.0.0-rc6
 
-#region CommonFunctions
-function DigitStrCompare(str1,str2)
-	val1 = Число(str1);
-	val2 = Число(str2);
-	if val1 > val2 then
-		return 1;
-	elsif val1< val2 then
-		return -1;
-	else
-		return 0;
-	endif;	
-endfunction
-// порівняння двох версій шаблону 0.0.0
-//	- ver1 
-//  - ver2
-//result
-//	- 0   ver1 = ver2
-//  - 1   ver1 > ver2
-//  - -1  ver1 < ver2
-function VersionCompare(ver1,ver2) export
-	ver1arr = StringSplit(ver1,".",false);
-	ver2arr = StringSplit(ver2,".",false);
-	if ver1arr.Количество() <> 3 then
-		raise "Арнумент 1 не того формату ver1=" + ver1 + " шаблон 0.0.0";
-	endif;	
-	if ver1arr.Количество() <> 3 then
-		raise "Арнумент 2 не того формату ver2=" + ver1 + " шаблон 0.0.0";
-	endif;	
-	for i=0 to 2 do
-		r = DigitStrCompare(ver1arr[i],ver2arr[i]);
-		if r <> 0 then
-			return r;
-		endif;
-	enddo;
-	return 0;
-endfunction
-function GetEmptyUUID() export
-	return new UUID("00000000-0000-0000-0000-000000000000");
-endfunction
+#region CommonMethods
+// Функция - Value or default
+//
+// Параметры:
+//  value	 - any type	 - 
+//  default	 - any type	 - 
+// 
+// Возвращаемое значение:
+//   -  as value
+//
 function ValueOrDefault(value,default) export
 	if typeof(default)=type("Number") then
 		return ?(value=undefined or value="",default,Number(value));
@@ -55,125 +26,7 @@ function ValueOrDefault(value,default) export
 	endif;	
 endfunction
 
-function ItemOrDefault(items,itemName,default) export
-	return ValueOrDefault(items[itemName],default);	
-endfunction	
 
-
-// Перевірка на пустий UUID
-//  - value (UUID or string)
-function IsEmptyUUID(value) export
-	if TypeOf(value) = type("UUID") then
-		return value = GetEmptyUUID();
-	elsif TypeOf(value) = type("string") then
-		return new UUID(value) = GetEmptyUUID();
-	else
-		raise("Неправильний тип value");
-	endif;	
-endfunction	
-function DateAddDay(value,count = 1) export
-	return value + count*86400;
-endfunction
-
-function DateAddHour(value,count = 1) export
-	return value + count*3600;
-endfunction	
-
-function DateAddMinute(value,count = 1) export
-	return value + count*60;
-endfunction	
-
-function StringStartWith(value,searchString) export
-	return StrFind(value,searchString)=1;
-endfunction
-
-function StringSplit(value,delimiter=";",includeEmpty=true) export
-	
-	if StrLen(delimiter) <> 1 then
-		raise "Роздільник має бути тільки 1 символ.";
-	endif;	
-	
-	result = new array;
-	position = 1;
-	success = true;
-	while success do
-		nextPosition =  StrFind(value,delimiter,position);
-		if nextPosition = 0 then
-			success = false;
-			continue;
-		endif;
-		count =  nextPosition - position;
-		if count = 0 then
-			if includeEmpty then
-				result.Add("");
-			endif;	
-			position = position + 1;
-			continue;
-		endif;
-		result.Add(Mid(value,position,count));
-		position = position + count +1;
-	enddo;
-	return result;
-endfunction	
-
-#endregion
-
-#region ExchangeConfig
-
-function GetConfigValue(key) export
-	reg = InformationRegisters.SabatexIExchangeConfig.Get(new structure("Key",key));
-	return reg.Value;	
-endfunction
-
-procedure SetConfigValue(Key,Value) export
-	reg = InformationRegisters.SabatexIExchangeConfig.CreateRecordManager();
-	reg.Key = Key;
-	reg.Value  = Value;
-	reg.Write(true);
-endprocedure	
-
-
-// Зчитуэмо конфігурацію нода із константи
-// result: structure node config
-function GetNodeConfig() export
-	result = new structure;
-	result.Insert("clientId",ValueOrDefault(GetConfigValue("clientId"),""));
-	result.Insert("https",ValueOrDefault(GetConfigValue("https"),true));
-	result.Insert("Host",ValueOrDefault(GetConfigValue("Host"),"sabatex.francecentral.cloudapp.azure.com"));
-	result.Insert("Port",ValueOrDefault(GetConfigValue("Port"),443));
-	result.Insert("password",ValueOrDefault(GetConfigValue("password"),""));
-	return result;
-endfunction
-procedure SetNodeConfig(nodeConfig) export
-	SetConfigValue("clientId",ValueOrDefault(nodeConfig["clientId"],""));
-	SetConfigValue("https",ValueOrDefault(nodeConfig["https"],true));
-	SetConfigValue("Host",ValueOrDefault(nodeConfig["Host"],"sabatex.francecentral.cloudapp.azure.com"));
-	SetConfigValue("Port",ValueOrDefault(nodeConfig["Port"],443));
-	SetConfigValue("password",ValueOrDefault(nodeConfig["password"],""));
-	SetConfigValue("ObjectDifferNames",ValueOrDefault(nodeConfig["ObjectDifferNames"],"{}"));
-endprocedure
-
-function GetDestinationNodes()
-		Query = new Query;
-		Query.Text = 
-			"SELECT
-			|	sabatexNodeConfig.NodeName AS NodeName,
-			|	sabatexNodeConfig.destinationId AS destinationId,
-			|	sabatexNodeConfig.isActive AS isActive,
-			|	sabatexNodeConfig.Take AS Take,
-			|	sabatexNodeConfig.LogLevel AS LogLevel,
-			|	sabatexNodeConfig.updateCatalogs AS updateCatalogs,
-			|	sabatexNodeConfig.incomingParser AS incomingParser,
-			|	sabatexNodeConfig.useObjectCashe AS useObjectCashe,
-			|	sabatexNodeConfig.IsQueryEnable AS IsQueryEnable,
-			|	sabatexNodeConfig.ObjectDifferNames AS ObjectDifferNames
-			|FROM
-			|	InformationRegister.sabatexNodeConfig AS sabatexNodeConfig
-			|WHERE
-			|	sabatexNodeConfig.isActive = TRUE";
-	
-			return Query.Execute().Выгрузить();
-endfunction
 procedure SetSenderValueIfDestinationEmpty(valueName,sender,destination)
 	var propValue;
 	if sender.Property(valueName,propValue) then
@@ -188,137 +41,198 @@ procedure FillStructFromSenderIsEmpty(sender,destination)
 	enddo;	
 endprocedure
 
-// отримати конфігурацію для обміну даними
-//  - destinationNode список налаштувань для віддаленого вузла обміну
-function GetConfig(destinationNode)
-	config = new structure;
-	config.Insert("nodeConfig",GetNodeConfig());
-	config.Insert("accessToken",GetAccessToken());
-	config.Insert("nodeName",destinationNode.nodeName);
-	config.Insert("destinationId",new UUID(destinationNode.destinationId));
-	config.Insert("Take",destinationNode.Take);
-	config.Insert("LogLevel",destinationNode.LogLevel);
-	config.Insert("updateCatalogs",destinationNode.updateCatalogs);
-	config.Insert("incomingParser",destinationNode.incomingParser);		
-	config.Insert("useObjectCashe",destinationNode.useObjectCashe);
-	config.Insert("QueryParser","SabatexExchange.defaultQueryParser");
-	config.Insert("IsQueryEnable",destinationNode.IsQueryEnable);
-		
-		//if config.Host = "" then
-		//	raise "В регістрі відомостей sabatexNodeConfig не заповнено поле Host";	
-		//endif;	
-		//
-		//	
-		//if nodeConfig.Take <=0 or nodeConfig.Take >500 then
-		//	config.Take = 50;	
-		//endif;
+function StringStartWith(value,searchString) export
+	return StrFind(value,searchString)=1;
+endfunction
 
-    
-	config.Insert("MapDifferObjects",new structure);
-	config.MapDifferObjects.Insert("Forward",new map);
-	config.MapDifferObjects.Insert("Backward",new map);
-	try
-		dfNames = Deserialize(destinationNode.ObjectDifferNames);
-		for each v in dfNames do
-			config.MapDifferObjects.Forward.Insert(v.Key,v.Value);
-	        config.MapDifferObjects.Backward.Insert(v.Value,v.Key);
-		enddo;
-	except
-		raise "Помилка зчитування параметру обміну JSON  Список обэктів з різними назвами";
-	endtry;
-	
-	
-	config.Insert("ExportObjects",0);
-	config.Insert("ImportObjects",0);
-	config.Insert("MissObjects",0);
-	config.Insert("QueriedObjects",0);
-	config.Insert("Log","");
-		
+function DateAddDay(value,count = 1) export
+	return value + count*86400;
+endfunction
+
+function DateAddHour(value,count = 1) export
+	return value + count*3600;
+endfunction	
+
+function DateAddMinute(value,count = 1) export
+	return value + count*60;
+endfunction	
+function DigitStrCompare(str1,str2)
+	val1 = Число(str1);
+	val2 = Число(str2);
+	if val1 > val2 then
+		return 1;
+	elsif val1< val2 then
+		return -1;
+	else
+		return 0;
+	endif;	
+endfunction
+
+function GetEmptyUUID() export
+	return new UUID("00000000-0000-0000-0000-000000000000");
+endfunction
+
+// Перевірка на пустий UUID
+//  - value (UUID or string)
+function IsEmptyUUID(value) export
+	if TypeOf(value) = type("UUID") then
+		return value = GetEmptyUUID();
+	elsif TypeOf(value) = type("string") then
+		return new UUID(value) = GetEmptyUUID();
+	else
+		raise("Неправильний тип value");
+	endif;	
+endfunction	
+
+function ConvertQueriesToTable(queryList)
 	table = new ValueTable;
+	table.Columns.Add("nodeName");
 	table.Columns.Add("objectType");
 	table.Columns.Add("objectId");
-	config.Insert("queryList",table);
-
-	//except
-	//	raise "Помилка ініціювання налаштувань обміну для нода "+nodeConfig.nodeName+" з помилкою " + ОписаниеОшибки();	
-	//endtry;
-	
-	return config;
+	for each query in queryList do
+		row = table.Add();
+		row.nodeName = query.nodeName;
+		row.objectType = query.objectType;
+		row.objectId = query.objectId;
+	enddo;
+	table.GroupBy("nodeName,objectType,objectId");
 endfunction
-function GetConfigByNodeName(nodeName) export
-	filter = new structure("NodeName",nodename);
-	reg = РегистрыСведений.sabatexNodeConfig.Получить(filter);
-	reg.Insert("NodeName",nodename);
-	return GetConfig(reg);
-endfunction	
-	
-#endregion
 
-#region JSON
-function Serialize(object) export
-	jsonWriter = new JSONWriter;
-	jsonParams = new JSONWriterSettings(ПереносСтрокJSON.Нет,,,,,,true);
-	jsonWriter.SetString(jsonParams);
-	if TypeOf(object) = Type("Structure")or TypeOf(object) = Type("Array")  then
-		WriteJSON(jsonWriter,object);
-	else
-		СериализаторXDTO.WriteJSON(jsonWriter,object,НазначениеТипаXML.Неявное);
-	endif;
-	return jsonWriter.Close();
-endfunction
-function Deserialize(txt,datefields = undefined)  export
-	if datefields = undefined then
-		datefields = new array;
-	endif;	
-	
-	jsonReader=Новый JSONReader;	
-	jsonReader.SetString(txt);
-	result = ReadJSON(jsonReader,true,datefields);
-	if typeof(result) = type("Map") then
-		objectXDTO = result.Get("#value");
-		if objectXDTO <> undefined then
-			return objectXDTO;
-		endif;
-	endif;
-	return result;
-endfunction	
+//function StringSplit(value,delimiter=";",includeEmpty=true) export
+//	
+//	if StrLen(delimiter) <> 1 then
+//		raise "Роздільник має бути тільки 1 символ.";
+//	endif;	
+//	
+//	result = new array;
+//	position = 1;
+//	success = true;
+//	while success do
+//		nextPosition =  StrFind(value,delimiter,position);
+//		if nextPosition = 0 then
+//			success = false;
+//			continue;
+//		endif;
+//		count =  nextPosition - position;
+//		if count = 0 then
+//			if includeEmpty then
+//				result.Add("");
+//			endif;	
+//			position = position + 1;
+//			continue;
+//		endif;
+//		result.Add(Mid(value,position,count));
+//		position = position + count +1;
+//	enddo;
+//	return result;
+//endfunction
+
+// порівняння двох версій шаблону 0.0.0
+//	- ver1 
+//  - ver2
+//result
+//	- 0   ver1 = ver2
+//  - 1   ver1 > ver2
+//  - -1  ver1 < ver2
+//function VersionCompare(ver1,ver2) export
+//	ver1arr = StringSplit(ver1,".",false);
+//	ver2arr = StringSplit(ver2,".",false);
+//	if ver1arr.Количество() <> 3 then
+//		raise "Арнумент 1 не того формату ver1=" + ver1 + " шаблон 0.0.0";
+//	endif;	
+//	if ver1arr.Количество() <> 3 then
+//		raise "Арнумент 2 не того формату ver2=" + ver1 + " шаблон 0.0.0";
+//	endif;	
+//	for i=0 to 2 do
+//		r = DigitStrCompare(ver1arr[i],ver2arr[i]);
+//		if r <> 0 then
+//			return r;
+//		endif;
+//	enddo;
+//	return 0;
+//endfunction
+
+//function ItemOrDefault(items,itemName,default) export
+//	return ValueOrDefault(items[itemName],default);	
+//endfunction	
+
 #endregion
 
 #region Logged
-procedure Logged(conf,level,sourceName,message)
-	try
-		if level <= conf.LogLevel then
-			logLevel = УровеньЖурналаРегистрации.Примечание;
+procedure SystemLog(logLevel,message)
+	WriteLogEvent("SabatexExchange",logLevel,,,message);
+endprocedure	
+procedure SystemLogError(message) export
+	WriteLogEvent("SabatexExchange",EventLogLevel.Error,,,message);
+endprocedure	
+
+// Процедура - Логування 
+//
+// Параметры:
+//  conf			 - structure	 - 
+//  level			 - integer	 -  0 Error,1 Warning,2 Information,3-9 Note
+//  sourceName		 - string	 - 
+//  message			 - string	 -  Повідомлення
+//  isJournalWrite	 - boolean	 -  Чи проводити запис в загальний лог
+//
+procedure Logged(conf,level,sourceName,message,isJournalWrite)
+	if level <= conf.LogLevel then
+		conf.Log = conf.Log + message + Символы.ПС;
+		if isJournalWrite then
 			if level = 0 then
-				logLevel = УровеньЖурналаРегистрации.Ошибка;
-			ИначеЕсли level=1 then
-				logLevel = УровеньЖурналаРегистрации.Предупреждение;
-			ИначеЕсли level=2 then
-				logLevel = УровеньЖурналаРегистрации.Информация;
+				logLevel = EventLogLevel.Error;
+			elsif level=1 then
+				logLevel = EventLogLevel.Warning;
+			elsif level=2 then
+				logLevel = EventLogLevel.Information;
+			else
+				logLevel = EventLogLevel.Note;
 			endif;	
 			
-			ЗаписьЖурналаРегистрации("SabatexExchange",logLevel,sourceName,
-			,
-			message);
-			conf.Log = conf.Log + message + Символы.ПС;
+			WriteLogEvent("SabatexExchange",logLevel,sourceName,,message);
 		endif;
-	except
-		
-	endtry;
+	endif;
 endprocedure
-procedure LogError(conf,message) export
-	Logged(conf,0,"",message);		
+// Процедура - Sabatex log error
+//
+// Параметры:
+//  conf	 - structure - LogLevel - рівень логування, Log - додаэться поточний лог 
+//  message	 - 	 - 
+//
+procedure Error(conf,message,isJournalWrite=false) export
+	conf.success = false;
+	Logged(conf,0,"",message,isJournalWrite);		
 endprocedure	
-procedure LogWarning(conf,message) export
-	Logged(conf,1,"",message);		
+// Процедура - Sabatex log warning
+//
+// Параметры:
+//  conf	 - 	 - 
+//  message	 - 	 - 
+//
+procedure Warning(conf,message,isJournalWrite=false) export
+	Logged(conf,1,"",message,isJournalWrite);		
 endprocedure
-procedure LogInformation(conf,message) export
-	Logged(conf,2,"",message);		
+// Процедура - Sabatex log information
+//
+// Параметры:
+//  conf	 - 	 - 
+//  message	 - 	 - 
+//
+procedure Information(conf,message,isJournalWrite=false) export
+	Logged(conf,2,"",message,isJournalWrite);		
 endprocedure
-procedure LogNote(conf,message) export
-	Logged(conf,3,"",message);		
+// Процедура - Sabatex log note
+//
+// Параметры:
+//  conf	 - 	 - 
+//  message	 - 	 - 
+//
+procedure Note(conf,message,isJournalWrite=false) export
+	Logged(conf,3,"",message,isJournalWrite);		
 endprocedure
 #endregion
+
+
 #region ExchangeWebApi
 function CreateHTTPSConnection(conf)
 	nodeConfig = conf.nodeConfig;
@@ -330,7 +244,6 @@ function CreateHTTPSConnection(conf)
 	return result;
 	
 endfunction	
-
 function BuildUrl(url,queries=null)
 	result  = url;
 		if queries <> null then
@@ -346,40 +259,6 @@ function BuildUrl(url,queries=null)
 		endif;
 	return result;
 endfunction	
-// Cteate HTTP Request 
-// params:
-//    url - complete url for service
-//    headers - map headers for request
-//    queries - url queries  
-function CreateHTTPRequest(url,headers,queries=null)
-	request = new HTTPRequest(BuildUrl(url,queries));
-	for each header in headers do
-		request.Headers.Insert(header.Ключ, header.Значение);
-	enddo;
-	return request;
-endfunction	
-
-
-
-#region Autenfication
-
-function GetAccessToken()
-	result = new Structure;
-	result.Insert("access_token",ValueOrDefault(GetConfigValue("access_token"),"undefined"));
-	result.Insert("token_type",ValueOrDefault(GetConfigValue("token_type"),""));
-	result.Insert("refresh_token",ValueOrDefault(GetConfigValue("refresh_token"),"undefined"));
-	result.Insert("expires_in",ValueOrDefault(GetConfigValue("expires_in"),CurrentDate()));
-	return result;
-endfunction
-
-procedure SetAccessToken(conf,accessToken)
-	expires_in = CurrentDate()+ Number(accessToken["expires_in"]);
-	SetConfigValue("access_token",ValueOrDefault(accessToken["access_token"],"undefined"));
-	SetConfigValue("token_type",ValueOrDefault(accessToken["token_type"],""));
-	SetConfigValue("refresh_token",ValueOrDefault(accessToken["refresh_token"],"undefined"));
-	SetConfigValue("expires_in",ValueOrDefault(expires_in,CurrentDate()));
-	conf["accessToken"]=GetAccessToken();
-endprocedure
 // Ідентифікація на сервері обміну
 // - nodeConfig параметри зєднання
 // result:
@@ -404,7 +283,6 @@ function Login(conf)
 	endif;	
 	return Deserialize(apiToken);
 endfunction
-
 // отримати новий токен за допомогою  refresh_token
 function RefreshToken(conf)
 	connection = CreateHTTPSConnection(conf);
@@ -426,13 +304,12 @@ function RefreshToken(conf)
 	endif;
 	return Deserialize(apiToken);
 endfunction
-
 // оновити токен (при неуспішному обміні)
 function updateToken(conf)
 	// 1. спроба оновити токен за допомогою рефреш токена
 	try
 		token = RefreshToken(conf);
-		SetAccessToken(conf,token);
+		InformationRegisters.SabatexNodeConfig.SetAccessToken(conf,token);
 		return true;
 	except
 	endtry;	
@@ -441,19 +318,12 @@ function updateToken(conf)
 	try
 		token = Login(conf);
 		SetAccessToken(conf,token);
-		return true;
 	except
 	endtry;	
 	return false;
 endfunction
-
-#endregion
-
-
-
-#region objects
 // download objects from server bay sender nodeName
-function GetObjectsExchange(conf,first=true) export
+function GetObjectsExchange(conf,first=true)
 	connection = CreateHTTPSConnection(conf);
 	request = new HTTPRequest(BuildUrl("api/v0/objects",new structure("take",conf.take)));
 	request.Headers.Insert("accept","*/*");
@@ -482,7 +352,7 @@ function GetObjectsExchange(conf,first=true) export
 		raise "GetObjectsExchange error request with error:"+ОписаниеОшибки();
 	endtry;	
 endfunction
-procedure DeleteExchangeObject(conf,id,first=true) export
+procedure DeleteExchangeObject(conf,id,first=true)
 	connection = CreateHTTPSConnection(conf);
 	request = new HTTPRequest(BuildUrl("/api/v0/objects/"+XMLString(id)));
 	request.Headers.Insert("accept","*/*");
@@ -515,7 +385,7 @@ endprocedure
 //   objectId		- string(50) object Id
 //   dateStamp      - DateTime The registered moment
 //   textJSON       - The serialized object to JSON 
-procedure POSTExchangeObject(conf, objectType, objectId, dateStamp,textJSON,first=true) export
+procedure POSTExchangeObject(conf, objectType, objectId, dateStamp,textJSON,first=true)
 	connection = CreateHTTPSConnection(conf);
 	request = new HTTPRequest(BuildUrl("api/v0/objects"));
 	request.Headers.Insert("accept","*/*");
@@ -544,12 +414,8 @@ procedure POSTExchangeObject(conf, objectType, objectId, dateStamp,textJSON,firs
 		raise error;
 	endtry;	
 endprocedure	
-
-#endregion
-
-#region quries
 // get queried objects
-function GetQueriedObjects(conf,first=true) export
+function GetQueriedObjects(conf,first=true)
 	connection = CreateHTTPSConnection(conf);
 	request = new HTTPRequest(BuildUrl("/api/v0/queries",new structure("take",conf.take)));
 	request.Headers.Insert("accept","*/*");
@@ -580,7 +446,7 @@ endfunction
 //    conf  - налаштування зэднання
 //    id    - внутрышнэ id обэкта
 //    first - true(за замовчуванням), false - при повторному виклику.
-procedure DeleteQueriesObject(conf,id,first=true) export
+procedure DeleteQueriesObject(conf,id,first=true)
 	connection = CreateHTTPSConnection(conf);
 	request = new HTTPRequest(BuildUrl("/api/v0/queries/"+XMLСтрока(id)));
 	request.Headers.Insert("accept","*/*");
@@ -607,7 +473,7 @@ procedure DeleteQueriesObject(conf,id,first=true) export
 
 endprocedure	
 // реєструє запит на сервері та повертає ід запита
-procedure PostQueries(conf,ObjectId,ObjectType,first=true) export
+procedure PostQueries(conf,ObjectId,ObjectType,first=true)
 	connection = CreateHTTPSConnection(conf);
 	request = new HTTPRequest(BuildUrl("api/v0/queries"));
 	request.Headers.Insert("accept","*/*");
@@ -638,11 +504,439 @@ procedure PostQueries(conf,ObjectId,ObjectType,first=true) export
 		raise error;
 	endtry;	
 endprocedure
+#endregion
+
+
+#region JSON
+// Функция - Sabatex JSONSerialize
+//
+// Параметры:
+//  object	 - 	 - 
+// 
+// Возвращаемое значение:
+//   -  Серіалізований в строку обєкт 
+//
+function Serialize(object)
+	jsonWriter = new JSONWriter;
+	jsonParams = new JSONWriterSettings(ПереносСтрокJSON.Нет,,,,,,true);
+	jsonWriter.SetString(jsonParams);
+	if TypeOf(object) = Type("Structure")or TypeOf(object) = Type("Array")  then
+		WriteJSON(jsonWriter,object);
+	else
+		СериализаторXDTO.WriteJSON(jsonWriter,object,НазначениеТипаXML.Неявное);
+	endif;
+	return jsonWriter.Close();
+endfunction
+
+// Функция - Sabatex JSONDeserialize
+//
+// Параметры:
+//  txt			 - string	 - JSON текст
+//  datefields	 - array	 - список полів з типом Date
+// 
+// Возвращаемое значение:
+//   - десеріалызований обєкт в Map
+//
+function Deserialize(txt,datefields = undefined)
+	if datefields = undefined then
+		datefields = new array;
+	endif;	
+	
+	jsonReader=Новый JSONReader;	
+	jsonReader.SetString(txt);
+	result = ReadJSON(jsonReader,true,datefields);
+	if typeof(result) = type("Map") then
+		objectXDTO = result.Get("#value");
+		if objectXDTO <> undefined then
+			return objectXDTO;
+		endif;
+	endif;
+	return result;
+endfunction	
+#endregion
+
+
+#region ExchangeConfig
+// Функция - Get node config
+// 
+// Возвращаемое значение:
+//   - 
+//
+function GetHostConfig() export
+	reg = InformationRegisters.SabatexExchangeConfig.Get(new structure("Key","HostConfig"));
+	rootNode =  Deserialize(ValueOrDefault(reg.Value,"{}")); 
+	result = new structure;
+	result.Insert("clientId",ValueOrDefault(rootNode["clientId"],""));
+	result.Insert("https",ValueOrDefault(rootNode["https"],true));
+	result.Insert("Host",ValueOrDefault(rootNode["Host"],"sabatex.francecentral.cloudapp.azure.com"));
+	result.Insert("Port",ValueOrDefault(rootNode["Port"],443));
+	result.Insert("password",ValueOrDefault(rootNode["password"],""));
+	return result;
+endfunction
+procedure SetNodeConfig(hostConfig) export
+	reg = InformationRegisters.SabatexExchangeConfig.CreateRecordManager();
+	reg.Key = "HostConfig";
+	reg.Value  = Serialize(hostConfig);;
+	reg.Write(true);
+endprocedure
+
+function GetAccessToken() export
+	reg =  InformationRegisters.SabatexExchangeConfig.Get(new structure("Key","AccessToken"));
+	token =  Deserialize(ValueOrDefault(reg.Value,"{}"));
+	if TypeOf(token) <> Type("Map") then
+		token = new Map;
+	endif;	
+	result = new Structure;
+	result.Insert("access_token",ValueOrDefault(token["access_token"],"undefined"));
+	result.Insert("token_type",ValueOrDefault(token["token_type"],""));
+	result.Insert("refresh_token",ValueOrDefault(token["refresh_token"],"undefined"));
+	result.Insert("expires_in",ValueOrDefault(token["expires_in"],CurrentDate()));
+	return result;
+endfunction
+// Процедура - Sabatex set access token
+//
+// Параметры:
+//  conf		 - 	 - 
+//  accessToken	 - 	 - 
+//
+procedure SetAccessToken(conf,accessToken) export
+    expires_in = CurrentDate()+ Number(accessToken["expires_in"]);
+    result = new Structure;
+	result.Insert("access_token",ValueOrDefault(accessToken["access_token"],"undefined"));
+	result.Insert("token_type",ValueOrDefault(accessToken["token_type"],""));
+	result.Insert("refresh_token",ValueOrDefault(accessToken["refresh_token"],"undefined"));
+	result.Insert("expires_in",ValueOrDefault(accessToken["expires_in"],CurrentDate()));
+	reg = InformationRegisters.SabatexExchangeConfig.CreateRecordManager();
+	reg.Key = "AccessToken";
+	reg.Value  = Serialize(result);
+	reg.Write(true);
+	conf["accessToken"]=GetAccessToken();
+endprocedure
+// отримати конфігурацію для обміну даними
+//  - destinationNode список налаштувань для віддаленого вузла обміну
+function GetConfig(destinationNode)
+	config = new structure;
+	config.Insert("nodeConfig",GetHostConfig());
+	config.Insert("accessToken",GetAccessToken());
+	config.Insert("nodeName",destinationNode.nodeName);
+	config.Insert("destinationId",new UUID(destinationNode.destinationId));
+	config.Insert("Take",destinationNode.Take);
+	config.Insert("LogLevel",destinationNode.LogLevel);
+	config.Insert("updateCatalogs",destinationNode.updateCatalogs);
+	config.Insert("userDefinedModule",destinationNode.userDefinedModule);		
+	config.Insert("QueryParser","SabatexExchange.defaultQueryParser");
+	config.Insert("IsQueryEnable",destinationNode.IsQueryEnable);
+	config.Insert("Log","");
+	config.Insert("InternalObjectTypes",new Map); // співставлення внутрішніх типів з зовнішніми
+	config.Insert("ObjectTypes",new Map);         // підтримуємі зовнышні типи	
+	
+	// таблиця обєктів для запиту
+	table = new ValueTable;
+	table.Columns.Add("objectType");
+	table.Columns.Add("objectId");
+	config.Insert("queryList",table);
+	
+	config.Insert("objectId","");
+	config.Insert("objectType","");
+	config.Insert("localObjectType","");
+	config.Insert("success",true);
+	config.Insert("source",new Map);
+	config.Insert("objectConf");
+	
+	
+	
+	if config.userDefinedModule <> "" then
+		Execute(config.userDefinedModule+".Initialize(config)");
+	endif;	
+	
+	return config;
+endfunction
+
+
+function GetDestinationNodes() export
+		Query = new Query;
+		Query.Text = 
+			"SELECT
+			|	SabatexNodeConfig.NodeName AS NodeName,
+			|	SabatexNodeConfig.destinationId AS destinationId,
+			|	SabatexNodeConfig.isActive AS isActive,
+			|	SabatexNodeConfig.Take AS Take,
+			|	SabatexNodeConfig.LogLevel AS LogLevel,
+			|	SabatexNodeConfig.updateCatalogs AS updateCatalogs,
+			|	SabatexNodeConfig.userDefinedModule AS userDefinedModule,
+			|	SabatexNodeConfig.IsQueryEnable AS IsQueryEnable
+			|FROM
+			|	InformationRegister.SabatexNodeConfig AS SabatexNodeConfig
+			|WHERE
+			|	SabatexNodeConfig.isActive = TRUE";
+		result = new Array;
+			
+		QueryResult = Query.Execute();
+		SelectionDetailRecords = QueryResult.Select();
+		While SelectionDetailRecords.Next() Do
+			result.Add(GetConfig(SelectionDetailRecords));
+		enddo;	
+		return result;	
+endfunction
+
+
+#region configBuilder
+
+// function - Додавання типу обєкта по якому підтримується імпорт 
+//
+// Параметры:
+//  conf		 		- structure	 - Конфігурація обміну 
+//  objectType	 		- string	 - Тип обєкта (зовнішній). Буде приведено до верхнього регістра
+//  internalObjectType	- string	 - (необовязково) Тип обєкта (внутрішній). Буде приведено до верхнього регістра. За замовчуванням типи одинакові
+//
+// Возвращаемое значение:
+//   - Structure 		- Налаштування імпорту обьєкта
+//
+function AddImportedType(conf,objectType,internalObjectType=undefined,UserDefinedObjectParser=undefined) export
+	typeKey = upper(objectType);
+	objectConf = new Structure("UserDefinedPostResolve",undefined);
+	objectConf.Insert("Attributes",New structure);
+	if internalObjectType = undefined then
+		objectConf.Insert("InternalObjectType",typeKey);
+		conf.InternalObjectTypes.Insert(typeKey,typeKey);
+	else
+		objectConf.Insert("InternalObjectType",upper(internalObjectType));
+		conf.InternalObjectTypes.Insert(upper(internalObjectType),typeKey);
+	endif;
+	if UserDefinedObjectParser <> undefined then
+		objectConf.Insert("UserDefinedObjectParser",UserDefinedObjectParser);
+	endif;	
+	conf.ObjectTypes.Insert(typeKey,objectConf);
+	return objectConf;
+endfunction
+
+// Процедура - Додати користувацьку процедуру додаткової обробки обєкта після його імпорта до бази   
+//
+// Параметры:
+//  conf	 - structure	 - 
+//  typeName - string	 - 
+//  procName - 	 - Назва процедури (процедура має знаходитись в модулі визначеному користувачем)
+//
+procedure AddUserDefinedPostResolve(objectConf,procName) export
+	objectConf.UserDefinedPostResolve = procName;
+endprocedure
+// Процедура - Додати процедуру обробки атрибута
+//
+// Параметры:
+//  conf	 - 	 - 
+//  attrName - 	 - 
+//  procName - 	 - 
+//
+procedure AddUserDefinedProcAttribute(objectConf,attrName,procName) export
+	objectConf.Attributes.Insert(attrName,new structure("ResolveType,Name","PROC",procName));
+endprocedure
+// Процедура - Додати відповідність атрибута між локальною і відаленою системами
+//
+// Параметры:
+//  conf				 - 	 - 
+//  typeName			 - 	 - 
+//  attrName			 - 	 - 
+//  destinationAttrName	 - 	 - 
+//
+procedure AddUserDefinedMapAttribute(objectConf,attrName,destinationAttrName) export
+	objectConf.Attributes.Insert(attrName,new structure("ResolveType,Name","MAP",destinationAttrName));
+endprocedure
+
+// Процедура - Додати користувацьку обробку ымпорту обэкта (
+//
+// Параметры:
+//  objectConf	 - 	 - 
+//  procName	 - 	 - 
+//
+procedure AddUserDefinedObjectResolver(objectConf,procName) export
+	objectConf.Insert("UserDefinedObjectResolver",procName);
+endprocedure
+#endregion
+
+
+// Функция - Отримати налаштування для імпорту обьєкта
+//
+// Параметры:
+//  conf		 - structure	 - Конфігурація обміну 
+//  objectType	 - string		 - Тип обєкта (зовнішній). Буде приведено до верхнього регістра
+// 
+// Возвращаемое значение:
+//   - Map       - параметри імпорту
+//   - undefined - для даного типу не підтримуэться імпорт
+function GetImportedType(conf) export
+	typeKey = upper(conf.objectType);
+	return conf.ObjectTypes[typeKey];
+endfunction
+// Функция - Get user defined map attribute
+//
+// Параметры:
+//  conf		 - 	 - 
+//  objectType	 - 	 - 
+//  attrName	 - 	 - 
+// 
+// Возвращаемое значение:
+//   - 
+//
+function GetUserDefinedMapAttribute(objectConf,attrName)
+	var result;
+	if objectConf.Property(attrName,result) then
+		if result.ResolveType =  "MAP" then
+			return result.Name;
+		endif	
+	endif;
+	return undefined;
+endfunction	
+// Функция - Get user defined proc attribute
+//
+// Параметры:
+//  conf		 - 	 - 
+//  objectType	 - 	 - 
+//  attrName	 - 	 - 
+// 
+// Возвращаемое значение:
+//   - 
+//
+function GetUserDefinedProcAttribute(objectConf,attrName)
+	var result;
+	if objectConf.Property(attrName,result) then
+		if result.ResolveType = "PROC" then
+			return result.Name;
+		endif	
+	endif;
+	return undefined;
+endfunction	
+
+// Повертає назву метода пошуку елемента
+function GetUserDefinedLoockObject(conf,objectType)
+	return undefined;	
+endfunction
+function GetUserDefinedAttributeId(conf,objectType) export
+	return undefined;	
+endfunction	
+// Функция - Отримати метод пошуку обэкта
+//
+// Параметры:
+//  conf		 - 	 - 
+//  objectType	 - string	 - 
+// 
+// Возвращаемое значение:
+//   string -  Назва процедури або undefined
+//
+function GetUserDefinedLookObjectProcedure(conf,objectType) export
+	return undefined;
+endfunction
+
+// Функция - Get destination object name
+//
+// Параметры:
+//  conf			 - 	 - 
+//  localObjectName	 - 	 - 
+// 
+// Возвращаемое значение:
+//   - 
+//
+function GetDestinationObjectName(conf,internalObjectType)  export
+	result = conf.InternalObjectTypes[upper(internalObjectType)];
+	if result = undefined then
+		return internalObjectType;
+	else
+		return result;
+	endif;
+endfunction
+
+// Функция - Отримати внутрішній тип по зовнішньому
+//
+// Параметры:
+//  conf					 - structure	 - 
+//  objectType          	 - string	     - зовнішній тип обєкта, по замовчуванню поточний обробляемий тип обьєкта
+// 
+// Возвращаемое значение:
+//   -  string - внутрішній тип обєкта
+//
+function GetInternalObjectType(conf, val objectType=undefined) export
+	if objectType = undefined then
+		objectType = conf.objectType;
+	endif;	
+	result = conf.ObjectTypes[upper(objectType)];
+	if result = undefined then
+		return objectType;
+	else
+		return result.InternalObjectType;
+	endif;
+endfunction
+
+// Функция - Get destination attr name
+//
+// Параметры:
+//  conf		 - 	 - 
+//  objectType	 - 	 - 
+//  attrName	 - 	 - 
+// 
+// Возвращаемое значение:
+//   - 
+//
+function GetDestinationAttrName(conf,objectType,attrName) export
+	return attrName;		
+endfunction
+
+
 
 #endregion
 
-#endregion
 #region GetObjects
+
+// Функция - Is enum
+//
+// Параметры:
+//  objectType	 - string	 - тип обэкта "Перечисление.ВидНалога"
+// 
+// Возвращаемое значение:
+//   -  true Enum type
+//
+function IsEnum(objectType) export
+	return StringStartWith(upper(objectType),"ПЕРЕЧИСЛЕНИЕ");	
+endfunction	
+
+// Функция - Is catalog
+//
+// Параметры:
+//  objectType	 - 	 - 
+// 
+// Возвращаемое значение:
+//   - 
+//
+function IsCatalog(objectType) export
+	return StringStartWith(upper(objectType),"СПРАВОЧНИК");	
+endfunction	
+	
+// Функция - Is document
+//
+// Параметры:
+//  objectType	 - 	 - 
+// 
+// Возвращаемое значение:
+//   - 
+//
+function IsDocument(objectType) export
+	return StringStartWith(upper(objectType),"ДОКУМЕНТ");	
+endfunction	
+
+// Функция - Get name object
+//
+// Параметры:
+//  objectType	 - 	 - 
+// 
+// Возвращаемое значение:
+//   - 
+//
+function GetNameObject(objectType) export
+	pos = Найти(objectType,".");
+	if pos = -1 then
+		raise "Задано неправильний тип objectType=" + objectType;
+	endif;	
+	return Сред(objectType,pos+1);
+endfunction	
+
 function checkComplexType(conf,complexValue,objectId,objectType)
 	try
 		objectId = complexValue.Get("#value");
@@ -651,13 +945,13 @@ function checkComplexType(conf,complexValue,objectId,objectType)
 		subType = Сред(complexType,1,pos);
 		typeName = Сред(complexType,pos+1);
 		if subType = "jcfg:CatalogRef." then
-			objectType = GetLocalObjectName(conf,"справочник."+lower(typeName));
+			objectType = GetInternalObjectType(conf,"справочник."+lower(typeName));
 			return true;
 		elsif subType = "jcfg:DocumentRef." then
-			objectType = GetLocalObjectName(conf,"документ."+lower(typeName));
+			objectType = GetInternalObjectType(conf,"документ."+lower(typeName));
 			return  true;
 		else
-			LogError(conf,"Невідомий тип " + complexType);
+			Error(conf,"Невідомий тип " + complexType);
 			return false;
 		endif;
 	except
@@ -665,81 +959,112 @@ function checkComplexType(conf,complexValue,objectId,objectType)
 	endtry;
 endfunction	
 
-function GetObjectManager(conf,objectType)
-	pos = Найти(objectType,".");
-	if pos = -1 then
-		LogError(conf,"Задано неправильний тип objectType=" + objectType);
-		return undefined;
+// Функция - Get object manager
+//
+// Параметры:
+//  conf		 - structure	 - 
+//  objectType	 - string	 - 
+//  success		 - boolean	 - 
+// 
+// Возвращаемое значение:
+//  ObjectManager - Мененеджер обьєкта.
+// або генерується виключення при неправильному значенні 
+//
+function GetObjectManager(conf,val objectType=undefined)
+	if objectType = undefined then
+		objectType = conf.localObjectType;
+	endif;
+	if IsDocument(objectType) then
+		try
+			result = Documents[GetNameObject(objectType)];
+		except
+			raise "Спроба отримати локальний тип " + objectType +". Встановіть відповідність внутрішнього та зовнішнього обєктів";  
+		endtry;	
+	elsif IsCatalog(objectType) then
+		try
+			result = Catalogs[GetNameObject(objectType)];
+		except
+			raise "Спроба отримати локальний тип " + objectType +". Встановіть відповідність внутрішнього та зовнішнього обєктів";  
+		endtry;	
+	else
+		raise "Обробка даних типів не передбачена objectType=" + objectType;
+	endif;
+	return result;
+endfunction
+
+function GetEnumValue(conf,objectType,objectId) export
+	userDefinedProcedure = GetUserDefinedLookObjectProcedure(conf,objectType);
+	if userDefinedProcedure = undefined then
+		try
+			x= Enums[GetNameObject(objectType)];
+		except
+			Error(conf,"Помилка отримання перерахування конфігурації - "+objectType);
+			return Enums.AllRefsType();
+		endtry;
+		if objectId = "" then
+			return Enums.AllRefsType();
+		endif;	
+		
+		try
+			return x[objectId];
+		except
+			Error(conf,"Помилка отримання зжначення - "+objectId+" - з перерахування конфігурації - "+objectType);
+			return x.EmptyRef();
+		endtry;
+	else
+		try
+			Execute(userDefinedProcedure+"(conf,objectType,objectId,success)");
+		except
+		    Error(conf,"Помилка виклику метода користувача"+userDefinedProcedure+" : " +ErrorDescription());
+	   endtry;
 	endif;	
-	subType = Сред(objectType,1,pos-1);
-	typeName = Сред(objectType,pos+1);
-	
-	if lower(subType) = "справочник" then
-		return Catalogs[typeName];
-	elsif lower(subType) = "документ" then
-		return Documents[typeName];;
-	else
-		LogError(conf,"Задано неправильний тип objectType=" + objectType);
-		return undefined;
-	endif;
 endfunction
-procedure AddToMapDifferObjects(conf,localName,destinationName) export
-	if not conf.Property("MapDifferObjects") then
-		conf.Insert("MapDifferObjects",new structure);
-		conf.MapDifferObjects.Insert("Forward",new map);
-		conf.MapDifferObjects.Insert("Backward",new map);
-	endif;	
-	conf.MapDifferObjects.Forward.Insert(lower(localName),lower(destinationName));
-	conf.MapDifferObjects.Backward.Insert(lower(destinationName),lower(localName));
-endprocedure
-function GetDestinationObjectName(conf,localObjectName)
-	result = conf.MapDifferObjects.Forward[lower(localObjectName)];
-	if result = undefined then
-		return localObjectName;
-	else
-		return result;
-	endif;
-endfunction
-function GetLocalObjectName(conf,destinationObjectName)
-	result = conf.MapDifferObjects.Backward[lower(destinationObjectName)];
-	if result = undefined then
-		return destinationObjectName;
-	else
-		return result;
-	endif;
-endfunction
-// Get object by id
-// conf  - config struct (include sender node
-// objectId - string 
-// objectType - empty for complex type, string справочник.номнклатура,...
-// success - bool (set false if error)
-// attributeName - if defined object find by attribute
-function GetObjectRef(conf,знач objectId,знач objectType, success,attributeName=undefined) export
+
+// Функция - Пошук обьєкта по Id
+//
+// Параметры:
+//  conf			 - strucrure	 - 
+//  objectId		 - string,Map	 - id обєкта (string UUID, for Enum Name), Map - комплексний тип
+//  objectType		 - string	 - тип обьэкта "Справочник.Номенклатура"
+//  success			 - boolean	 - 
+//  attributeName	 - 	 - 
+// 
+// Возвращаемое значение:
+//  Ref,EmptyRef,undefined - 
+//
+function GetObjectRef(conf,objectType,objectId) export
 	// complex type
 	if typeof(objectId) = type("Map") then
 		complexObjectId = "";
 		complexObjectType = "";
 		if checkComplexType(conf,objectId,complexObjectId,complexObjectType) then
-			return GetObjectRef(conf,complexObjectId,complexObjectType,success);
+			return GetObjectRef(conf,complexObjectType,complexObjectId);
 		endif;
-		
-		objectManager = GetObjectManager(conf,objectType);
-		if objectManager <> undefined then
+		try
+			objectManager = GetObjectManager(conf,objectType);
 			return objectManager.EmptyRef();
-		endif;
-		success = false;
-		return undefined;
+		except
+			Error(conf,"Помилка отримання комплексного типу "+objectType + "  з objectId ="+objectId );
+			return undefined;
+		endtry;	
 	endif;	
 	
-	objectManager = GetObjectManager(conf,objectType);
-	if objectManager = undefined then
+	if IsEnum(objectType) then
+		return GetEnumValue(conf,objectType,objectId);
+	endif;	
+	
+	try
+		objectManager = GetObjectManager(conf,objectType);
+	except	
+		Error(conf,"Помилка отримання типу "+objectType + "  з objectId ="+objectId );
 		return undefined;
-	endif;
+	endtry;
 	
 	if IsEmptyUUID(ObjectId) then
 		return objectManager.EmptyRef();	
 	endif;
 	
+	attributeName = GetUserDefinedAttributeId(conf,objectType);
 	if attributeName = undefined then
 		result = objectManager.GetRef(new UUID(objectId));
 	else
@@ -755,29 +1080,11 @@ function GetObjectRef(conf,знач objectId,знач objectType, success,attrib
 	endif;
 	return result;
 endfunction	
-#endregion
 
-#region Helpers
-function GetSameEnumValue(conf,enumName,enumValueName,success) export
-	try
-		x= Enums[enumName];
-	except
-		success = false;
-		LogError(conf,"Помилка отримання перерахування конфігурації - "+enumName);
-		return Enums.AllRefsType();
-	endtry;
-	if enumValueName = "" then
-		return Enums.AllRefsType();
-	endif;	
-	try
-		return x[enumValueName];
-	except
-		success = false;
-		LogError(conf,"Помилка отримання зжначення - "+enumValueName+" - з перерахування конфігурації - "+enumName);
-		return x.EmptyRef();
-		
-	endtry;
-endfunction
+
+
+
+
 
 #endregion
 
@@ -819,26 +1126,11 @@ procedure ReciveObjects(conf)
 				DeleteExchangeObject(conf,item["id"]);
 				CommitTransaction();
 			except
-				LogError(conf,"Do not load objectId=" + objectId + ";objectType="+ objectType + " Error Message: " + ОписаниеОшибки());
+				Error(conf,"Do not load objectId=" + objectId + ";objectType="+ objectType + " Error Message: " + ОписаниеОшибки());
 				RollbackTransaction();
 			endtry;
 		enddo;
 endprocedure
-
-function ConvertQueriesToTable(queryList)
-	table = new ValueTable;
-	table.Columns.Add("nodeName");
-	table.Columns.Add("objectType");
-	table.Columns.Add("objectId");
-	for each query in queryList do
-		row = table.Add();
-		row.nodeName = query.nodeName;
-		row.objectType = query.objectType;
-		row.objectId = query.objectId;
-	enddo;
-	table.GroupBy("nodeName,objectType,objectId");
-endfunction
-
 procedure PostObjects(conf)
 	// post queries
 	conf.queryList.GroupBy("objectType,objectId");
@@ -878,14 +1170,6 @@ endprocedure
 #endregion
 
 #region AnalizeObjects
-// parse incoming object and return 
-// true - object is Ok
-// false - missed object
-// unresolved - array structure queried objects
-procedure IncomingDefaultParser(conf,obj,success)
-	success = false;
-	LogError(conf,"Не задано IncomingParser!");	
-endprocedure	
 
 procedure AddUnresolvedObject(conf,item,newObject = true)
 	reg = InformationRegisters.sabatexExchangeUnresolvedObjects.CreateRecordManager();
@@ -916,8 +1200,264 @@ procedure DeleteUnresolvedObject(conf,item)
 	reg.dateStamp = item.dateStamp;
 	reg.Delete();
 endprocedure	
+// Процедура - Set attribute
+//
+// Параметры:
+//  conf		 - structure	 - 
+//  source		 - 	 - 
+//  destination	 - 	 - 
+//  attr		 - 	 - 
+//  success		 - 	 - 
+//
+procedure SetAttribute(conf,objectConf,source,destination,attr)
+	// check may by exsist user defined proc
+	userDefinedProc = GetUserDefinedProcAttribute(conf.objectConf,attr.Name);
+	if userDefinedProc <> undefined then 
+		methodName = conf.userDefinedModule+"."+userDefinedProc;
+		try
+			Execute(methodname+ "(conf,objectType,source,destination,attr)");
+		except
+			Error(conf,"Помилка виконання методу визначено користувачем - "+methodName+" Error:"+ErrorDescription());
+		endtry;	
+	    return;
+	endif;
+	
+	types = attr.Type.Типы();
+	if types.Count() =1 then
+		attrType = types[0];
+		typeName = destination.Metadata().FullName();
+		sourceAttrName = ValueOrDefault(GetUserDefinedMapAttribute(conf.objectConf,attr.Name),attr.Name);
+		
+		if attrType = Type("string") or attrType = Type("Boolean") then
+			destination[attr.name] = source[sourceAttrName];
+		elsif attrType = Type("Date") then
+			destination[attr.name] = XMLValue(attrType,source[sourceAttrName]);	
+		else
+			mtype = Metadata.FindByType(attrType);
+			fullName = mtype.FullName();
+			
+			try
+				destination[attr.Name] = GetObjectRef(conf,mtype.FullName(),source[sourceAttrName]);
+			except
+				Error(conf,"Помилка отримання атрибуту - "+attr.name);
+			endtry;
+		endif;
+	else
+		Error(conf,"Помилка встановлення комплексного значення для атрибуту "+attr.Name);
+	endif;
+endprocedure	
+
+// Процедура - Resolve object catalog
+//
+// Параметры:
+//  conf		 - structure	 - параметри нода
+//  localObject  - object        - існуючий обьєкт який обробляється або undefined 
+// 
+// Возвращаемое значение:
+//   -  Object - Ще не записаний обэкт
+//
+function ResolveObjectCatalog(conf,localObject)
+	isNew =false;
+	if localObject = undefined then
+		// new object
+		isNew = true;
+		if Metadata.Catalogs[GetNameObject(conf.localObjectType)].Hierarchical  then
+			isFolder = conf.source["IsFolder"];
+			if ?(isFolder = undefined,false,isFolder) then
+				localObject = Catalogs[GetNameObject(conf.localObjectType)].CreateFolder();
+			else
+				localObject = Catalogs[GetNameObject(conf.localObjectType)].CreateItem();
+			endif;
+		else
+			localObject = Catalogs[GetNameObject(conf.localObjectType)].CreateItem();
+		endif;
+	endif;
+	
+	if conf.updateCatalogs or isNew then		
+		
+		localObject.DeletionMark = conf.source["DeletionMark"];
+		mdata = localObject.Metadata();
+		if mdata.CodeLength <> 0 then
+			localObject.Code = conf.source["Code"];
+		endif;
+		
+		if mdata.DescriptionLength <> 0 then
+			localObject.Description = conf.source["Description"];
+		endif;
+		
+		if mdata.Owners.Count() <> 0 then
+			localObject.Owner = GetObjectRef(conf,mdata.FullName(),conf.source["Owner"]);
+		endif;
+		
+		if mdata.Hierarchical then
+			localObject.Parent = GetObjectRef(conf,mdata.FullName(),conf.source["Parent"]);
+			if localObject.IsFolder then
+				return localObject;
+			endif;	
+		endif;	
+		
+		// set attributes
+		for each attr in mdata.Attributes do
+			SetAttribute(conf,conf.localObjectType,conf.source,localObject,attr);		
+		enddo;	
+		
+		// set tab
+		for each table in mdata.TabularSections do
+			destinationTableName =GetDestinationAttrName(conf,conf.localObjectType,table.Name);
+			ts = conf.source[destinationTableName];
+			if ts <> undefined then
+				for each line in ts do
+					for each attr in table.Attributes do
+						row = localObject[table.Name].Add();
+						SetAttribute(conf,conf.localObjectType+"."+attr.Name,line,row,attr);		
+					enddo;	
+				enddo;	
+			endif;	
+		enddo;	
+	endif;
+	return localObject;
+endfunction	
+
+procedure ResolveObjectDocument(conf,localObject)
+	if localObject = undefined then
+		localObject = Documents[GetNameObject(conf.localObjectType)].CreateDocument();
+	endif;
+	
+	localObject.DeletionMark = conf.source["DeletionMark"];
+	mdata = localObject.Metadata();
+		
+	localObject.Number = conf.source["Number"];
+	localObject.Date = conf.source["Date"];
+		
+		
+	// set attributes
+	for each attr in mdata.Attributes do
+		SetAttribute(conf,conf.localObjectType,conf.source,localObject,attr);		
+	enddo;	
+		
+	// set tab
+	for each table in mdata.TabularSections do
+			destinationTableName =GetDestinationAttrName(conf,conf.localObjectType,table.Name);
+			ts = conf.source[destinationTableName];
+			if ts <> undefined then
+				for each line in ts do
+					for each attr in table.Attributes do
+						row = localObject[table.Name].Add();
+						SetAttribute(conf,conf.localObjectType+"."+attr.Name,line,row,attr);		
+					enddo;	
+				enddo;	
+			endif;	
+		enddo;	
+endprocedure	
+
+// Процедура - Аналіз вхідного обєкта
+//
+// Параметры:
+//  conf		     - structure	 - параметри нода
+//  conf.objectId	 - string	 -  ключ обєкта в системі клієнта
+//  conf.objectType	 - string	 -  зовнішній тип обэкта (Справочник.Номенклатура)
+//  conf.source		 - map	     -  Десеріалізований обєкт
+//  conf.success	 - boolean	 -  Встановлюється признак помилки
+//
+procedure ResolveObject(conf)
+	// спроба отримати налащтування для обєкта
+	conf.objectConf = GetImportedType(conf);
+	if conf.objectConf = undefined then
+		raise "Імпорт обєктів даного типу не відтримується.";
+	endif;	
+	
+	conf.localObjectType = GetInternalObjectType(conf);
+	
+	// спроба запуску користувацької обробки
+	userDefinedParser=undefined;
+	if conf.objectConf.Property("UserDefinedObjectParser",userDefinedParser) then
+		try
+			Execute(userDefinedParser+"(conf)");
+			return;
+		except
+			raise "Помилка виклику метода користувача"+userDefinedParser+" : " +ErrorDescription();
+		endtry;
+	endif;
+
+	// Використовуэмо автоматичний парсер
+	objectManager = GetObjectManager(conf);
+	if objectManager = undefined then
+		raise "Обробка даного типу не підтримуэться - "+conf.localObjectType;
+	endif;
+		
+	// варіант пошуку по атрибуту
+	attributeId = GetUserDefinedAttributeId(conf,conf.localObjectType);
+		
+	// пошук обэкта по ід або атрибуту
+	if attributeId = undefined then
+		localObject = objectManager.GetRef(new UUID(conf.objectId)).GetObject();	
+	else
+		localObject = objectManager.FindByAttribute(attributeId,new UUID(conf.objectId)).GetObject();
+	endif;
+	
+	// спроба пошуку по користувацьким параметрам тільки непомічені до видалення
+	if localObject = undefined and conf.source["DeletionMark"] = false then
+		userDefinedLookProc = GetUserDefinedLookObjectProcedure(conf,conf.localObjectType);
+		if userDefinedLookProc <> undefined then
+			try
+				Execute(userDefinedLookProc+"(conf,objectId,localObjectType,source,localObject,success)");
+		    except
+			    raise "Помилка виклику метода користувача"+userDefinedLookProc+" : " +ErrorDescription();
+			endtry;
+		endif;	
+	endif;
+		
+	// пропуск видалених обєктів 
+	if localObject = undefined and conf.source["DeletionMark"] = true then
+		raise "Спроба імпорту нового обєкта поміченого до видалення в віддаленій системі";
+	endif;	
+
+	isUpdate = false;	
+	if localObject = undefined then
+		isUpdate = true;
+		// новий обьэкт
+		if IsCatalog(conf.localObjectType) then
+			localObject = ResolveObjectCatalog(conf,localObject);
+		elsif IsDocument(conf.localObjectType) then
+			if localObject <> undefined then
+				if localObject.Проведен then
+					return;
+				endif;
+			endif;
+			ResolveObjectDocument(conf,localObject);
+		else
+			raise "Обробка даного типу не підтримуэться - "+conf.localObjectType;
+        endif;
+	endif;	
+		
+	// встановлення id обэкта
+	if attributeId <> undefined then
+		if localObject[attributeId] <> conf.objectId then
+			localObject[attributeId] = conf.objectId;
+			isUpdate = true;
+		endif;
+	else
+		if localObject.IsNew() and conf.success then
+			localObject.SetNewObjectRef(objectManager.GetRef(new UUID(conf.objectId)));
+		endif;	
+	endif;
+		
+    // Запис обьєкта		
+	if conf.success and isUpdate then
+		try
+			localObject.Write();
+		except
+			Error(conf,"Помилка запису. Error:"+ErrorDescription());
+		endtry;	
+	endif;	
+endprocedure
+
+// Процедура - Аналіз 200 обєктів з урахуванням спроб (спочатку нові)
+//
+// Параметры:
+//  conf - 	 - 
+//
 procedure AnalizeUnresolvedObjects(conf)
-	try
 		Query = New Query;
 		Query.Text = 
 		"SELECT TOP 200
@@ -946,34 +1486,38 @@ procedure AnalizeUnresolvedObjects(conf)
 		SelectionDetailRecords = QueryResult.Select();
 		
 		While SelectionDetailRecords.Next() Do
-			objectId = "";
-			objectType = "";
-			
-			НачатьТранзакцию();
 			try
-				objectId = SelectionDetailRecords["objectId"];
-				objectType = SelectionDetailRecords["objectType"];
-				
-				success = true;
+				conf.objectId = SelectionDetailRecords["objectId"];
+				conf.objectType = SelectionDetailRecords["objectType"];
 				conf.Log = "";
-				Execute(conf.IncomingParser+"(conf,SelectionDetailRecords,success)");
+				conf.success = true;
+
+				try
+					datefields = new array;
+					conf.source = Deserialize(SelectionDetailRecords.objectAsText,datefields);
+				except
+					Error(conf,"Помилка десереалізації ! Error Message: " + ОписаниеОшибки());
+				endtry;
 				
-				if success then
+				if conf.success then
+					try
+						ResolveObject(conf);
+					except
+						Error(conf,"Помилка  аналіза Error:" + ОписаниеОшибки(),true);
+					endtry;
+				endif;
+								
+				if conf.success then
 					DeleteUnresolvedObject(conf,SelectionDetailRecords);
 				else
 					LevelUpUnresolvedObject(conf,SelectionDetailRecords);
 				endif;
 				
 			except
-				LogError(conf,"Do not load objectId=" + objectId + ";objectType="+ objectType + " Error Message: " + ОписаниеОшибки());
-				ОтменитьТранзакцию();
+				Error(conf,"Do not load objectId=" + conf.objectId + ";objectType="+ conf.objectType + " Error Message: " + ОписаниеОшибки(),true);
 				continue;
 			endtry;
-			ЗафиксироватьТранзакцию();
 		enddo;
-	except
-		LogError(conf,"Загальна помилка AnalizeUnresolvedObjects для клієнта -"+ string(conf.clientId) + " - " + ОписаниеОшибки());
-	endtry;
 endprocedure
 #endregion
 
@@ -1004,11 +1548,12 @@ function GetDocumentById(conf,objectName,objectId)
 	endif;	
 	objRef = Documents[objectName].GetRef(new UUID(objectId));
 	if objRef.GetObject() = undefined then
-		LogError(conf,"Помилка отримання обєкта документа "+objectName + " з ID="+objectId);
+		Error(conf,"Помилка отримання обєкта документа "+objectName + " з ID="+objectId);
 		return undefined;
 	endif;
 	return objRef;
 endfunction
+
 function GetCatalogById(conf,objectName,objectId)
 	if IsEmptyUUID(objectId) then
 		return undefined;
@@ -1016,7 +1561,7 @@ function GetCatalogById(conf,objectName,objectId)
 
 	objRef = Catalogs[objectName].GetRef(new UUID(objectId));
 	if objRef.GetObject() = undefined then
-		LogError(conf,"Помилка отримання обєкта Довідника "+objectName + " з ID="+objectId);
+		Error(conf,"Помилка отримання обєкта Довідника "+objectName + " з ID="+objectId);
 		return undefined;
 	endif;
 	return objRef;
@@ -1047,7 +1592,7 @@ procedure AddQueryForExchange(conf,objectType,objectId) export
 	ВыборкаДетальныеЗаписи = РезультатЗапроса.Выбрать();
 	
 	Пока ВыборкаДетальныеЗаписи.Следующий() Цикл
-		LogInformation(conf,""+objectType + " з Id=" + objectId+" в черзі чекає обробки.");
+		Information(conf,""+objectType + " з Id=" + objectId+" в черзі чекає обробки.");
 		// miss unresolved object
 		return;
 	КонецЦикла;
@@ -1055,7 +1600,7 @@ procedure AddQueryForExchange(conf,objectType,objectId) export
 	query = conf.queryList.Add();
 	query.objectType = objectType;
 	query.objectId = objectId;
-	LogInformation(conf,"Відправлено запит на отримання "+ objectType + " з Id=" + objectId);
+	Information(conf,"Відправлено запит на отримання "+ objectType + " з Id=" + objectId);
 endprocedure	
 
 // Обробка запитів до системи
@@ -1079,7 +1624,7 @@ procedure DoQueriedObjects(conf)
 					try
 						Execute(extensionQueryFunction+"(conf,objectType,objectId,object)");
 					except
-						LogError(conf,"Помилка виконання розширеного запиту до бази:"+ОписаниеОшибки() );
+						Error(conf,"Помилка виконання розширеного запиту до бази:"+ОписаниеОшибки() );
 					endtry;
 				endif;
 			endif;
@@ -1094,50 +1639,42 @@ endprocedure
 #endregion
 
 
-// Розпочати процесс обміну
-// params:
-// 		nodeName - назва нода обміну в регістрі sabatexNodeConfig
-//      incomingParser - метод який прододить аналіз вхідних обєктів
-//      queryParser    - метод який обробляє вхідні запити до облікової системи 
-procedure ExchangeProcess() export
+// Процедура - Розпочати процесс обміну
+//
+procedure ExchangeProcess(resultMessage="") export
+	resultMessage = "";
 	try
 	    destinationNodes = GetDestinationNodes();
-		for each destinationNode in destinationNodes do
-			start = CurrentDate();
-			
-			try  
-				conf = GetConfig(destinationNode);
-				
-				// ansver the query and set to queue
-				DoQueriedObjects(conf);
-				
-				// read  input objects
-				ReciveObjects(conf);
-				
-				AnalizeUnresolvedObjects(conf);
-				
-				PostObjects(conf);
-				
-								
-			except
-				LogError(conf,string(conf.nodeConfig.clientId) + " - " + ОписаниеОшибки());
-			endtry;
-			end = ТекущаяДата();
-			log = "The exchange with "+conf.nodeName + " process result:" + Chars.LF;
-			log = log + "Import objects - " + conf.ImportObjects + Chars.LF;
-			log = log + "Missed objects - " + conf.MissObjects + Chars.LF;
-			log = log + "Export objects - " +conf.ExportObjects  +Chars.LF;
-			log = log+ "Duration process = " + string(end - start)+ " сек.";
-			LogNote(conf,log); 
-		enddo;
-		
-	except
-		ЗаписьЖурналаРегистрации("SabatexExchange",
-		УровеньЖурналаРегистрации.Ошибка,
-		,
-		,
-		"Аварійне завершення обміну з помилкою:"+ОписаниеОшибки());
+	except	
+		resultMessage = "Помилка зчитування налаштувань обміну:"+ОписаниеОшибки();
+		SystemLogError(resultMessage);
+		return;
 	endtry;
+		
+	for each conf in destinationNodes do
+		start = CurrentDate();
+		try
+			// ansver the query and set to queue
+			DoQueriedObjects(conf);
+		
+			// read  input objects
+			ReciveObjects(conf);
+				
+			// Аналіз поступивших обєктів
+			AnalizeUnresolvedObjects(conf);
+			
+			// Відправка на сервер
+			PostObjects(conf);
+		except
+			message = string(conf.nodeConfig.clientId) + " - Програмна помилка -" + ОписаниеОшибки();
+			Error(conf,message,true);
+			resultMessage = resultMessage  + message+ Chars.CR;
+		endtry;
+		end = ТекущаяДата();
+		message = "Тривалість обміну  з вузлом "+conf.nodeName + " - " + string(end - start)+ " сек.";
+		Note(conf,message,true);
+		resultMessage = resultMessage  + message+ Chars.CR;
+	enddo;
 endprocedure
 
 #endregion

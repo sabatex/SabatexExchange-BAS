@@ -17,7 +17,7 @@
 
 &НаСервере
 Процедура ПриСозданииНаСервере(Отказ, СтандартнаяОбработка)
-	nodeConfig = SabatexExchange.GetNodeConfig();
+	nodeConfig = SabatexExchange.GetHostConfig();
 	clientId = nodeConfig.clientId;
 	https = nodeConfig.https;
 	Host = nodeConfig.Host;

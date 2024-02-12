@@ -81,6 +81,11 @@
 					<ContextMenu name="dateStampContextMenu" id="44"/>
 					<ExtendedTooltip name="dateStampExtendedTooltip" id="45"/>
 				</LabelField>
+				<LabelField name="sender" id="49">
+					<DataPath>List.sender</DataPath>
+					<ContextMenu name="senderContextMenu" id="50"/>
+					<ExtendedTooltip name="senderExtendedTooltip" id="51"/>
+				</LabelField>
 				<LabelField name="levelLive" id="40">
 					<DataPath>List.levelLive</DataPath>
 					<DefaultItem>true</DefaultItem>

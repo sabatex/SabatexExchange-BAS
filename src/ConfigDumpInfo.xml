@@ -2,16 +2,34 @@
 <ConfigDumpInfo xmlns="http://v8.1c.ru/8.3/xcf/dumpinfo" xmlns:xen="http://v8.1c.ru/8.3/xcf/enums" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" format="Hierarchical" version="2.9">
 	<ConfigVersions>
 		<Metadata name="CommonCommand.SabatexCommonStartExchange" id="311ff686-857e-4ec5-8db7-f0aa0f99bb56" configVersion="39a1683b63c4cfe7fb5c281958896a9f6e408ed2"/>
-		<Metadata name="CommonCommand.SabatexCommonStartExchange.CommandModule" id="311ff686-857e-4ec5-8db7-f0aa0f99bb56.2" configVersion="05d80e044422966e206cdac418016e34aacbfbd6"/>
+		<Metadata name="CommonCommand.SabatexCommonStartExchange.CommandModule" id="311ff686-857e-4ec5-8db7-f0aa0f99bb56.2" configVersion="9c50b302007c28ad1c1fa8de475884f4cdb1eb39"/>
 		<Metadata name="CommonModule.SabatexExchange" id="eaa5f3c5-7c51-4f83-b3e2-4a065491de85" configVersion="17793b03eace00f4b3968c2da31d4de34101caaa"/>
-		<Metadata name="CommonModule.SabatexExchange.Module" id="eaa5f3c5-7c51-4f83-b3e2-4a065491de85.0" configVersion="b00d54176545de44d875caec9f61e4a9c7c036d3"/>
-		<Metadata name="Configuration.SabatexExchange" id="2a67a443-4d1e-4953-bc8a-967898b9f865" configVersion="80a00fa43dce2de72f7204f56ccc044fc911608d"/>
-		<Metadata name="Configuration.SabatexExchange.ManagedApplicationModule" id="13685d31-beba-438c-b131-4bb071a2072c.6" configVersion="a58636808230fcf24d7cbf995316df84e6a6f1c4"/>
-		<Metadata name="InformationRegister.SabatexIExchangeConfig" id="213e2d0c-5ed2-4fa9-b8ab-a9987fcc8d95" configVersion="89e35c6fae59310097b091f4ca1b7490d9fe94cf">
-			<Metadata name="InformationRegister.SabatexIExchangeConfig.Dimension.Key" id="ccf33e0d-ac6c-4b3e-8775-811746719e6a"/>
-			<Metadata name="InformationRegister.SabatexIExchangeConfig.Resource.Value" id="f2669bc5-e747-4578-baac-5a9f73fed124"/>
+		<Metadata name="CommonModule.SabatexExchange.Module" id="eaa5f3c5-7c51-4f83-b3e2-4a065491de85.0" configVersion="04cf80b97bef3470cf7d3bb372103dabee453b27"/>
+		<Metadata name="Configuration.SabatexExchange" id="2a67a443-4d1e-4953-bc8a-967898b9f865" configVersion="6e687aa386ceaaa86f25e1523fdf30f553c68dfc"/>
+		<Metadata name="Configuration.SabatexExchange.ManagedApplicationModule" id="13685d31-beba-438c-b131-4bb071a2072c.6" configVersion="f4fa774579ce74066e581c9bea23e03525a12934"/>
+		<Metadata name="InformationRegister.SabatexExchangeConfig" id="6af1f701-1b59-46b4-b2d0-98da96c05c14" configVersion="6ee7887e7d32d953402d0743e6be2ad5aca37cb8">
+			<Metadata name="InformationRegister.SabatexExchangeConfig.Resource.Value" id="58891a4c-a0ef-4d78-86e7-7dd8c14c64e3"/>
+			<Metadata name="InformationRegister.SabatexExchangeConfig.Dimension.Key" id="e2f934b6-af3d-4f54-a2bc-ecee0d0a07b2"/>
 		</Metadata>
-		<Metadata name="InformationRegister.SabatexIExchangeConfig.ManagerModule" id="213e2d0c-5ed2-4fa9-b8ab-a9987fcc8d95.2" configVersion="da4ebb6f27356d0312767e2c774b7f4d63f5a3af"/>
+		<Metadata name="InformationRegister.SabatexExchangeConfig.ManagerModule" id="6af1f701-1b59-46b4-b2d0-98da96c05c14.2" configVersion="49f9684248aab97016b00d11a8efdb6ca5b20e74"/>
+		<Metadata name="InformationRegister.SabatexNodeConfig" id="c698a8e8-9fc2-480b-bd3f-96bae0e5279c" configVersion="d51114024106150970df1ad3414fbb59e56463ed">
+			<Metadata name="InformationRegister.SabatexNodeConfig.Dimension.NodeName" id="178476bc-4fc6-4f61-9362-732e89c12b00"/>
+			<Metadata name="InformationRegister.SabatexNodeConfig.Resource.destinationId" id="498f1b50-c0dc-400d-9fa5-c68980eaa772"/>
+			<Metadata name="InformationRegister.SabatexNodeConfig.Resource.Take" id="4e0916b4-45f8-48d8-8e09-fafa7659d58a"/>
+			<Metadata name="InformationRegister.SabatexNodeConfig.Resource.updateCatalogs" id="5f534f93-9d50-4286-aed2-881de2310650"/>
+			<Metadata name="InformationRegister.SabatexNodeConfig.Resource.userDefinedModule" id="bfc48e56-2ce5-4b48-b947-757f2e74c8e0"/>
+			<Metadata name="InformationRegister.SabatexNodeConfig.Resource.LogLevel" id="c1ad8f66-c3fe-4be6-9250-3080edb8632e"/>
+			<Metadata name="InformationRegister.SabatexNodeConfig.Resource.StoredData" id="ca0f7163-7593-40ed-b5e8-54c04b54bf4b"/>
+			<Metadata name="InformationRegister.SabatexNodeConfig.Resource.IsQueryEnable" id="e10b33bd-4a8b-4956-9467-87cb09097a51"/>
+			<Metadata name="InformationRegister.SabatexNodeConfig.Resource.AppToken" id="e3b41551-bfcd-40ff-b1ee-a0e04fb2ce71"/>
+			<Metadata name="InformationRegister.SabatexNodeConfig.Resource.isActive" id="f2a4ad1b-0cc4-4cb3-a8f4-2882e24e14d3"/>
+		</Metadata>
+		<Metadata name="InformationRegister.SabatexNodeConfig.Form.ListForm" id="699d461b-1155-4b2f-943c-d16ce8421aef" configVersion="9d791edfbe706cbd5ed60f27227512c4699741bb"/>
+		<Metadata name="InformationRegister.SabatexNodeConfig.Form.ListForm.Form" id="699d461b-1155-4b2f-943c-d16ce8421aef.0" configVersion="f2e0bcfe99833aae2e7675b1428ccd6035b5e0ad"/>
+		<Metadata name="InformationRegister.SabatexNodeConfig.Form.RecordForm" id="968dbac0-b8ef-4ae6-98fa-8d2837d287a5" configVersion="50b5ad47f9b168798fb92b98cc7be6c347011f6e"/>
+		<Metadata name="InformationRegister.SabatexNodeConfig.Form.RecordForm.Form" id="968dbac0-b8ef-4ae6-98fa-8d2837d287a5.0" configVersion="a41007eb12c315d86cdd08ddecb918d433365eaa"/>
+		<Metadata name="InformationRegister.SabatexNodeConfig.Help" id="c698a8e8-9fc2-480b-bd3f-96bae0e5279c.0" configVersion="0653689b87b00a5ddb9c218a95b7c700a89da81a"/>
+		<Metadata name="InformationRegister.SabatexNodeConfig.ManagerModule" id="c698a8e8-9fc2-480b-bd3f-96bae0e5279c.2" configVersion="fe464273bdef4cc8efea6f74462880fe75d61e52"/>
 		<Metadata name="InformationRegister.sabatexExchangeObject" id="bce1125d-2557-477b-a256-05749b1069d3" configVersion="eab685e9781e8090fd222ff4ff815e8d1b49c593">
 			<Metadata name="InformationRegister.sabatexExchangeObject.Dimension.object" id="16c7d63d-7a04-4563-98c7-f7018bba69f1"/>
 			<Metadata name="InformationRegister.sabatexExchangeObject.Resource.dateStamp" id="4bdc5276-5f0b-4410-8561-9aac6a5612c0"/>
@@ -34,27 +52,11 @@
 			<Metadata name="InformationRegister.sabatexExchangeUnresolvedObjects.Resource.objectAsText" id="c1ce29af-e998-4e9a-afcf-af2b12e2e7a7"/>
 		</Metadata>
 		<Metadata name="InformationRegister.sabatexExchangeUnresolvedObjects.Form.ListForm" id="5bbf04fe-2914-496b-8d35-a37a9b7479e4" configVersion="6384df49c48b78a7cd24331bc55933668caac6f1"/>
-		<Metadata name="InformationRegister.sabatexExchangeUnresolvedObjects.Form.ListForm.Form" id="5bbf04fe-2914-496b-8d35-a37a9b7479e4.0" configVersion="60404f220b0cc928f9cbc5b3666009d20e517dee"/>
+		<Metadata name="InformationRegister.sabatexExchangeUnresolvedObjects.Form.ListForm.Form" id="5bbf04fe-2914-496b-8d35-a37a9b7479e4.0" configVersion="a7182c1af56669bc6ecc52bab8cfa0505521aa84"/>
 		<Metadata name="InformationRegister.sabatexExchangeUnresolvedObjects.Form.RecordForm" id="d72cf9ab-f94b-4f20-82ca-1bc7dfc5b42f" configVersion="e316796e0418cfb68222e21464624d1faefdff57"/>
-		<Metadata name="InformationRegister.sabatexExchangeUnresolvedObjects.Form.RecordForm.Form" id="d72cf9ab-f94b-4f20-82ca-1bc7dfc5b42f.0" configVersion="54c180fa2b8c7d96c70384b6dc6c9c0f73c0d922"/>
+		<Metadata name="InformationRegister.sabatexExchangeUnresolvedObjects.Form.RecordForm.Form" id="d72cf9ab-f94b-4f20-82ca-1bc7dfc5b42f.0" configVersion="87c5fcf748a0148bef3f4e773ae64951b2fc3a33"/>
 		<Metadata name="InformationRegister.sabatexExchangeUnresolvedObjects.ManagerModule" id="a3fff70a-46cc-4e11-a74d-bf613690274a.2" configVersion="196c92178a70c3824b5d0015ac8642a471707207"/>
-		<Metadata name="InformationRegister.sabatexNodeConfig" id="c698a8e8-9fc2-480b-bd3f-96bae0e5279c" configVersion="49029ed93596bf827ae84fc7a4a3871dc95f6b6b">
-			<Metadata name="InformationRegister.sabatexNodeConfig.Dimension.NodeName" id="178476bc-4fc6-4f61-9362-732e89c12b00"/>
-			<Metadata name="InformationRegister.sabatexNodeConfig.Resource.destinationId" id="498f1b50-c0dc-400d-9fa5-c68980eaa772"/>
-			<Metadata name="InformationRegister.sabatexNodeConfig.Resource.Take" id="4e0916b4-45f8-48d8-8e09-fafa7659d58a"/>
-			<Metadata name="InformationRegister.sabatexNodeConfig.Resource.useObjectCashe" id="4eb91021-c016-45b7-8320-2c23bc0a128e"/>
-			<Metadata name="InformationRegister.sabatexNodeConfig.Resource.updateCatalogs" id="5f534f93-9d50-4286-aed2-881de2310650"/>
-			<Metadata name="InformationRegister.sabatexNodeConfig.Resource.incomingParser" id="bfc48e56-2ce5-4b48-b947-757f2e74c8e0"/>
-			<Metadata name="InformationRegister.sabatexNodeConfig.Resource.LogLevel" id="c1ad8f66-c3fe-4be6-9250-3080edb8632e"/>
-			<Metadata name="InformationRegister.sabatexNodeConfig.Resource.ObjectDifferNames" id="dc9d3f33-fd3f-421f-8e80-cb6392f8f299"/>
-			<Metadata name="InformationRegister.sabatexNodeConfig.Resource.IsQueryEnable" id="e10b33bd-4a8b-4956-9467-87cb09097a51"/>
-			<Metadata name="InformationRegister.sabatexNodeConfig.Resource.isActive" id="f2a4ad1b-0cc4-4cb3-a8f4-2882e24e14d3"/>
-		</Metadata>
-		<Metadata name="InformationRegister.sabatexNodeConfig.Form.ListForm" id="699d461b-1155-4b2f-943c-d16ce8421aef" configVersion="9d791edfbe706cbd5ed60f27227512c4699741bb"/>
-		<Metadata name="InformationRegister.sabatexNodeConfig.Form.ListForm.Form" id="699d461b-1155-4b2f-943c-d16ce8421aef.0" configVersion="adc3a25b9a6cd04d68d06ac5723e6b65d4b385f5"/>
-		<Metadata name="InformationRegister.sabatexNodeConfig.Help" id="c698a8e8-9fc2-480b-bd3f-96bae0e5279c.0" configVersion="0653689b87b00a5ddb9c218a95b7c700a89da81a"/>
-		<Metadata name="InformationRegister.sabatexNodeConfig.ManagerModule" id="c698a8e8-9fc2-480b-bd3f-96bae0e5279c.2" configVersion="9262feac0b3df1de4b7069ce3315dfc55c62f41d"/>
 		<Metadata name="Language.Украинский" id="443d43b2-5115-4552-8816-e65ef915c499" configVersion="16002541f686f3edc9224a85013f8f3042552400"/>
-		<Metadata name="Subsystem.Администрирование" id="ba718318-a006-4596-8dc1-22437e5ed01d" configVersion="5c9867db75cd52dff7481e80e530a41db04e042a"/>
+		<Metadata name="Subsystem.Администрирование" id="ba718318-a006-4596-8dc1-22437e5ed01d" configVersion="8ced0ddd023d27591fb586c392aa5007550b6003"/>
 	</ConfigVersions>
 </ConfigDumpInfo>

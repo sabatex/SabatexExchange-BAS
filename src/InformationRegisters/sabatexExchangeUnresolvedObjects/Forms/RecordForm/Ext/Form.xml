@@ -116,6 +116,8 @@
 						<InputField name="Log" id="16">
 							<DataPath>Record.Log</DataPath>
 							<ReadOnly>true</ReadOnly>
+							<AutoMaxWidth>false</AutoMaxWidth>
+							<AutoMaxHeight>false</AutoMaxHeight>
 							<MultiLine>true</MultiLine>
 							<ContextMenu name="LogContextMenu" id="17"/>
 							<ExtendedTooltip name="LogExtendedTooltip" id="18"/>
