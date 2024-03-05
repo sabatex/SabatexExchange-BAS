@@ -2,7 +2,7 @@
 // Copyright (c) 2021 by Serhiy Lakas
 // https://sabatex.github.io
 // 1C 8.2.16 compatible
-// version 3.0.0-rc6
+// version 3.0.0
 
 #region CommonMethods
 // Функция - Value or default
@@ -318,6 +318,7 @@ function updateToken(conf)
 	try
 		token = Login(conf);
 		SetAccessToken(conf,token);
+		return true;
 	except
 	endtry;	
 	return false;
@@ -473,7 +474,7 @@ procedure DeleteQueriesObject(conf,id,first=true)
 
 endprocedure	
 // реєструє запит на сервері та повертає ід запита
-procedure PostQueries(conf,ObjectId,ObjectType,first=true)
+procedure PostQueries(conf,ObjectId,ObjectType,first=true) export
 	connection = CreateHTTPSConnection(conf);
 	request = new HTTPRequest(BuildUrl("api/v0/queries"));
 	request.Headers.Insert("accept","*/*");
@@ -626,7 +627,6 @@ function GetConfig(destinationNode)
 	config.Insert("LogLevel",destinationNode.LogLevel);
 	config.Insert("updateCatalogs",destinationNode.updateCatalogs);
 	config.Insert("userDefinedModule",destinationNode.userDefinedModule);		
-	config.Insert("QueryParser","SabatexExchange.defaultQueryParser");
 	config.Insert("IsQueryEnable",destinationNode.IsQueryEnable);
 	config.Insert("ExchangeMode",destinationNode.ExchangeMode);
 	config.Insert("Log","");
@@ -654,6 +654,42 @@ function GetConfig(destinationNode)
 	
 	return config;
 endfunction
+// Функция - Get config by node name
+//
+// Параметры:
+//  nodeName - string	 - Назва нода в системі
+// 
+// Возвращаемое значение:
+//   structure - Конфігурація нода або undefined 
+//
+function GetConfigByNodeName(nodeName) export
+		Query = new Query;
+		Query.Text = 
+			"SELECT
+			|	SabatexExchangeNodeConfig.NodeName AS NodeName,
+			|	SabatexExchangeNodeConfig.destinationId AS destinationId,
+			|	SabatexExchangeNodeConfig.isActive AS isActive,
+			|	SabatexExchangeNodeConfig.Take AS Take,
+			|	SabatexExchangeNodeConfig.LogLevel AS LogLevel,
+			|	SabatexExchangeNodeConfig.updateCatalogs AS updateCatalogs,
+			|	SabatexExchangeNodeConfig.userDefinedModule AS userDefinedModule,
+			|	SabatexExchangeNodeConfig.IsQueryEnable AS IsQueryEnable,
+			|	SabatexExchangeNodeConfig.ExchangeMode AS ExchangeMode
+			|FROM
+			|	InformationRegister.SabatexExchangeNodeConfig AS SabatexExchangeNodeConfig
+			|WHERE
+			|	SabatexExchangeNodeConfig.isActive = TRUE
+			|	AND SabatexExchangeNodeConfig.NodeName = &NodeName";
+		result = new Array;
+		
+		Query.Parameters.Insert("NodeName",nodeName);
+		QueryResult = Query.Execute();
+		SelectionDetailRecords = QueryResult.Select();
+		While SelectionDetailRecords.Next() Do
+			return GetConfig(SelectionDetailRecords);
+		enddo;	
+        return undefined;
+endfunction	
 
 function GetDestinationNodes() export
 		Query = new Query;
@@ -742,7 +778,7 @@ function GetNormalizedObjectType(objectType)
 endfunction	
 
 
-function CreateExternalObjectDescriptor(conf,externalObjectType,parserProc=undefined,internalObjectDescriptor=undefined)
+function CreateExternalObjectDescriptor(conf,externalObjectType,parserProc=undefined,internalObjectDescriptor=undefined) export
 	var externalObject;
 	if ValidateObject(externalObjectType) then
 		normalizedObjectType = GetNormalizedObjectType(externalObjectType);
@@ -820,13 +856,21 @@ endfunction
 procedure ConfiguredUserDefinedObjectParser(conf,externalObjectType,parserProc) export
 	CreateExternalObjectDescriptor(conf,externalObjectType,parserProc);	
 endprocedure	
-	
 
-
-
-
-procedure AddAttributeProperty(objectConf,attrName,Ignore=true,default=undefined,destinationName=undefined,procName=undefined,postParser=undefined) export
-	attr = new structure("ignore,default,destinationName,procName,postParser",Ignore,default,destinationName,procName,postParser);
+// Процедура - Add attribute property
+//
+// Параметры:
+//  objectConf		 - 	 - 
+//  attrName		 - string	 - 
+//  Ignore			 - boolean	 - 
+//  default			 - object	 - 
+//  destinationName	 - string	 - 
+//  procName		 - string	 - 
+//  postParser		 - string	 - 
+//  ignoredIsMiss	 - boolean	 - 
+//
+procedure AddAttributeProperty(objectConf,attrName,Ignore=false,default=undefined,destinationName=undefined,procName=undefined,postParser=undefined,ignoredIsMiss=false) export
+	attr = new structure("ignore,default,destinationName,procName,postParser,ignoredIsMiss",Ignore,default,destinationName,procName,postParser,ignoredIsMiss);
 	objectConf.Attributes.Insert(attrName,attr);
 endprocedure
 
@@ -857,7 +901,7 @@ function GetInternalObjectType(conf, val objectType=undefined) export
 	if not conf.Objects.Property(?(objectType=undefined,conf.NormalizedObjectType,GetNormalizedObjectType(objectType)),result) then
 		raise "Імпорт обєктів типу - "+objectType + " не підтримується.";
 	endif;	
-	return result.InternalObjectType;
+	return result.ObjectType;
 endfunction
 
 
@@ -1209,6 +1253,9 @@ endprocedure
 procedure SetAttribute(conf,objectConf,source,destination,attr,tableName=undefined)
 	var attrConf;
 	sourceAttrName = attr.Name;
+	if upper(attr.Name) = upper("SabatexExchangeId") then
+		return;
+	endif;	
 	if objectConf <> undefined and  objectConf.Attributes.Property(attr.Name,attrConf) then
 		// check ignore
 		if attrConf.Ignore then
@@ -1242,7 +1289,12 @@ procedure SetAttribute(conf,objectConf,source,destination,attr,tableName=undefin
 		
 		importValue = source[sourceAttrName];
 		if importValue = undefined then
-			raise "Атрибут "+ sourceAttrName + " відсутній в файлі імпорта.";
+			if attrConf<>undefined and attrConf.ignoredIsMiss then
+				return;
+			else
+				raise "Атрибут "+ sourceAttrName + " відсутній в файлі імпорта.";
+			endif;
+			
 		endif;	
 		
 		
@@ -1737,14 +1789,12 @@ procedure DoQueriedObjects(conf)
 				object = GetDocumentById(conf,GetObjectTypeKind(conf,objectType),objectId);
 			else
 				// get extended query
-				extensionQueryFunction=undefined;
-				if conf.Property("ExtensionQueryFunction",extensionQueryFunction) then
-					try
-						Execute(extensionQueryFunction+"(conf,objectType,objectId,object)");
-					except
-						Error(conf,"Помилка виконання розширеного запиту до бази:"+ОписаниеОшибки() );
-					endtry;
-				endif;
+				
+				try
+					Execute(conf.userDefinedModule+".QueryObject(conf,objectType,objectId,object)");
+				except
+					Error(conf,"Помилка виконання розширеного запиту до бази:"+ОписаниеОшибки() );
+				endtry;
 			endif;
 			if object <> undefined then
 				RegisterObjectForNode(object,conf.NodeName);		

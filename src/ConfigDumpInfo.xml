@@ -4,10 +4,10 @@
 		<Metadata name="CommonCommand.SabatexCommonStartExchange" id="311ff686-857e-4ec5-8db7-f0aa0f99bb56" configVersion="ddcd90a98d499ca4824120cd8743c06455c66f28"/>
 		<Metadata name="CommonCommand.SabatexCommonStartExchange.CommandModule" id="311ff686-857e-4ec5-8db7-f0aa0f99bb56.2" configVersion="b1d0a1a37178cb1e74f9d28e52465e90c068c1a8"/>
 		<Metadata name="CommonModule.SabatexExchange" id="eaa5f3c5-7c51-4f83-b3e2-4a065491de85" configVersion="469e39e9d4af07cac19d8bfa9b3ef6fdc3227cca"/>
-		<Metadata name="CommonModule.SabatexExchange.Module" id="eaa5f3c5-7c51-4f83-b3e2-4a065491de85.0" configVersion="fa41e0167de588595ba0a892f9021175d80e66e1"/>
+		<Metadata name="CommonModule.SabatexExchange.Module" id="eaa5f3c5-7c51-4f83-b3e2-4a065491de85.0" configVersion="eda00cc45701d07778736b74706d35dd84072fb4"/>
 		<Metadata name="CommonModule.UserDefinedModuleDemo" id="f9abaf2a-5a7b-4b9e-92e4-c0438d3e84e6" configVersion="9dbdf16f9b4402bb31c7cd119e7e7e0fbe2dd7ba"/>
-		<Metadata name="CommonModule.UserDefinedModuleDemo.Module" id="f9abaf2a-5a7b-4b9e-92e4-c0438d3e84e6.0" configVersion="e984ad2125a2aa2787e855f68bf3a7f8505e5323"/>
-		<Metadata name="Configuration.SabatexExchange" id="2a67a443-4d1e-4953-bc8a-967898b9f865" configVersion="4e3d690a5bc8202fe9de432bfb6de3b5c9a246b9"/>
+		<Metadata name="CommonModule.UserDefinedModuleDemo.Module" id="f9abaf2a-5a7b-4b9e-92e4-c0438d3e84e6.0" configVersion="5f45fc0666324d529a9b13cc45031c5da1c19668"/>
+		<Metadata name="Configuration.SabatexExchange" id="2a67a443-4d1e-4953-bc8a-967898b9f865" configVersion="9116c197e0c6b731ce0e7db1d1cac897e3c5855f"/>
 		<Metadata name="Configuration.SabatexExchange.ManagedApplicationModule" id="13685d31-beba-438c-b131-4bb071a2072c.6" configVersion="f4fa774579ce74066e581c9bea23e03525a12934"/>
 		<Metadata name="Enum.SabatexExchangeMode" id="91f24846-0f72-483a-be76-33e094b2ef24" configVersion="30c108961fc89e58166132c5c05b3844565198aa">
 			<Metadata name="Enum.SabatexExchangeMode.EnumValue.Manual" id="2d91d3c3-5b85-4ae8-a722-ddb393f00877"/>
