@@ -51,7 +51,7 @@
 			</UsePurposes>
 			<ScriptVariant>English</ScriptVariant>
 			<Vendor>sabatex</Vendor>
-			<Version>3.0.5</Version>
+			<Version>3.0.9</Version>
 			<DefaultLanguage>Language.Украинский</DefaultLanguage>
 			<BriefInformation/>
 			<DetailedInformation/>
@@ -64,10 +64,15 @@
 			<VendorInformationAddress>
 				<v8:item>
 					<v8:lang>uk</v8:lang>
-					<v8:content>https://github.com/sabatex/WebApiDocumentsExcange</v8:content>
+					<v8:content>https://sabatex.github.io</v8:content>
 				</v8:item>
 			</VendorInformationAddress>
-			<ConfigurationInformationAddress/>
+			<ConfigurationInformationAddress>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>https://github.com/sabatex/SabatexExchange-BAS</v8:content>
+				</v8:item>
+			</ConfigurationInformationAddress>
 			<InterfaceCompatibilityMode>Taxi</InterfaceCompatibilityMode>
 		</Properties>
 		<ChildObjects>

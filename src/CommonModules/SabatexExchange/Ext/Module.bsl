@@ -1,8 +1,8 @@
 ﻿#region SabatexExchange
-// Copyright (c) 2021 by Serhiy Lakas
+// Copyright (c) 2021-2024 by Serhiy Lakas
 // https://sabatex.github.io
 // 1C 8.2.16 compatible
-// version 3.0.0
+// version 3.0.9
 
 #region CommonMethods
 // Функция - Value or default
@@ -1388,7 +1388,7 @@ procedure ResolveAttributesAndTabularSections(conf,localobject,mdata)
 					if tableAttribute.postParser <> undefined then
 						methodName = conf.userDefinedModule+"."+tableAttribute.postParser;
 						try
-							Execute(methodname+ "(conf,line,row)");
+							Execute(methodname+ "(conf,localobject,line,row)");
 						except
 							Error(conf,"Помилка виконання методу визначено користувачем - "+methodName+" Error:"+ErrorDescription());
 						endtry;	
@@ -1448,7 +1448,7 @@ procedure ResolveObjectCatalog(conf,localObject)
 			endif;
 		endif;
 		
-		if mdata.Hierarchical then
+		if mdata.Hierarchical and conf.ObjectDescriptor.IdAttribute=undefined then
 			parent = conf.source["Parent"];
 			if parent <> undefined then
 				localObject.Parent = GetObjectRef(conf,mdata.FullName(),conf.source["Parent"]);
@@ -1568,14 +1568,6 @@ procedure ResolveObject(conf)
 		
 	endif;	
 
-	// Постобробка
-	if conf.ObjectDescriptor.PostParser <> undefined then
-		try
-			Execute(conf.userDefinedModule+"."+conf.ObjectDescriptor.PostParser+"(conf,localObject)");
-		except
-			raise "Помилка виклику метода користувача"+conf.ObjectDescriptor.PostParser+" : " +ErrorDescription();
-		endtry;
-	endif;
 	
 	// встановлення id обэкта
 	if attributeId <> undefined then
@@ -1605,11 +1597,15 @@ procedure ResolveObject(conf)
 		endif;	
 	endif;
 	
-	
-	
-	
-	
-	
+	BeginTransaction();
+	// Постобробка
+	if conf.ObjectDescriptor.PostParser <> undefined then
+		try
+			Execute(conf.userDefinedModule+"."+conf.ObjectDescriptor.PostParser+"(conf,localObject)");
+		except
+			raise "Помилка виклику метода користувача"+conf.ObjectDescriptor.PostParser+" : " +ErrorDescription();
+		endtry;
+	endif;
 	
 	// Запис обьєкта		
 	if conf.success and conf.isUpdated then
@@ -1618,6 +1614,11 @@ procedure ResolveObject(conf)
 		except
 			Error(conf,"Помилка запису. Error:"+ErrorDescription());
 		endtry;	
+	endif;
+	if conf.success then
+		CommitTransaction();
+	else
+		RollbackTransaction();
 	endif;	
 endprocedure
 
@@ -1808,15 +1809,14 @@ endprocedure
 
 
 // Процедура - Розпочати процесс обміну
-//
-procedure ExchangeProcess(exchangeMode,resultMessage="") export
+function ExchangeProcess(exchangeMode) export
 	resultMessage = "";
 	try
 	    destinationNodes = GetDestinationNodes();
 	except	
 		resultMessage = "Помилка зчитування налаштувань обміну:"+ОписаниеОшибки();
 		SystemLogError(resultMessage);
-		return;
+		return resultMessage;
 	endtry;
 		
 	for each conf in destinationNodes do
@@ -1853,7 +1853,8 @@ procedure ExchangeProcess(exchangeMode,resultMessage="") export
 		Note(conf,message,true);
 		resultMessage = resultMessage  + message+ Chars.CR;
 	enddo;
-endprocedure
+	return resultMessage;
+endfunction
 
 #endregion
 
