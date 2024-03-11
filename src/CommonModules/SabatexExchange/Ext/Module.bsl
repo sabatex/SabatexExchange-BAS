@@ -1603,7 +1603,7 @@ procedure ResolveObject(conf)
 		try
 			Execute(conf.userDefinedModule+"."+conf.ObjectDescriptor.PostParser+"(conf,localObject)");
 		except
-			raise "Помилка виклику метода користувача"+conf.ObjectDescriptor.PostParser+" : " +ErrorDescription();
+			Error(conf,"Помилка виклику метода користувача"+conf.ObjectDescriptor.PostParser+" : " +ErrorDescription());
 		endtry;
 	endif;
 	

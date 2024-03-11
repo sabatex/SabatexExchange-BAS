@@ -49,7 +49,6 @@
 			<ExtendedTooltip name="userDefinedModuleExtendedTooltip" id="21"/>
 		</InputField>
 		<CheckBoxField name="useObjectCashe" id="22">
-			<DataPath>1/0:4eb91021-c016-45b7-8320-2c23bc0a128e</DataPath>
 			<CheckBoxType>Auto</CheckBoxType>
 			<ContextMenu name="useObjectCasheContextMenu" id="23"/>
 			<ExtendedTooltip name="useObjectCasheExtendedTooltip" id="24"/>
