@@ -1,4 +1,6 @@
-﻿ 
+﻿// Copyright (c) 2021-2024 by Serhiy Lakas
+// https://sabatex.github.io
+// version 3.0.11
 
 #region SabatexExchangeAdapter
 // Функция - Пошук обьєкта по Id
@@ -64,8 +66,8 @@ endprocedure
 // Возвращаемое значение:
 //   structure - objectDescriptor
 //
-function CreateObjectDescriptor(Conf,ObjectType,val ExternalObjectType=undefined,PostParser=undefined,IdAttribute=undefined,LookObjectProc=undefined,UnInserted=false) export
-	return SabatexExchange.CreateObjectDescriptor(Conf,ObjectType,ExternalObjectType,PostParser,IdAttribute,LookObjectProc,UnInserted);
+function CreateObjectDescriptor(Conf,ObjectType,val ExternalObjectType=undefined,PostParser=undefined,IdAttribute=undefined,LookObjectProc=undefined,UnInserted=false,Transact=false) export
+	return SabatexExchange.CreateObjectDescriptor(Conf,ObjectType,ExternalObjectType,PostParser,IdAttribute,LookObjectProc,UnInserted,Transact);
 endfunction
 function CreateExternalObjectDescriptor(conf,externalObjectType,parserProc=undefined,internalObjectDescriptor=undefined) export
  	SabatexExchange.CreateExternalObjectDescriptor(conf,externalObjectType,parserProc,internalObjectDescriptor);
@@ -79,17 +81,57 @@ function AddTableProperty(objectConf,attrName,Ignore=false,destinationName=undef
 	return SabatexExchange.AddTableProperty(objectConf,attrName,Ignore,destinationName,procName,postParser);	
 endfunction
 
-procedure LogError(conf,message)
-	SabatexExchange.Error(conf,message);
-endprocedure
 
 procedure PostQueries(conf,objectId,objectType)
 	sabatexExchange.PostQueries(conf, objectId,objectType);	
 endprocedure	
 	
 
+function CreateDocumentDescriptor(Conf,ObjectType,val ExternalObjectType=undefined,PostParser=undefined,IdAttribute=undefined,LookObjectProc=undefined,UnInserted=false,Transact=false) export
+	return SabatexExchange.CreateObjectDescriptor(Conf,ObjectType,ExternalObjectType,PostParser,IdAttribute,LookObjectProc,UnInserted,Transact);
+endfunction
+ 
+
+
 #endregion
 
+
+#region Logged
+procedure LogError(conf,message)
+	SabatexExchange.Error(conf,message);
+endprocedure
+procedure Error(conf,message,isJournalWrite=false)
+	SabatexExchangeLogged.Error(conf,message,isJournalWrite);
+endprocedure	
+// Процедура - Sabatex log warning
+//
+// Параметры:
+//  conf	 - 	 - 
+//  message	 - 	 - 
+//
+procedure Warning(conf,message,isJournalWrite=false)
+	SabatexExchangeLogged.Warning(conf,message,isJournalWrite);		
+endprocedure
+// Процедура - Sabatex log information
+//
+// Параметры:
+//  conf	 - 	 - 
+//  message	 - 	 - 
+//
+procedure Information(conf,message,isJournalWrite=false)
+	SabatexExchangeLogged.Information(conf,message,isJournalWrite);		
+endprocedure
+// Процедура - Sabatex log note
+//
+// Параметры:
+//  conf	 - 	 - 
+//  message	 - 	 - 
+//
+procedure Note(conf,message,isJournalWrite=false)
+	SabatexExchangeLogged.Note(conf,message,isJournalWrite);		
+endprocedure
+	
+#endregion
 
 
 // Процедура - Викликаэться при ініціалізації обміну (наявність обовязкова)
@@ -102,6 +144,14 @@ procedure Initialize(conf) export
 endprocedure
 
 
+// Процедура - Query object
+//
+// Параметры:
+//  conf		 - 	 - 
+//  objectType	 - 	 - 
+//  objectId	 - 	 - 
+//  object		 - 	 - 
+//
 procedure QueryObject(conf,objectType,objectId,object) export
 		
 	

@@ -202,12 +202,6 @@
 									<ContextMenu name="NodeNameКонтекстноеМеню" id="17"/>
 									<ExtendedTooltip name="NodeNameРасширеннаяПодсказка" id="18"/>
 								</LabelField>
-								<LabelField name="destinationId" id="22">
-									<DataPath>Список.destinationId</DataPath>
-									<DefaultItem>true</DefaultItem>
-									<ContextMenu name="destinationIdКонтекстноеМеню" id="23"/>
-									<ExtendedTooltip name="destinationIdРасширеннаяПодсказка" id="24"/>
-								</LabelField>
 								<LabelField name="ExchangeMode" id="79">
 									<DataPath>Список.ExchangeMode</DataPath>
 									<ContextMenu name="ExchangeModeContextMenu" id="80"/>
@@ -231,6 +225,11 @@
 									<DefaultItem>true</DefaultItem>
 									<ContextMenu name="LogLevelКонтекстноеМеню" id="44"/>
 									<ExtendedTooltip name="LogLevelРасширеннаяПодсказка" id="45"/>
+								</LabelField>
+								<LabelField name="ObjectKey" id="82">
+									<DataPath>Список.ObjectKey</DataPath>
+									<ContextMenu name="ObjectKeyContextMenu" id="83"/>
+									<ExtendedTooltip name="ObjectKeyExtendedTooltip" id="84"/>
 								</LabelField>
 							</ChildItems>
 						</Table>
