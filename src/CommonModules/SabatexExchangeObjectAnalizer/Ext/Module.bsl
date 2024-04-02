@@ -5,7 +5,14 @@
 
 #region AnalizeObjects
 
-procedure AddUnresolvedObject(conf,item,newObject = true)
+// Процедура - Add unresolved object
+//
+// Параметры:
+//  conf		 - struct    - 
+//  item		 - map	     - 
+//  newObject	 - boolean	 - 
+//
+procedure AddUnresolvedObject(conf,item,newObject = true) export
 	reg = InformationRegisters.sabatexExchangeUnresolvedObjects.CreateRecordManager();
 	reg.Id = item["id"];
 	reg.sender = new UUID(item["sender"]);
@@ -449,7 +456,7 @@ endprocedure
 // Параметры:
 //  conf - 	 - 
 //
-procedure AnalizeUnresolvedObjects(conf)
+procedure AnalizeUnresolvedObjects(conf) export
 		Query = New Query;
 		Query.Text = 
 		"SELECT TOP 200
@@ -507,7 +514,7 @@ procedure AnalizeUnresolvedObjects(conf)
 				endif;
 				
 			except
-				SabatexExchangeLogged.Error(conf,"Do not load objectId=" + conf.objectId + ";objectType="+ conf.objectType + " Error Message: " + ОписаниеОшибки(),true);
+				SabatexExchangeLogged.ErrorJournaled(conf,"Do not load objectId=" + conf.objectId + ";objectType="+ conf.objectType + " Error Message: " + ОписаниеОшибки());
 				continue;
 			endtry;
 		enddo;

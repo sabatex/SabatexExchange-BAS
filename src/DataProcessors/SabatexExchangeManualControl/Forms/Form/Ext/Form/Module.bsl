@@ -28,8 +28,7 @@ EndProcedure
 
 &AtServer
 Procedure SendQueryAtServer()
-	conf = SabatexExchange.GetConfigByNodeName(Object.NodeSelector);
-	SabatexExchange.PostQueries(conf,conf.InternalNodeCode,"Query."+Format(Object.DateQuery,"DF=yyyyMMdd"));
+	SabatexExchange.RegisterQueryObjectsForNode(Object.NodeSelector,"all",Object.DateQuery);
 EndProcedure
 
 &AtClient

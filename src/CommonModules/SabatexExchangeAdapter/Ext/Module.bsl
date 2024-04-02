@@ -1,8 +1,9 @@
-﻿// Copyright (c) 2021-2024 by Serhiy Lakas
+﻿
+#region SabatexExchangeAdapter
+// Copyright (c) 2021-2024 by Serhiy Lakas
 // https://sabatex.github.io
 // version 3.0.11
 
-#region SabatexExchangeAdapter
 // Функция - Пошук обьєкта по Id
 //
 // Параметры:
@@ -20,7 +21,7 @@ function GetObjectRef(conf,objectType,objectId,val objectDescriptor=undefined)
 endfunction	
 
 procedure AddAttributeProperty(objectConf,attrName,Ignore=false,default=undefined,destinationName=undefined,procName=undefined,postParser=undefined,ignoredIsMiss=false)
-	SabatexExchange.AddAttributeProperty(objectConf,attrName,Ignore,default,destinationName,procName,postParser,ignoredIsMiss);		
+	SabatexExchangeConfig.AddAttributeProperty(objectConf,attrName,Ignore,default,destinationName,procName,postParser,ignoredIsMiss);		
 endprocedure
 // Процедура - Add attribute ignored
 //
@@ -67,42 +68,32 @@ endprocedure
 //   structure - objectDescriptor
 //
 function CreateObjectDescriptor(Conf,ObjectType,val ExternalObjectType=undefined,PostParser=undefined,IdAttribute=undefined,LookObjectProc=undefined,UnInserted=false,Transact=false) export
-	return SabatexExchange.CreateObjectDescriptor(Conf,ObjectType,ExternalObjectType,PostParser,IdAttribute,LookObjectProc,UnInserted,Transact);
+	return SabatexExchangeConfig.CreateObjectDescriptor(Conf,ObjectType,ExternalObjectType,PostParser,IdAttribute,LookObjectProc,UnInserted,Transact);
 endfunction
 function CreateExternalObjectDescriptor(conf,externalObjectType,parserProc=undefined,internalObjectDescriptor=undefined) export
- 	SabatexExchange.CreateExternalObjectDescriptor(conf,externalObjectType,parserProc,internalObjectDescriptor);
+ 	SabatexExchangeConfig.CreateExternalObjectDescriptor(conf,externalObjectType,parserProc,internalObjectDescriptor);
 endfunction
 
 procedure CreateEnumObjectDescriptor(Conf,EnumName,EnumRelolveProc=undefined)
-	SabatexExchange.CreateObjectDescriptor(Conf,"Перечисление."+EnumName,,EnumRelolveProc);
+	SabatexExchangeConfig.CreateObjectDescriptor(Conf,"Перечисление."+EnumName,,EnumRelolveProc);
 endprocedure	
 
 function AddTableProperty(objectConf,attrName,Ignore=false,destinationName=undefined,procName=undefined,postParser=undefined) export
-	return SabatexExchange.AddTableProperty(objectConf,attrName,Ignore,destinationName,procName,postParser);	
+	return SabatexExchangeConfig.AddTableProperty(objectConf,attrName,Ignore,destinationName,procName,postParser);	
 endfunction
-
 
 procedure PostQueries(conf,objectId,objectType)
-	sabatexExchange.PostQueries(conf, objectId,objectType);	
+	SabatexExchangeWebApi.PostQueries(conf, objectId,objectType);	
 endprocedure	
-	
 
 function CreateDocumentDescriptor(Conf,ObjectType,val ExternalObjectType=undefined,PostParser=undefined,IdAttribute=undefined,LookObjectProc=undefined,UnInserted=false,Transact=false) export
-	return SabatexExchange.CreateObjectDescriptor(Conf,ObjectType,ExternalObjectType,PostParser,IdAttribute,LookObjectProc,UnInserted,Transact);
+	return SabatexExchangeConfig.CreateObjectDescriptor(Conf,ObjectType,ExternalObjectType,PostParser,IdAttribute,LookObjectProc,UnInserted,Transact);
 endfunction
  
-
-
-#endregion
-
-
 #region Logged
-procedure LogError(conf,message)
-	SabatexExchange.Error(conf,message);
-endprocedure
-procedure Error(conf,message,isJournalWrite=false)
-	SabatexExchangeLogged.Error(conf,message,isJournalWrite);
-endprocedure	
+function Error(conf,message,result=undefined)
+	return SabatexExchangeLogged.Error(conf,message,result);
+endfunction	
 // Процедура - Sabatex log warning
 //
 // Параметры:
@@ -132,6 +123,11 @@ procedure Note(conf,message,isJournalWrite=false)
 endprocedure
 	
 #endregion
+
+
+#endregion
+
+
 
 
 // Процедура - Викликаэться при ініціалізації обміну (наявність обовязкова)

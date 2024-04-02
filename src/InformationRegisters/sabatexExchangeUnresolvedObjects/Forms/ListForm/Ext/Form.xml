@@ -110,12 +110,6 @@
 					<ContextMenu name="LogContextMenu" id="32"/>
 					<ExtendedTooltip name="LogExtendedTooltip" id="33"/>
 				</LabelField>
-				<LabelField name="destination" id="46">
-					<DataPath>List.destination</DataPath>
-					<DefaultItem>true</DefaultItem>
-					<ContextMenu name="destinationContextMenu" id="47"/>
-					<ExtendedTooltip name="destinationExtendedTooltip" id="48"/>
-				</LabelField>
 			</ChildItems>
 		</Table>
 	</ChildItems>

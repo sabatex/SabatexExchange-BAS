@@ -2,9 +2,20 @@
 // https://sabatex.github.io
  
 #region Logged
+// Процедура - System log
+//
+// Параметры:
+//  logLevel - 	 - 
+//  message	 - 	 - 
+//
 procedure SystemLog(logLevel,message)
 	WriteLogEvent("SabatexExchange",logLevel,,,message);
 endprocedure	
+// Процедура - System log error
+//
+// Параметры:
+//  message	 - 	 - 
+//
 procedure SystemLogError(message) export
 	WriteLogEvent("SabatexExchange",EventLogLevel.Error,,,message);
 endprocedure	
@@ -36,16 +47,38 @@ procedure Logged(conf,level,sourceName,message,isJournalWrite)
 		endif;
 	endif;
 endprocedure
-// Процедура - Sabatex log error
+// Функция - Sabatex log error
 //
 // Параметры:
-//  conf	 - structure - LogLevel - рівень логування, Log - додаэться поточний лог 
-//  message	 - 	 - 
+//  conf	 - structure - 
+//  level 	 - integer   - рівень логування, Log - додаэться поточний лог 
+//  message	 - string	 - 
+//  
 //
-procedure Error(conf,message,isJournalWrite=false) export
+// Возвращаемое значение:
+//   - 
+//
+function Error(conf,message,result=undefined) export
 	conf.success = false;
-	Logged(conf,0,"",message,isJournalWrite);		
-endprocedure	
+	Logged(conf,0,"",message,false);
+	return result;
+endfunction
+
+// Функция - Error journaled
+//
+// Параметры:
+//  conf	 - 	 - 
+//  message	 - 	 - 
+//  result	 - 	 - 
+// 
+// Возвращаемое значение:
+//   - 
+//
+function ErrorJournaled(conf,message,result = undefined) export
+	conf.success = false;
+	Logged(conf,0,"",message,true);		
+	return result;	
+endfunction	
 // Процедура - Sabatex log warning
 //
 // Параметры:

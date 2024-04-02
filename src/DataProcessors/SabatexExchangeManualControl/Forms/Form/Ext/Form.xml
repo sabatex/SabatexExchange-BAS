@@ -10,26 +10,31 @@
 			<CommandName>CommonCommand.SabatexCommonStartExchange</CommandName>
 			<ExtendedTooltip name="CommonCommandSabatexCommonStartExchangeExtendedTooltip" id="5"/>
 		</Button>
-		<InputField name="NodeSelector" id="1">
-			<DataPath>Object.NodeSelector</DataPath>
-			<EditMode>EnterOnInput</EditMode>
-			<ListChoiceMode>true</ListChoiceMode>
-			<ContextMenu name="NodeSelectorContextMenu" id="2"/>
-			<ExtendedTooltip name="NodeSelectorExtendedTooltip" id="3"/>
-		</InputField>
-		<InputField name="DateQuery" id="6">
-			<DataPath>Object.DateQuery</DataPath>
-			<ContextMenu name="DateQueryContextMenu" id="7"/>
-			<ExtendedTooltip name="DateQueryExtendedTooltip" id="8"/>
-			<Events>
-				<Event name="OnChange">DateQueryOnChange</Event>
-			</Events>
-		</InputField>
-		<Button name="SendQuery" id="9">
-			<Type>UsualButton</Type>
-			<CommandName>Form.Command.SendQuery</CommandName>
-			<ExtendedTooltip name="SendQueryExtendedTooltip" id="10"/>
-		</Button>
+		<UsualGroup name="Group1" id="11">
+			<ExtendedTooltip name="Group1ExtendedTooltip" id="12"/>
+			<ChildItems>
+				<InputField name="NodeSelector" id="1">
+					<DataPath>Object.NodeSelector</DataPath>
+					<EditMode>EnterOnInput</EditMode>
+					<ListChoiceMode>true</ListChoiceMode>
+					<ContextMenu name="NodeSelectorContextMenu" id="2"/>
+					<ExtendedTooltip name="NodeSelectorExtendedTooltip" id="3"/>
+				</InputField>
+				<InputField name="DateQuery" id="6">
+					<DataPath>Object.DateQuery</DataPath>
+					<ContextMenu name="DateQueryContextMenu" id="7"/>
+					<ExtendedTooltip name="DateQueryExtendedTooltip" id="8"/>
+					<Events>
+						<Event name="OnChange">DateQueryOnChange</Event>
+					</Events>
+				</InputField>
+				<Button name="SendQuery" id="9">
+					<Type>UsualButton</Type>
+					<CommandName>Form.Command.SendQuery</CommandName>
+					<ExtendedTooltip name="SendQueryExtendedTooltip" id="10"/>
+				</Button>
+			</ChildItems>
+		</UsualGroup>
 	</ChildItems>
 	<Attributes>
 		<Attribute name="Object" id="1">

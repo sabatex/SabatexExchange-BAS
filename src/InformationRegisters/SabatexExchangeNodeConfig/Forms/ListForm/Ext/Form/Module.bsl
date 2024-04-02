@@ -7,7 +7,7 @@
 	nodeConfig.Insert("Host",Host);
 	nodeConfig.Insert("Port",Port);
 	nodeConfig.Insert("password",password);
-	SabatexExchange.SetHostConfig(nodeConfig);
+	SabatexExchangeConfig.SetHostConfig(nodeConfig);
 КонецПроцедуры
 
 &НаКлиенте
@@ -17,7 +17,7 @@
 
 &НаСервере
 Процедура ПриСозданииНаСервере(Отказ, СтандартнаяОбработка)
-	nodeConfig = SabatexExchange.GetHostConfig();
+	nodeConfig = SabatexExchangeConfig.GetHostConfig();
 	clientId = nodeConfig.clientId;
 	https = nodeConfig.https;
 	Host = nodeConfig.Host;

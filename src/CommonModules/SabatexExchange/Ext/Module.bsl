@@ -88,7 +88,7 @@ endfunction
 //  ObjectManager - Мененеджер обьєкта.
 // або генерується виключення при неправильному значенні 
 //
-function GetObjectManager(conf,val objectType=undefined)
+function GetObjectManager(conf,val objectType=undefined) export
 	if objectType = undefined then
 		objectType = conf.ObjectDescriptor.ObjectType;
 	endif;
@@ -159,7 +159,7 @@ endfunction
 //  Ref      - посилання на обьєкт (знайдено)
 //  EmptyRef - (передано дійсний тип та objectId = UUID("00000000-0000-0000-0000-000000000000") 
 //
-function GetObjectRef(conf,objectType,objectId,val objectDescriptor=undefined) export
+function GetObjectRef(conf,val objectType,val objectId,val objectDescriptor=undefined) export
 	
 	if typeof(objectId) = type("Map") then
 		// комплексний тип
@@ -205,11 +205,14 @@ function GetObjectRef(conf,objectType,objectId,val objectDescriptor=undefined) e
 	endif;	
 
 	if result= objectManager.EmptyRef() or  result.GetObject() = undefined then
-		destinationFullName = objectDescriptor.ExternalObjectDescriptor.ObjectType;
-		
-		conf.success = false;
-		AddQueryForExchange(conf,destinationFullName,objectId);
-		return objectManager.EmptyRef();
+		if objectDescriptor.uninserted then
+			return SabatexExchangeLogged.Error(conf,"В системі відсутній обєкт "+objectType + " з Id " + objectId,objectManager.EmptyRef());
+		else
+			destinationFullName = objectDescriptor.ExternalObjectDescriptor.ObjectType;
+			conf.success = false;
+			AddQueryForExchange(conf,destinationFullName,objectId);
+			return objectManager.EmptyRef();
+		endif;
 	endif;
 	return result;
 endfunction	
@@ -223,14 +226,38 @@ endfunction
 // 	obj        - object  or reference  (Catalog or Documrnt)
 //  nodeName   - нод в якому приймає участь даний обєкт  
 procedure RegisterObjectForNode(obj,nodeName) export
+	objectRef	= obj.Ref;
+	messageHeader = SabatexJSON.Serialize(new structure("id,type",XMLString(objectRef.UUID()),objectRef.Метаданные().FullName()));
 	reg = InformationRegisters.sabatexExchangeObject.CreateRecordManager();
    	objectRef	= obj.Ref;
-	reg.ObjectId =objectRef.UUID(); 
-    reg.ObjectType = objectRef.Метаданные().FullName();
+	reg.MessageHeader = messageHeader;
+	//reg.ObjectId =objectRef.UUID(); 
+    //reg.ObjectType = objectRef.Метаданные().FullName();
+	reg.NodeName  = nodeName;
+	reg.dateStamp = CurrentDate();
+	reg.Write(true);
+endprocedure
+
+procedure RegisterQueryObjectForNode(nodeName,objectId,objectType) export
+	oq = new Structure("query",New Structure("id,type",Lower(XMLString(objectId)),Lower(objectType)));
+	reg = InformationRegisters.sabatexExchangeObject.CreateRecordManager();
+	reg.MessageHeader = SabatexJSON.Serialize(oq);
 	reg.NodeName  = nodeName;
 	reg.dateStamp = CurrentDate();
 	reg.Write(true);
 endprocedure	
+
+procedure RegisterQueryObjectsForNode(nodeName,ObjectTypes,day) export
+	for each objectType in StrSplit(ObjectTypes,",") do
+		mh = new Structure("query",New Structure("type,day",Lower(objectType),Lower(Format(day,"DF=yyyyMMdd"))));
+		reg = InformationRegisters.sabatexExchangeObject.CreateRecordManager();
+		reg.MessageHeader = SabatexJSON.Serialize(mh);
+		reg.NodeName  =  nodeName;
+	    reg.dateStamp = CurrentDate();
+	    reg.Write(true);
+	enddo;	
+endprocedure
+
 // Delete object from cashe
 // params:
 //	destinationId - 
@@ -256,24 +283,23 @@ procedure ReciveObjects(conf)
 				SabatexExchangeWebApi.DeleteExchangeObject(conf,item["id"]);
 				CommitTransaction();
 			except
-				SabatexExchangeLogged.Error(conf,"Do not load objectId=" + objectId + ";objectType="+ objectType + " Error Message: " + ОписаниеОшибки());
 				RollbackTransaction();
+				SabatexExchangeLogged.Error(conf,"Do not load objectId=" + objectId + ";objectType="+ objectType + " Error Message: " + ОписаниеОшибки());
 			endtry;
 		enddo;
 endprocedure
 procedure PostObjects(conf)
 	// post queries
-	conf.queryList.GroupBy("objectType,objectId");
-	for each query in conf.queryList do 
-		SabatexExchangeWebApi.PostQueries(conf,query.objectId,query.objectType);
-	enddo;	
-	
+	//conf.queryList.GroupBy("objectType,objectId");
+	//for each query in conf.queryList do 
+	//	SabatexExchangeWebApi.PostQueries(conf,query.objectId,query.objectType);
+	//enddo;	
+	//
 	Query = Новый Запрос;
 	Query.Текст = 
-		"SELECT TOP 200
+		"SELECT TOP "+ XMLString(conf.take)+"
 		|	sabatexExchangeObject.dateStamp AS dateStamp,
-		|	sabatexExchangeObject.ObjectType AS ObjectType,
-		|	sabatexExchangeObject.ObjectId AS ObjectId
+		|	sabatexExchangeObject.MessageHeader AS MessageHeader
 		|FROM
 		|	InformationRegister.sabatexExchangeObject AS sabatexExchangeObject
 		|WHERE
@@ -286,17 +312,22 @@ procedure PostObjects(conf)
 	
 	while items.Next() do
 		try
-			objectType = items.ObjectType; 
-			objectId = items.ObjectId;
-			objectManager = GetObjectManager(conf,objectType);	
-			object	= objectManager.GetRef(objectId).GetObject();
-			if object <> undefined then
-				objectJSON =SabatexJSON.Serialize(object);
-				SabatexExchangeWebApi.POSTExchangeObject(conf,objectType,string(objectId),items.dateStamp,objectJSON);
-			endif;
+			messageHeader = SabatexJSON.Deserialize(items.MessageHeader);
+			message = undefined;
+			if messageHeader["query"] = undefined then
+				objectType = messageHeader["type"]; 
+			    objectId = items["id"];
+			    objectManager = GetObjectManager(conf,objectType);	
+			    object	= objectManager.GetRef(objectId).GetObject();
+			    if object <> undefined then
+				  message =SabatexJSON.Serialize(object);
+				endif;
+		    endif;
+		    SabatexExchangeWebApi.POSTExchangeMessage(conf,items.MessageHeader,items.dateStamp,message);
+
 			DeleteObjectForExchange(objectId,objectType,conf.nodeName);
 		except
-			
+			SabatexExchangeLogged.Error(conf,ErrorDescription());	
 		endtry;
 	enddo;
 endprocedure	
@@ -330,8 +361,7 @@ function GetDocumentById(conf,objectName,objectId)
 	endif;	
 	objRef = Documents[objectName].GetRef(new UUID(objectId));
 	if objRef.GetObject() = undefined then
-		SabatexExchangeLogged.Error(conf,"Помилка отримання обєкта документа "+objectName + " з ID="+objectId);
-		return undefined;
+		return SabatexExchangeLogged.Error(conf,"Помилка отримання обєкта документа "+objectName + " з ID="+objectId);
 	endif;
 	return objRef;
 endfunction
@@ -343,8 +373,7 @@ function GetCatalogById(conf,objectName,objectId)
 
 	objRef = Catalogs[objectName].GetRef(new UUID(objectId));
 	if objRef.GetObject() = undefined then
-		SabatexExchangeLogged.Error(conf,"Помилка отримання обєкта Довідника "+objectName + " з ID="+objectId);
-		return undefined;
+		return SabatexExchangeLogged.Error(conf,"Помилка отримання обєкта Довідника "+objectName + " з ID="+objectId);
 	endif;
 	return objRef;
 endfunction
@@ -443,19 +472,19 @@ function ExchangeProcess(exchangeMode) export
 		if exchangeMode =  conf.ExchangeMode then
 			try
 				// ansver the query and set to queue
-				DoQueriedObjects(conf);
+				//DoQueriedObjects(conf);
 				
 				// read  input objects
-				ReciveObjects(conf);
+				//ReciveObjects(conf);
 				
 				// Аналіз поступивших обєктів
-				SabatexExchangeObjectAnalizer.AnalizeUnresolvedObjects(conf);
+				//SabatexExchangeObjectAnalizer.AnalizeUnresolvedObjects(conf);
 				
 				// Відправка на сервер
 				PostObjects(conf);
 			except
 				message = string(conf.nodeConfig.clientId) + " - Програмна помилка -" + ErrorDescription();
-				SabatexExchangeLogged.Error(conf,message,true);
+				SabatexExchangeLogged.ErrorJournaled(conf,message);
 				resultMessage = resultMessage  + message+ Chars.CR;
 			endtry;
 		else

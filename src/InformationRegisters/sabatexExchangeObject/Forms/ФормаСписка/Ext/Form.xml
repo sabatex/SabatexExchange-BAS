@@ -72,20 +72,15 @@
 					<ContextMenu name="dateStampКонтекстноеМеню" id="21"/>
 					<ExtendedTooltip name="dateStampРасширеннаяПодсказка" id="22"/>
 				</LabelField>
+				<LabelField name="MessageHeader" id="32">
+					<DataPath>Список.MessageHeader</DataPath>
+					<ContextMenu name="MessageHeaderContextMenu" id="33"/>
+					<ExtendedTooltip name="MessageHeaderExtendedTooltip" id="34"/>
+				</LabelField>
 				<LabelField name="NodeName" id="23">
 					<DataPath>Список.NodeName</DataPath>
 					<ContextMenu name="NodeNameКонтекстноеМеню" id="24"/>
 					<ExtendedTooltip name="NodeNameРасширеннаяПодсказка" id="25"/>
-				</LabelField>
-				<LabelField name="ObjectType" id="26">
-					<DataPath>Список.ObjectType</DataPath>
-					<ContextMenu name="ObjectTypeContextMenu" id="27"/>
-					<ExtendedTooltip name="ObjectTypeExtendedTooltip" id="28"/>
-				</LabelField>
-				<LabelField name="ObjectId" id="29">
-					<DataPath>Список.ObjectId</DataPath>
-					<ContextMenu name="ObjectIdContextMenu" id="30"/>
-					<ExtendedTooltip name="ObjectIdExtendedTooltip" id="31"/>
 				</LabelField>
 			</ChildItems>
 		</Table>
