@@ -1,8 +1,6 @@
 ﻿// Copyright (c) 2021-2024 by Serhiy Lakas
 // https://sabatex.github.io
 
-
-#region ExchangeWebApi
 function CreateHTTPSConnection(conf)
 	nodeConfig = conf.nodeConfig;
 	ssl = ?(nodeConfig.https,new ЗащищенноеСоединениеOpenSSL( undefined, undefined ),undefined);
@@ -115,9 +113,7 @@ function GetObjectsExchange(conf,first=true) export
 		if response.StatusCode <> 200 then
 			raise "GetObjectsExchange error request with StatusCode="+ response.StatusCode;
 		endif;
-		datefields = new array;
-		datefields.Add("dateStamp");
-		return SabatexJSON.Deserialize(response.GetBodyAsString(),datefields);	
+		return SabatexJSON.Deserialize(response.GetBodyAsString());	
 	except
 		raise "GetObjectsExchange error request with error:"+ОписаниеОшибки();
 	endtry;	
@@ -131,7 +127,7 @@ endfunction
 //
 procedure DeleteExchangeObject(conf,id,first=true) export
 	connection = CreateHTTPSConnection(conf);
-	request = new HTTPRequest(BuildUrl("/api/v0/objects/"+XMLString(id)));
+	request = new HTTPRequest(BuildUrl("/api/v1/objects/"+XMLString(id)));
 	request.Headers.Insert("accept","*/*");
 	request.Headers.Insert("clientId",conf.nodeConfig.clientId);
 	request.Headers.Insert("apiToken",conf.accessToken.access_token);
@@ -190,96 +186,5 @@ procedure POSTExchangeMessage(conf, messageHeader, dateStamp,textJSON,first=true
 		raise "Помилка ідентифікації на сервері! Error:"+ОписаниеОшибки();
 	endtry;	
 endprocedure	
-//// get queried objects
-//function GetQueriedObjects(conf,first=true) export
-//	connection = CreateHTTPSConnection(conf);
-//	request = new HTTPRequest(BuildUrl("/api/v0/queries",new structure("take",conf.take)));
-//	request.Headers.Insert("accept","*/*");
-//	request.Headers.Insert("clientId",string(conf.nodeConfig.clientId));
-//	request.Headers.Insert("destinationId",string(conf.destinationId));
-//	request.Headers.Insert("apiToken",string(conf.accessToken.access_token));
-//	try
-//		response = connection.Get(request);
-//		if response.StatusCode = 401 then
-//			if first then
-//				if updateToken(conf) then
-//					return GetQueriedObjects(conf,false);
-//				endif;
-//			endif;
-//		endif;
-//			
-//		if response.StatusCode <> 200 then
-//			raise "Помилка запиту /api/v0/queries " + response.StatusCode;		
-//		endif;
-//		return SabatexJSON.Deserialize(response.GetBodyAsString());
-//	except  
-//		raise "Error GetQueriedObjects: "+ ОписаниеОшибки();	
-//	endtry;
-//endfunction
-//// Видалення запиту з сервера.
-////
-//// Параметры:
-////    conf  - налаштування зэднання
-////    id    - внутрышнэ id обэкта
-////    first - true(за замовчуванням), false - при повторному виклику.
-//procedure DeleteQueriesObject(conf,id,first=true) export
-//	connection = CreateHTTPSConnection(conf);
-//	request = new HTTPRequest(BuildUrl("/api/v0/queries/"+XMLСтрока(id)));
-//	request.Headers.Insert("accept","*/*");
-//	request.Headers.Insert("clientId",string(conf.nodeConfig.clientId));
-//	request.Headers.Insert("apiToken",string(conf.accessToken.access_token));
-//	try
-// 		response = connection.Delete(request);
-//		
-//		if response.StatusCode = 401 then
-//			if first then
-//				if updateToken(conf) then
-//					DeleteQueriesObject(conf,id,false);
-//					return;
-//				endif;
-//			endif;
-//		endif;
 
-//	if response.StatusCode <> 200 then
-//		raise "Помилка запиту /api/v0/queries with id=" +id+ " with StatusCode: "+ response.StatusCode;	
-//	endif;
-//	except  
-//		raise "Error DeleteQueriesObject: "+ ОписаниеОшибки();	
-//	endtry;
-
-//endprocedure	
-//// реєструє запит на сервері та повертає ід запита
-//procedure PostQueries(conf,ObjectId,ObjectType,first=true) export
-//	connection = CreateHTTPSConnection(conf);
-//	request = new HTTPRequest(BuildUrl("api/v0/queries"));
-//	request.Headers.Insert("accept","*/*");
-//	request.Headers.Insert("Content-Type","application/json; charset=utf-8");
-//	request.Headers.Insert("clientId",string(conf.nodeConfig.clientId));
-//	request.Headers.Insert("destinationId",string(conf.destinationId));
-//	request.Headers.Insert("apiToken",string(conf.accessToken.access_token));
-//	
-//	try			  
-//		jsonString = SabatexJSON.Serialize(new structure("objectType,objectId",objectType,objectId));
-//		request.SetBodyFromString(jsonString,"UTF-8",ИспользованиеByteOrderMark.НеИспользовать);
-//		response = connection.Post(request);
-//		
-//		if response.StatusCode = 401 then
-//			if first then
-//				if updateToken(conf) then
-//					PostQueries(conf,ObjectId,ObjectType,false);
-//					return;
-//				endif;
-//			endif;
-//		endif;
-//		if response.StatusCode <> 200 then
-//			raise "Помилка POST /api/v0/queries  with StatusCode: "+ response.StatusCode;	
-//		endif;
-
-//	except
-//		error = "Помилка ідентифікації на сервері! Error:"+ОписаниеОшибки();
-//		raise error;
-//	endtry;	
-//endprocedure
-
-#endregion
 

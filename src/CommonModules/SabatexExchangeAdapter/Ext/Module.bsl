@@ -2,7 +2,7 @@
 #region SabatexExchangeAdapter
 // Copyright (c) 2021-2024 by Serhiy Lakas
 // https://sabatex.github.io
-// version 3.0.11
+// version 4.0.0-rc16
 
 // Функция - Пошук обьєкта по Id
 //
@@ -20,9 +20,39 @@ function GetObjectRef(conf,objectType,objectId,val objectDescriptor=undefined)
 	return SabatexExchange.GetObjectRef(conf,objectType,objectId,objectDescriptor);
 endfunction	
 
-procedure AddAttributeProperty(objectConf,attrName,Ignore=false,default=undefined,destinationName=undefined,procName=undefined,postParser=undefined,ignoredIsMiss=false)
-	SabatexExchangeConfig.AddAttributeProperty(objectConf,attrName,Ignore,default,destinationName,procName,postParser,ignoredIsMiss);		
+
+#region registration_message_for_exchange
+procedure RegisterQueryObjectsByDayForNode(nodeName,objectType,date)
+	SabatexExchange.RegisterQueryObjectsForNode(nodeName,objectType,date);
 endprocedure
+
+procedure RegisterQueryForNode(conf,query)
+	SabatexExchange.RegisterQueryForNode(conf,query);
+endprocedure	
+procedure RegisterObjectForNode(conf,obj)
+	SabatexExchange.RegisterMessageForNode(conf.NodeName,,obj);
+endprocedure
+
+
+#endregion
+
+
+ #region Configuration
+// Процедура - Add attribute property
+//
+// Параметры:
+//  objectConf		 - 	 - 
+//  attrName		 - 	 - 
+//  Ignore			 - 	 - 
+//  default			 - 	 - 
+//  destinationName	 - 	 - 
+//  procName		 - 	 - 
+//  postParser		 - 	 - 
+//  ignoredIsMiss	 - 	 - 
+//
+function AddAttributeProperty(objectConf,attrName,Ignore=false,default=undefined,destinationName=undefined,procName=undefined,postParser=undefined)
+	return SabatexExchangeConfig.AddAttributeProperty(objectConf,attrName,Ignore,default,destinationName,procName,postParser);		
+endfunction
 // Процедура - Add attribute ignored
 //
 // Параметры:
@@ -45,9 +75,9 @@ endprocedure
 //  destinationName	 - 	 - 
 //  ignoredIsMiss	 - 	 - 
 //
-procedure AddAttributeMapped(objectDescriptor,attrName,destinationName,ignoredIsMiss=false)
-	AddAttributeProperty(objectDescriptor,attrName,,,destinationName,,,ignoredIsMiss);	
-endprocedure
+function AddAttributeMapped(objectDescriptor,attrName,destinationName)
+	return SabatexExchangeConfig.AddAttributeMapped(objectDescriptor,attrName,destinationName);	
+endfunction
 
 procedure AddAttributeProc(objectDescriptor,attrName,procName)
 	AddAttributeProperty(objectDescriptor,attrName,,,,procName);	
@@ -59,7 +89,6 @@ endprocedure
 //  Conf				 - 	 - 
 //  ObjectType			 - string	 -  тип обьэкта типу "Справочник.Номенклатура"
 //  ExternalObjectType	 - string	 -  (необовязково якщо одинакові) тип обэкта в іншвй базі
-//  PostParser			 - string	 -  (необовязково) назва процедури яка буде викликана після парсингу обєкта
 //  IdAttribute			 - string	 -  (необовязково) вказуэться якщо обэкт ідентифікується не через UUID обэкта а через атрибут 
 //  LookObjectProc		 - string	 -  (необовязково) процендура пошуку обєкта по користувацьким алгоритмам (тільки нові) IdAttribute - обовязкове 
 //  UnInserted		 	 - bool 	 -  (необовязково) Обэкт тільки синхронізується з базою 
@@ -67,29 +96,83 @@ endprocedure
 // Возвращаемое значение:
 //   structure - objectDescriptor
 //
-function CreateObjectDescriptor(Conf,ObjectType,val ExternalObjectType=undefined,PostParser=undefined,IdAttribute=undefined,LookObjectProc=undefined,UnInserted=false,Transact=false) export
-	return SabatexExchangeConfig.CreateObjectDescriptor(Conf,ObjectType,ExternalObjectType,PostParser,IdAttribute,LookObjectProc,UnInserted,Transact);
+function CreateObjectDescriptor(Conf,ObjectType,val ExternalObjectType=undefined,UseIdAttribute=false,LookObjectProc=undefined) export
+	return SabatexExchangeConfig.CreateObjectDescriptor(Conf,ObjectType,ExternalObjectType,UseIdAttribute,LookObjectProc);
 endfunction
+
+// Процедура - Configure update startegy
+//
+// Параметры:
+//  objectDescriptor - structure - 
+//  update			 - boolean	 - (необовязково) true/false Оновлювати обэкт. (Обєкт може мінятись клієнтом і мати інші властивості в порівнянні destination)
+//
+procedure ConfigureUpdateStartegy(objectDescriptor,update)
+	SabatexExchangeConfig.ConfigureUpdateStartegy(objectDescriptor,update);	
+endprocedure	
+
+// Процедура - Configure store unresolved startegy
+//
+// Параметры:
+//  objectDescriptor - 	 - 
+//  writeUnresolved	 - 	 - 
+//
+procedure ConfigureStoreUnresolvedStartegy(objectDescriptor,writeUnresolved)
+	SabatexExchangeConfig.ConfigureStoreUnresolvedStartegy(objectDescriptor,writeUnresolved);
+endprocedure	
+
+// Процедура - Configure inserting object
+//
+// Параметры:
+//  objectDescriptor - 	 - 
+//  uninserted		 - 	 - 
+//
+procedure ConfigureInsertingStartegy(objectDescriptor,uninserted)
+	SabatexExchangeConfig.ConfigureInsertingStartegy(objectDescriptor,uninserted);
+endprocedure	
+
+// Процедура - Configure missing data startegy
+//
+// Параметры:
+//  objectDescriptor	 - 	 - 
+//  ignoreMissedObject	 - 	 - 
+//
+procedure ConfigureMissingDataStartegy(objectDescriptor,ignoreMissedObject)
+	SabatexExchangeConfig.ConfigureMissingDataStartegy(objectDescriptor,ignoreMissedObject);
+endprocedure	
+
+// Процедура - Configure transact document startegy
+//
+// Параметры:
+//  objectDescriptor - 	 - 
+//  transact		 - 	 - 
+//
+procedure ConfigureTransactDocumentStartegy(objectDescriptor,transact)
+	SabatexExchangeConfig.ConfigureTransactDocumentStartegy(objectDescriptor,transact);
+endprocedure	
+
+	
+
+
+procedure ConfigureParserActions(conf,objectDescriptor,OnBeforeSave=false,OnAfterSave=undefined) export
+ 	SabatexExchangeConfig.ConfigureParserActions(conf,objectDescriptor,OnBeforeSave,OnAfterSave);
+endprocedure	
+
+
 function CreateExternalObjectDescriptor(conf,externalObjectType,parserProc=undefined,internalObjectDescriptor=undefined) export
  	SabatexExchangeConfig.CreateExternalObjectDescriptor(conf,externalObjectType,parserProc,internalObjectDescriptor);
 endfunction
 
 procedure CreateEnumObjectDescriptor(Conf,EnumName,EnumRelolveProc=undefined)
-	SabatexExchangeConfig.CreateObjectDescriptor(Conf,"Перечисление."+EnumName,,EnumRelolveProc);
+	SabatexExchangeConfig.CreateEnumObjectDescriptor(Conf,EnumName,EnumRelolveProc);
 endprocedure	
 
 function AddTableProperty(objectConf,attrName,Ignore=false,destinationName=undefined,procName=undefined,postParser=undefined) export
 	return SabatexExchangeConfig.AddTableProperty(objectConf,attrName,Ignore,destinationName,procName,postParser);	
 endfunction
+ 	
+ #endregion
 
-procedure PostQueries(conf,objectId,objectType)
-	SabatexExchangeWebApi.PostQueries(conf, objectId,objectType);	
-endprocedure	
 
-function CreateDocumentDescriptor(Conf,ObjectType,val ExternalObjectType=undefined,PostParser=undefined,IdAttribute=undefined,LookObjectProc=undefined,UnInserted=false,Transact=false) export
-	return SabatexExchangeConfig.CreateObjectDescriptor(Conf,ObjectType,ExternalObjectType,PostParser,IdAttribute,LookObjectProc,UnInserted,Transact);
-endfunction
- 
 #region Logged
 function Error(conf,message,result=undefined)
 	return SabatexExchangeLogged.Error(conf,message,result);
@@ -125,6 +208,14 @@ endprocedure
 #endregion
 
 
+
+ #region functions
+ function IsEmptyUUID(value)
+	return Sabatex.IsEmptyUUID(value);
+endfunction	
+
+ #endregion
+  
 #endregion
 
 
@@ -136,6 +227,10 @@ endprocedure
 //  conf - structure	 -  конфігупація обміну
 //
 procedure Initialize(conf) export
+	// конфігурація ідентична хосту (підтримуэться правило повного обміну, перезапис обєктів, крім проведених)
+	//conf.IsIdenticalConfiguration = false; 
+    // вказується тип ключа обєкта в випадку викоритання SabatexExchangeId (UUID - default, string)	
+	//conf.IdAttributeType =Enums.SabatexExchangeIdAttributeType.UUID;	
 	
 endprocedure
 
@@ -148,7 +243,11 @@ endprocedure
 //  objectId	 - 	 - 
 //  object		 - 	 - 
 //
-procedure QueryObject(conf,objectType,objectId,object) export
-		
-	
+procedure QueryObject(conf,query,object) export
+	Error(conf,"Для обробки запитів необхідно реалізувати матод QueryObject(conf,query,object)");		
+endprocedure	
+
+// Процедура додає список обєктів по яким можна зробити запит до нода
+procedure ObjectQueriesList(conf,items) export
+
 endprocedure	

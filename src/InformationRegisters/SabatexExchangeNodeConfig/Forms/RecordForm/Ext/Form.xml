@@ -59,16 +59,11 @@
 			<ContextMenu name="IsQueryEnableContextMenu" id="26"/>
 			<ExtendedTooltip name="IsQueryEnableExtendedTooltip" id="27"/>
 		</CheckBoxField>
-		<InputField name="ObjectKey" id="31">
-			<DataPath>Record.ObjectKey</DataPath>
-			<ContextMenu name="ObjectKeyContextMenu" id="32"/>
-			<ExtendedTooltip name="ObjectKeyExtendedTooltip" id="33"/>
-		</InputField>
-		<InputField name="PrefixNode" id="34">
-			<DataPath>Record.InternalNodeCode</DataPath>
-			<ContextMenu name="PrefixNodeContextMenu" id="35"/>
-			<ExtendedTooltip name="PrefixNodeExtendedTooltip" id="36"/>
-		</InputField>
+		<CheckBoxField name="IsIdenticalConfiguration" id="31">
+			<CheckBoxType>Auto</CheckBoxType>
+			<ContextMenu name="IsIdenticalConfigurationContextMenu" id="32"/>
+			<ExtendedTooltip name="IsIdenticalConfigurationExtendedTooltip" id="33"/>
+		</CheckBoxField>
 	</ChildItems>
 	<Attributes>
 		<Attribute name="Record" id="1">

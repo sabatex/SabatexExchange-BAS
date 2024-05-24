@@ -1,34 +1,26 @@
-﻿
-&AtServer
+﻿&AtServer
 Procedure OnCreateAtServer(Cancel, StandardProcessing)
-		//{{QUERY_BUILDER_WITH_RESULT_PROCESSING
-	// Даний фрагмент побудований конструктором.
-	// При повторному використанні конструктора, внесені вручну зміни будуть втрачені!!!
-	
-	Query = New Query;
-	Query.Text = 
-		"SELECT
-		|	SabatexExchangeNodeConfig.NodeName AS NodeName
-		|FROM
-		|	InformationRegister.SabatexExchangeNodeConfig AS SabatexExchangeNodeConfig
-		|WHERE
-		|	SabatexExchangeNodeConfig.isActive = TRUE";
-	
-	QueryResult = Query.Execute();
-	
-	SelectionDetailRecords = QueryResult.Select();
-	
-	While SelectionDetailRecords.Next() Do
-		Items.NodeSelector.ChoiceList.Add(SelectionDetailRecords.NodeName);
+	nodes = SabatexExchangeConfig.GetDestinationNodes();
+	for each node in nodes do
+		Items.NodeSelector.ChoiceList.Add(node.NodeName);
 	EndDo;
 	
-	//}}QUERY_BUILDER_WITH_RESULT_PROCESSING
-
+	If Object.NodeSelector <> "" then
+		NodeSelectorOnChangeAtServer(Object.NodeSelector)
+	endif;
+	
+	
+	
 EndProcedure
 
 &AtServer
 Procedure SendQueryAtServer()
-	SabatexExchange.RegisterQueryObjectsForNode(Object.NodeSelector,"all",Object.DateQuery);
+	conf = SabatexExchangeConfig.GetConfigByNodeName(Object.NodeSelector);
+	for each node in  ObjectTypes do
+		if node.Checked then
+			SabatexExchange.RegisterQueryObjectsForNode(conf,node.Name,Object.DateQuery);
+		endif;
+	enddo;
 EndProcedure
 
 &AtClient
@@ -41,3 +33,43 @@ EndProcedure
 Procedure DateQueryOnChange(Item)
 	Items.SendQuery.Enabled = true;
 EndProcedure
+
+&AtServer
+Procedure NodeSelectorOnChangeAtServer(nodeName)
+	objectsNameList = new Array;
+	try
+		conf = SabatexExchangeConfig.GetConfigByNodeName(nodeName);
+		Execute(conf.userDefinedModule+".ObjectQueriesList(conf,objectsNameList)");
+	except
+		Message("Помилка виконання методу користувача - .ObjectQueriesList(conf,items)");
+	endtry;
+	ObjectTypes.Clear();
+	for each objectsName in objectsNameList do
+		row = ObjectTypes.Add();
+		row.Checked = true;
+		row.Name = objectsName;
+	EndDo;
+EndProcedure
+
+
+&AtClient
+Procedure NodeSelectorOnChange(Item)
+	NodeSelectorOnChangeAtServer(Object.NodeSelector);
+EndProcedure
+
+
+&AtClient
+Procedure UnSelectAll(Command)
+	for each row in ObjectTypes do
+		row.Checked = false;
+	enddo;
+EndProcedure
+
+
+&AtClient
+Procedure SelectAll(Command)
+	for each row in ObjectTypes do
+		row.Checked = true;
+	enddo;
+EndProcedure
+

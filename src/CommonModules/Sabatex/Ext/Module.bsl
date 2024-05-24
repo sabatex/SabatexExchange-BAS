@@ -80,19 +80,6 @@ function IsEmptyUUID(value) export
 	endif;	
 endfunction	
 
-function ConvertQueriesToTable(queryList)
-	table = new ValueTable;
-	table.Columns.Add("nodeName");
-	table.Columns.Add("objectType");
-	table.Columns.Add("objectId");
-	for each query in queryList do
-		row = table.Add();
-		row.nodeName = query.nodeName;
-		row.objectType = query.objectType;
-		row.objectId = query.objectId;
-	enddo;
-	table.GroupBy("nodeName,objectType,objectId");
-endfunction
 
 //function StringSplit(value,delimiter=";",includeEmpty=true) export
 //	

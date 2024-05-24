@@ -28,7 +28,7 @@
 			</xr:ContainedObject>
 			<xr:ContainedObject>
 				<xr:ClassId>fb282519-d103-4dd3-bc12-cb271d631dfc</xr:ClassId>
-				<xr:ObjectId>173de3c8-dbc7-488e-9078-c3b1b40615ca</xr:ObjectId>
+				<xr:ObjectId>fb67b984-f1be-4d05-ba95-c12677333d79</xr:ObjectId>
 			</xr:ContainedObject>
 		</InternalInfo>
 		<Properties>
@@ -51,7 +51,7 @@
 			</UsePurposes>
 			<ScriptVariant>English</ScriptVariant>
 			<Vendor>sabatex</Vendor>
-			<Version>3.0.12</Version>
+			<Version>4.0.0-rc24</Version>
 			<DefaultLanguage>Language.Украинский</DefaultLanguage>
 			<BriefInformation/>
 			<DetailedInformation/>
@@ -86,8 +86,10 @@
 			<CommonModule>Sabatex</CommonModule>
 			<CommonModule>SabatexExchangeLogged</CommonModule>
 			<CommonModule>SabatexExchangeWebApi</CommonModule>
+			<CommonModule>SabatexExchangeQuery</CommonModule>
 			<CommonCommand>SabatexCommonStartExchange</CommonCommand>
 			<Enum>SabatexExchangeMode</Enum>
+			<Enum>SabatexExchangeIdAttributeType</Enum>
 			<DataProcessor>SabatexExchangeManualControl</DataProcessor>
 			<InformationRegister>sabatexExchangeUnresolvedObjects</InformationRegister>
 			<InformationRegister>sabatexExchangeObject</InformationRegister>

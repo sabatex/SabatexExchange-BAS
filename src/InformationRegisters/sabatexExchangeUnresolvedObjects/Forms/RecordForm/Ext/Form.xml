@@ -31,7 +31,7 @@
 					<Title>
 						<v8:item>
 							<v8:lang>uk</v8:lang>
-							<v8:content>Main page</v8:content>
+							<v8:content>Головне</v8:content>
 						</v8:item>
 					</Title>
 					<ToolTip>
@@ -60,17 +60,10 @@
 							<ContextMenu name="IdContextMenu" id="5"/>
 							<ExtendedTooltip name="IdExtendedTooltip" id="6"/>
 						</InputField>
-						<InputField name="objectId" id="7">
-							<DataPath>Record.objectId</DataPath>
-							<ReadOnly>true</ReadOnly>
-							<ContextMenu name="objectIdContextMenu" id="8"/>
-							<ExtendedTooltip name="objectIdExtendedTooltip" id="9"/>
-						</InputField>
-						<InputField name="objectType" id="10">
-							<DataPath>Record.objectType</DataPath>
-							<ReadOnly>true</ReadOnly>
-							<ContextMenu name="objectTypeContextMenu" id="11"/>
-							<ExtendedTooltip name="objectTypeExtendedTooltip" id="12"/>
+						<InputField name="MessageHeader" id="42">
+							<DataPath>Record.MessageHeader</DataPath>
+							<ContextMenu name="MessageHeaderContextMenu" id="43"/>
+							<ExtendedTooltip name="MessageHeaderExtendedTooltip" id="44"/>
 						</InputField>
 						<InputField name="senderDateStamp" id="19">
 							<DataPath>Record.senderDateStamp</DataPath>
@@ -84,17 +77,17 @@
 							<ContextMenu name="serverDateStampContextMenu" id="23"/>
 							<ExtendedTooltip name="serverDateStampExtendedTooltip" id="24"/>
 						</InputField>
-						<InputField name="levelLive" id="25">
-							<DataPath>Record.levelLive</DataPath>
-							<ReadOnly>true</ReadOnly>
-							<ContextMenu name="levelLiveContextMenu" id="26"/>
-							<ExtendedTooltip name="levelLiveExtendedTooltip" id="27"/>
-						</InputField>
 						<InputField name="dateStamp" id="28">
 							<DataPath>Record.dateStamp</DataPath>
 							<ReadOnly>true</ReadOnly>
 							<ContextMenu name="dateStampContextMenu" id="29"/>
 							<ExtendedTooltip name="dateStampExtendedTooltip" id="30"/>
+						</InputField>
+						<InputField name="levelLive" id="25">
+							<DataPath>Record.levelLive</DataPath>
+							<ReadOnly>true</ReadOnly>
+							<ContextMenu name="levelLiveContextMenu" id="26"/>
+							<ExtendedTooltip name="levelLiveExtendedTooltip" id="27"/>
 						</InputField>
 					</ChildItems>
 				</Page>
@@ -102,7 +95,7 @@
 					<Title>
 						<v8:item>
 							<v8:lang>uk</v8:lang>
-							<v8:content>Log page</v8:content>
+							<v8:content>Логи</v8:content>
 						</v8:item>
 					</Title>
 					<ToolTip>
@@ -128,7 +121,7 @@
 					<Title>
 						<v8:item>
 							<v8:lang>uk</v8:lang>
-							<v8:content>Object page</v8:content>
+							<v8:content>Серіалізований обєкт</v8:content>
 						</v8:item>
 					</Title>
 					<ToolTip>
@@ -142,6 +135,8 @@
 						<InputField name="objectAsText" id="13">
 							<DataPath>Record.objectAsText</DataPath>
 							<ReadOnly>true</ReadOnly>
+							<AutoMaxWidth>false</AutoMaxWidth>
+							<AutoMaxHeight>false</AutoMaxHeight>
 							<MultiLine>true</MultiLine>
 							<ContextMenu name="objectAsTextContextMenu" id="14"/>
 							<ExtendedTooltip name="objectAsTextExtendedTooltip" id="15"/>

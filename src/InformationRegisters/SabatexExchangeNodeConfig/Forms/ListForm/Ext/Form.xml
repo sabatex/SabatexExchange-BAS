@@ -226,11 +226,6 @@
 									<ContextMenu name="LogLevelКонтекстноеМеню" id="44"/>
 									<ExtendedTooltip name="LogLevelРасширеннаяПодсказка" id="45"/>
 								</LabelField>
-								<LabelField name="ObjectKey" id="82">
-									<DataPath>Список.ObjectKey</DataPath>
-									<ContextMenu name="ObjectKeyContextMenu" id="83"/>
-									<ExtendedTooltip name="ObjectKeyExtendedTooltip" id="84"/>
-								</LabelField>
 							</ChildItems>
 						</Table>
 					</ChildItems>
