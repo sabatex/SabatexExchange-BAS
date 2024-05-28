@@ -49,6 +49,9 @@ function GetConfig(destinationNode)
 	config.Insert("ignoreMissedObject",false);
 	//  Оновлювати уже існуючі обєкти
 	config.Insert("IsUpdated",false);
+	// заборона додавати нові обєкти
+	config.Insert("UnInserted",false);
+
 	
 	#endregion
 	config.Insert("IdAttributeType",Enums.SabatexExchangeIdAttributeType.UUID);
@@ -236,7 +239,7 @@ function CreateObjectDescriptor(Conf,ObjectType,val ExternalObjectType=undefined
 		result.Insert("ExternalObjectDescriptor",CreateExternalObjectDescriptor(conf,ExternalObjectType,,result));
 		result.Insert("ObjectType",ObjectType);
 		result.Insert("UseIdAttribute",UseIdAttribute);
-		result.Insert("UnInserted",false);
+		result.Insert("UnInserted",undefined);
 		result.Insert("Transact",undefined);
 		result.Insert("ignoreMissedObject",undefined);
 		result.Insert("writeUnresolved",undefined); // take global conf.writeUnresolved
@@ -254,6 +257,7 @@ function CreateObjectDescriptor(Conf,ObjectType,val ExternalObjectType=undefined
 	endif;
 	raise "Неправильний тип обьэкта - " + ObjectType;
 endfunction
+
 // Процедура - Add attribute property
 //
 // Параметры:

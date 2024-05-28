@@ -19,43 +19,6 @@ endfunction
 
 
 
-// Отримати документ по UUID
-function GetDocumentById(conf,objectName,objectId)
-	if Sabatex.IsEmptyUUID(objectId) then
-		return undefined;
-	endif;	
-	objRef = Documents[objectName].GetRef(new UUID(objectId));
-	if objRef.GetObject() = undefined then
-		return SabatexExchangeLogged.Error(conf,"Помилка отримання обєкта документа "+objectName + " з ID="+objectId);
-	endif;
-	return objRef;
-endfunction
-
-function GetCatalogById(conf,objectName,objectId)
-	if Sabatex.IsEmptyUUID(objectId) then
-		return undefined;
-	endif;	
-
-	objRef = Catalogs[objectName].GetRef(new UUID(objectId));
-	if objRef.GetObject() = undefined then
-		return SabatexExchangeLogged.Error(conf,"Помилка отримання обєкта Довідника "+objectName + " з ID="+objectId);
-	endif;
-	return objRef;
-endfunction
-
-function GetChartOfCharacteristicTypesById(conf,objectName,objectId)
-	if Sabatex.IsEmptyUUID(objectId) then
-		return undefined;
-	endif;	
-
-	objRef =  ChartsOfCharacteristicTypes[objectName].GetRef(new UUID(objectId));
-	if objRef.GetObject() = undefined then
-		return SabatexExchangeLogged.Error(conf,"Помилка отримання обєкта ПланВидовХарактеристик "+objectName + " з ID="+objectId);
-	endif;
-	return objRef;
-endfunction
-
-
 // Обробка запитів до системи
 procedure QyeryAnalize(conf,query) export
 	try
@@ -63,19 +26,19 @@ procedure QyeryAnalize(conf,query) export
 		objectId = query["id"];
 		objectType = query["type"];
 		if objectId <> undefined and objectType <> undefined then
+			if Sabatex.IsEmptyUUID(objectId) then
+				SabatexExchangeLogged.Error("Передано хибний запит з пустим Id");
+				return;
+			endif;	
+
 			object = undefined;
-			if SabatexExchange.IsCatalog(objectType) then
-				object = GetCatalogById(conf,GetObjectTypeKind(conf,objectType),objectId);
-			elsif SabatexExchange.IsDocument(objectType) then
-				object = GetDocumentById(conf,GetObjectTypeKind(conf,objectType),objectId);
-			elsif SabatexExchange.IsChartOfCharacteristicTypes(objectType) then
-				object = GetChartOfCharacteristicTypesById(conf,GetObjectTypeKind(conf,objectType),objectId);
-			else
-				SabatexExchangeLogged.Error(conf,"Даний тип не підтримується - "+objectType);
+			objectManager = SabatexExchange.GetObjectManager(objectType);
+			objectRef = objectManager.GetRef(new UUID(objectId));
+			if objectRef.GetObject() = undefined then
+				SabatexExchangeLogged.Error(conf,"Помилка отримання обєкта " + objectType + " з ID="+objectId);
+				return;
 			endif;
-			if object <> undefined then
-				SabatexExchange.RegisterObjectForNode(conf,object);		
-			endif;
+			SabatexExchange.RegisterObjectForNode(conf,objectRef);		
 		else
 			try
 				Execute(conf.userDefinedModule+".QueryObject(conf,query,object)");

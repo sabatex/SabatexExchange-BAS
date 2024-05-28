@@ -2,7 +2,7 @@
 #region SabatexExchangeAdapter
 // Copyright (c) 2021-2024 by Serhiy Lakas
 // https://sabatex.github.io
-// version 4.0.0-rc16
+// version 4.0.0-rc24
 
 // Функция - Пошук обьєкта по Id
 //
@@ -230,7 +230,12 @@ procedure Initialize(conf) export
 	// конфігурація ідентична хосту (підтримуэться правило повного обміну, перезапис обєктів, крім проведених)
 	//conf.IsIdenticalConfiguration = false; 
     // вказується тип ключа обєкта в випадку викоритання SabatexExchangeId (UUID - default, string)	
-	//conf.IdAttributeType =Enums.SabatexExchangeIdAttributeType.UUID;	
+	//conf.IdAttributeType =Enums.SabatexExchangeIdAttributeType.UUID;
+	
+	
+	// загальне правило додавання обєктів за замовчуванням true.
+	// Блокує додванння нових обєктів (для розблокування обєкта потрібно викликати ConfigureInsertingStartegy
+	//conf.UnInserted = true; 
 	
 endprocedure
 

@@ -338,7 +338,7 @@ endfunction
 
 procedure ResolveObjectChartOfCharacteristicTypes(conf,localObject)
 	if localObject = undefined then 
-		objectManager = SabatexExchange.GetObjectManager(conf,conf.ObjectDescriptor.ObjectType);
+		objectManager = SabatexExchange.GetObjectManager(conf.ObjectDescriptor.ObjectType);
 		localObject = objectManager.CreateItem();
 	endif;
 	
@@ -500,7 +500,7 @@ procedure ResolveObject(conf)
 	
 	
 	// Використовуэмо автоматичний парсер
-	objectManager = SabatexExchange.GetObjectManager(conf);
+	objectManager = SabatexExchange.GetObjectManager(conf.ObjectDescriptor.ObjectType);
 	if objectManager = undefined then
 		SabatexExchangeLogged.Error(conf,"Тип -"+ conf.localObjectType +" відсутній в поточній конфігурації! Призначте відповідність типів або повну обробку даного типу.");
 		return;
@@ -542,7 +542,7 @@ procedure ResolveObject(conf)
 	localObject = undefined;
 	if objectRef = objectManager.EmptyRef() then
 		isNew = true;
-  		if conf.ObjectDescriptor.UnInserted then
+  		if SabatexExchange.IsUnserted(conf.ObjectDescriptor) then
 			SabatexExchangeLogged.Error(conf,"Обєкт не ідентифіковано. Даний обєкт необхідно додавати вручну.");
 			return;	
 		endif;

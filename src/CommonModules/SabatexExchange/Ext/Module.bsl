@@ -3,6 +3,7 @@
 
 #region GetObjects
 
+#region CheckObgectType
 // Функция - Is enum
 //
 // Параметры:
@@ -50,9 +51,24 @@ endfunction
 function IsExchangePlan(objectType) export
 	return Sabatex.StringStartWith(upper(objectType),Upper("ПланОбмена"));
 endfunction
+#endregion
 
+function IsUnserted(objectDescriptor,val recursiveLevel = 5) export
+	if recursiveLevel <= 0 then
+		raise "Перевищено кількість рекурсивниї звернень.";	
+	endif;
+	
+	if objectDescriptor.Uninserted <> undefined then
+		return  objectDescriptor.Uninserted;
+	endif;
+	
+	if objectDescriptor.Owner = undefined then
+		return true;
+	endif;
+	
+	return IsUnserted(objectDescriptor.Owner,recursiveLevel-1);
 
-
+endfunction
 
 // Функция - Get name object
 //
@@ -105,21 +121,16 @@ function checkComplexType(conf,complexValue,objectId,objectType) export
 	endtry;
 endfunction	
 
-// Функция - Get object manager
+// Функция - Отримати object manager ро символьному представленню
 //
 // Параметры:
-//  conf		 - structure	 - 
-//  objectType	 - string	 - 
-//  success		 - boolean	 - 
+//  objectType	 - string	 - Тип "Справочник.номенклатура"
 // 
 // Возвращаемое значение:
 //  ObjectManager - Мененеджер обьєкта.
-// або генерується виключення при неправильному значенні 
+//  або генерується виключення при неправильному значенні 
 //
-function GetObjectManager(conf,val objectType=undefined) export
-	if objectType = undefined then
-		objectType = conf.ObjectDescriptor.ObjectType;
-	endif;
+function GetObjectManager(val objectType) export
 	if IsDocument(objectType) then
 		try
 			result = Documents[GetNameObject(objectType)];
@@ -156,6 +167,17 @@ function GetObjectManager(conf,val objectType=undefined) export
 	return result;
 endfunction
 
+// Функция - Get enum value
+//
+// Параметры:
+//  conf			 - 	 - 
+//  objectType		 - 	 - 
+//  objectId		 - 	 - 
+//  objectDescriptor - 	 - 
+// 
+// Возвращаемое значение:
+//   - 
+//
 function GetEnumValue(conf,objectType,objectId,val objectDescriptor = undefined) export
 	if objectDescriptor = undefined then
 		if not conf.Objects.Property(SabatexExchangeConfig.GetNormalizedObjectType(objectType),objectDescriptor) then
@@ -197,6 +219,35 @@ function GetEnumValue(conf,objectType,objectId,val objectDescriptor = undefined)
 	endif;	
 endfunction
 
+// Функция - Get object ref by id
+//
+// Параметры:
+//  objectManager	 - ObjectManager - 
+//  objectDescriptor - structure - 
+//  id				 - string,number - Id обєкта (UUID,string,integer)
+// 
+// Возвращаемое значение:
+//   - посилання на обєкт або пусте посилання
+//
+function GetObjectRefById(objectManager,objectDescriptor,id) export
+// пошук обэкта по UUID або атрибуту SabatexExchangeId
+	if objectDescriptor.UseIdAttribute then
+		if objectManager.IdAttributeType = Enums.SabatexExchangeIdAttributeType.UUID then
+			return objectManager.FindByAttribute("SabatexExchangeId",new UUID(id)); 
+		else
+			return objectManager.FindByAttribute("SabatexExchangeId",id);
+		endif;
+	endif;
+	
+	lO = objectManager.GetRef(new UUID(id)).GetObject();
+	if lO <> undefined then
+		return lO.Ref
+	endif;
+	return objectManager.EmptyRef();
+endfunction	
+
+
+
 // Функция - Пошук обьєкта по Id
 //
 // Параметры:
@@ -219,7 +270,7 @@ function GetObjectRef(conf,val objectType,val objectId,val objectDescriptor=unde
 			return GetObjectRef(conf,complexObjectType,complexObjectId);
 		endif;
 		try
-			objectManager = GetObjectManager(conf,objectType);
+			objectManager = GetObjectManager(objectType);
 			return objectManager.EmptyRef();
 		except
 			SabatexExchangeLogged.Error(conf,"Помилка отримання комплексного типу "+objectType + "  з objectId ="+objectId );
@@ -242,7 +293,7 @@ function GetObjectRef(conf,val objectType,val objectId,val objectDescriptor=unde
 	endif;	
 
 	try
-		objectManager = GetObjectManager(conf,objectType);
+		objectManager = GetObjectManager(objectType);
 	except	
 		raise "Помилка отримання типу "+objectType + "  з objectId ="+objectId + " Error:" +ErrorDescription();
 	endtry;
@@ -251,14 +302,15 @@ function GetObjectRef(conf,val objectType,val objectId,val objectDescriptor=unde
 		return objectManager.EmptyRef();	
 	endif;
 	
-	if objectDescriptor.UseIdAttribute then
-		result = objectManager.FindByAttribute("SabatexExchangeId",new UUID(objectId))
-	else
-		result = objectManager.GetRef(new UUID(objectId));
-	endif;	
+	result = GetObjectRefById(objectManager,objectDescriptor,objectId);
+	//if objectDescriptor.UseIdAttribute then
+	//	result = objectManager.FindByAttribute("SabatexExchangeId",new UUID(objectId))
+	//else
+	//	result = objectManager.GetRef(new UUID(objectId));
+	//endif;	
 
 	if result= objectManager.EmptyRef() or  result.GetObject() = undefined then
-		if objectDescriptor.uninserted then
+		if IsUnserted(objectDescriptor) then
 			return SabatexExchangeLogged.Error(conf,"В системі відсутній обєкт "+objectType + " з Id " + objectId,objectManager.EmptyRef());
 		else
 			destinationFullName = objectDescriptor.ExternalObjectDescriptor.ObjectType;
@@ -452,7 +504,7 @@ procedure PostObjects(conf)
 			if messageHeader["query"] = undefined then
 				objectType = messageHeader["type"]; 
 			    objectId = messageHeader["id"];
-			    objectManager = GetObjectManager(conf,objectType);	
+			    objectManager = GetObjectManager(objectType);	
 			    object	= objectManager.GetRef(new UUID(objectId)).GetObject();
 			    if object <> undefined then
 				  message =SabatexJSON.Serialize(object);
