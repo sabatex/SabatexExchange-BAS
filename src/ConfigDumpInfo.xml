@@ -14,14 +14,14 @@
 		<Metadata name="CommonModule.SabatexExchangeLogged" id="3f9f8ef7-0695-43d3-8b89-7f4a1af1f4ab" configVersion="15dab334a3b73f22d349d0415fc7ee2c33824c49"/>
 		<Metadata name="CommonModule.SabatexExchangeLogged.Module" id="3f9f8ef7-0695-43d3-8b89-7f4a1af1f4ab.0" configVersion="346b9ce343a620f4859f9a0a4270ebbe78ed3016"/>
 		<Metadata name="CommonModule.SabatexExchangeObjectAnalizer" id="e3ed4df0-c9fa-406a-968c-8ee84994339f" configVersion="960701b93eacd95dc425a5d9f67c3ebec80c1d8e"/>
-		<Metadata name="CommonModule.SabatexExchangeObjectAnalizer.Module" id="e3ed4df0-c9fa-406a-968c-8ee84994339f.0" configVersion="567339d5d0bb41a54a1d8951d29a5b57bc4da7c7"/>
+		<Metadata name="CommonModule.SabatexExchangeObjectAnalizer.Module" id="e3ed4df0-c9fa-406a-968c-8ee84994339f.0" configVersion="f6fe3c5afaee1a8d5c92199114e9f210048aae44"/>
 		<Metadata name="CommonModule.SabatexExchangeQuery" id="c88f9600-5eba-426c-82fb-c3658153abec" configVersion="14e26af35c241e56dd846fa0fc6c1f020e0bef93"/>
 		<Metadata name="CommonModule.SabatexExchangeQuery.Module" id="c88f9600-5eba-426c-82fb-c3658153abec.0" configVersion="a6e4ef93979f7f411f2c9843ea5165b30bebaf39"/>
 		<Metadata name="CommonModule.SabatexExchangeWebApi" id="59e964b7-75e7-420a-b848-5bd521d7c8dd" configVersion="745118a35a02b4657080f9feee7f8277f6a461bf"/>
 		<Metadata name="CommonModule.SabatexExchangeWebApi.Module" id="59e964b7-75e7-420a-b848-5bd521d7c8dd.0" configVersion="73a0cd504b8050c465793a48326bb6b11afaae58"/>
 		<Metadata name="CommonModule.SabatexJSON" id="e8800efd-4b46-427f-9518-65cfbf0fdf86" configVersion="3210700d8d30623b03658f4748a49283239fcd38"/>
 		<Metadata name="CommonModule.SabatexJSON.Module" id="e8800efd-4b46-427f-9518-65cfbf0fdf86.0" configVersion="d03bb31d35dfc48f7bcc8df26fd397b9352afe45"/>
-		<Metadata name="Configuration.SabatexExchange" id="2a67a443-4d1e-4953-bc8a-967898b9f865" configVersion="b59fb801c6afa351aa02e778d948e030faa3cc08"/>
+		<Metadata name="Configuration.SabatexExchange" id="2a67a443-4d1e-4953-bc8a-967898b9f865" configVersion="cd2ee29be8b8162f1c46d5f691c962393cc76901"/>
 		<Metadata name="Configuration.SabatexExchange.ManagedApplicationModule" id="13685d31-beba-438c-b131-4bb071a2072c.6" configVersion="f4fa774579ce74066e581c9bea23e03525a12934"/>
 		<Metadata name="DataProcessor.SabatexExchangeManualControl" id="85e0d33b-527a-4776-8378-7a37da8c3fe4" configVersion="8f706a979615aa0c573b10a94b6c97f8095ba842">
 			<Metadata name="DataProcessor.SabatexExchangeManualControl.Attribute.DateQuery" id="33d96c60-be6c-40e9-a3e3-b695d441af5a"/>

@@ -506,22 +506,23 @@ procedure ResolveObject(conf)
 		return;
 	endif;
 	
-
+	objectRef = SabatexExchange.GetObjectRefById(objectManager,conf.ObjectDescriptor,conf.objectId);
+	
 	// пошук обэкта по UUID або атрибуту SabatexExchangeId
-	if conf.ObjectDescriptor.UseIdAttribute then
-		if conf.IdAttributeType = Enums.SabatexExchangeIdAttributeType.UUID then
-			objectRef = objectManager.FindByAttribute("SabatexExchangeId",new UUID(conf.objectId)); 
-		else
-			objectRef = objectManager.FindByAttribute("SabatexExchangeId",conf.objectId);
-		endif;
-	else
-		lO = objectManager.GetRef(new UUID(conf.objectId)).GetObject();
-		if lO = undefined then
-			objectRef = objectManager.EmptyRef();
-		else
-			objectRef = lO.Ref;
-		endif;	
-	endif;
+	//if conf.ObjectDescriptor.UseIdAttribute then
+	//	if conf.IdAttributeType = Enums.SabatexExchangeIdAttributeType.UUID then
+	//		objectRef = objectManager.FindByAttribute("SabatexExchangeId",new UUID(conf.objectId)); 
+	//	else
+	//		objectRef = objectManager.FindByAttribute("SabatexExchangeId",conf.objectId);
+	//	endif;
+	//else
+	//	lO = objectManager.GetRef(new UUID(conf.objectId)).GetObject();
+	//	if lO = undefined then
+	//		objectRef = objectManager.EmptyRef();
+	//	else
+	//		objectRef = lO.Ref;
+	//	endif;	
+	//endif;
 
 	
 	// спроба пошуку по користувацьким параметрам
