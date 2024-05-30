@@ -2,7 +2,7 @@
 #region SabatexExchangeAdapter
 // Copyright (c) 2021-2024 by Serhiy Lakas
 // https://sabatex.github.io
-// version 4.0.0-rc24
+// version 4.0.0-rc28
 
 // Функция - Пошук обьєкта по Id
 //
@@ -96,8 +96,8 @@ endprocedure
 // Возвращаемое значение:
 //   structure - objectDescriptor
 //
-function CreateObjectDescriptor(Conf,ObjectType,val ExternalObjectType=undefined,UseIdAttribute=false,LookObjectProc=undefined) export
-	return SabatexExchangeConfig.CreateObjectDescriptor(Conf,ObjectType,ExternalObjectType,UseIdAttribute,LookObjectProc);
+function CreateObjectDescriptor(Conf,ObjectType,val ExternalObjectType=undefined,val ignore=false) export
+	return SabatexExchangeConfig.CreateObjectDescriptor(Conf,ObjectType,ExternalObjectType,ignore);
 endfunction
 
 // Процедура - Configure update startegy
@@ -151,6 +151,9 @@ procedure ConfigureTransactDocumentStartegy(objectDescriptor,transact)
 endprocedure	
 
 	
+procedure ConfigureSearchObject(objectDescriptor,UseIdAttribute=false,LookObjectProc=undefined)
+	SabatexExchangeConfig.ConfigureSearchObject(objectDescriptor,UseIdAttribute,LookObjectProc);	
+endprocedure	
 
 
 procedure ConfigureParserActions(conf,objectDescriptor,OnBeforeSave=false,OnAfterSave=undefined) export

@@ -302,6 +302,10 @@ function GetObjectRef(conf,val objectType,val objectId,val objectDescriptor=unde
 		return objectManager.EmptyRef();	
 	endif;
 	
+	if objectDescriptor.Ignore then
+		return objectManager.EmptyRef();
+	endif;	
+	
 	result = GetObjectRefById(objectManager,objectDescriptor,objectId);
 	//if objectDescriptor.UseIdAttribute then
 	//	result = objectManager.FindByAttribute("SabatexExchangeId",new UUID(objectId))

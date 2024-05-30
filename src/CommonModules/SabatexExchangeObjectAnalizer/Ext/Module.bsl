@@ -450,7 +450,8 @@ endfunction
 
 procedure TransactDocement(conf,object)
 	if IsTransact(conf,object) then
-		object.ОбменДанными.Загрузка = false;
+		object.ОбменДанными.Загрузка =false;
+		object.ОбменДанными.Получатели.АвтоЗаполнение = false;
 		object.Write(DocumentWriteMode.Posting);
 	endif;	
 endprocedure	

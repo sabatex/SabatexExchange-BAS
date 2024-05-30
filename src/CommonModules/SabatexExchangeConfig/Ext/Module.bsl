@@ -228,7 +228,7 @@ endfunction
 // Возвращаемое значение:
 //   structure - objectDescriptor
 //
-function CreateObjectDescriptor(Conf,ObjectType,val ExternalObjectType=undefined,UseIdAttribute=false,LookObjectProc=undefined) export
+function CreateObjectDescriptor(Conf,ObjectType,val ExternalObjectType=undefined,val ignore=false) export
 	if ValidateObject(ObjectType) then
 		normalizedObjectType = GetNormalizedObjectType(objectType);
 		ExternalObjectType = ?(ExternalObjectType = undefined,ObjectType,ExternalObjectType);
@@ -238,8 +238,8 @@ function CreateObjectDescriptor(Conf,ObjectType,val ExternalObjectType=undefined
 		result.Insert("NormalizedObjectType",normalizedObjectType);
 		result.Insert("ExternalObjectDescriptor",CreateExternalObjectDescriptor(conf,ExternalObjectType,,result));
 		result.Insert("ObjectType",ObjectType);
-		result.Insert("UseIdAttribute",UseIdAttribute);
-		result.Insert("UnInserted",undefined);
+		result.Insert("UseIdAttribute",false);
+		result.Insert("UnInserted",false);
 		result.Insert("Transact",undefined);
 		result.Insert("ignoreMissedObject",undefined);
 		result.Insert("writeUnresolved",undefined); // take global conf.writeUnresolved
@@ -247,17 +247,16 @@ function CreateObjectDescriptor(Conf,ObjectType,val ExternalObjectType=undefined
 		result.Insert("OnAfterSave",undefined);
 		result.Insert("OnBeforeSave",undefined);
 		result.Insert("EnumResolverProc",undefined);
-		
-		if LookObjectProc <> undefined and not UseIdAttribute then
-			raise "При встановлені LookObjectProc мусить бути вказвно IdAttribute";
-		endif;	
-		result.Insert("LookObjectProc",lookObjectProc);
+		result.Insert("Ignore",ignore); // 
+		result.Insert("LookObjectProc",undefined);
+
+
+
 		conf.Objects.Insert(normalizedObjectType,result);
 		return result;
 	endif;
 	raise "Неправильний тип обьэкта - " + ObjectType;
 endfunction
-
 // Процедура - Add attribute property
 //
 // Параметры:
@@ -357,8 +356,12 @@ procedure ConfigureTransactDocumentStartegy(objectDescriptor,transact) export
 endprocedure	
 
 
-procedure ConfigureSearchObject(conf,objectDescriptor,UseIdAttribute=false,LookObjectProc=undefined) export
-
+procedure ConfigureSearchObject(objectDescriptor,UseIdAttribute=false,LookObjectProc=undefined) export
+	objectDescriptor.UseIdAttribute = UseIdAttribute;
+	if LookObjectProc <> undefined and not UseIdAttribute then
+		raise "При встановлені LookObjectProc мусить бути вказвно IdAttribute";
+	endif;	
+	objectDescriptor.LookObjectProc =lookObjectProc;
 endprocedure
 
 
