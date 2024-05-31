@@ -219,6 +219,15 @@ function GetEnumValue(conf,objectType,objectId,val objectDescriptor = undefined)
 	endif;	
 endfunction
 
+function GetIdAttributeType(objectDescriptor)
+	if objectDescriptor.IdAttributeType = undefined then
+		return objectDescriptor.Owner.IdAttributeType;
+	endif;
+	return objectDescriptor.IdAttributeType;
+endfunction
+
+
+
 // Функция - Get object ref by id
 //
 // Параметры:
@@ -232,7 +241,7 @@ endfunction
 function GetObjectRefById(objectManager,objectDescriptor,id) export
 // пошук обэкта по UUID або атрибуту SabatexExchangeId
 	if objectDescriptor.UseIdAttribute then
-		if objectManager.IdAttributeType = Enums.SabatexExchangeIdAttributeType.UUID then
+		if GetIdAttributeType(objectDescriptor) = Enums.SabatexExchangeIdAttributeType.UUID then
 			return objectManager.FindByAttribute("SabatexExchangeId",new UUID(id)); 
 		else
 			return objectManager.FindByAttribute("SabatexExchangeId",id);

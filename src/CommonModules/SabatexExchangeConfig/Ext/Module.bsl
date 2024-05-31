@@ -249,6 +249,7 @@ function CreateObjectDescriptor(Conf,ObjectType,val ExternalObjectType=undefined
 		result.Insert("EnumResolverProc",undefined);
 		result.Insert("Ignore",ignore); // 
 		result.Insert("LookObjectProc",undefined);
+        result.Insert("IdAttributeType",undefined);
 
 
 
