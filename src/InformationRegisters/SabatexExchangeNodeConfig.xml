@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
-<MetaDataObject xmlns="http://v8.1c.ru/8.3/MDClasses" xmlns:app="http://v8.1c.ru/8.2/managed-application/core" xmlns:cfg="http://v8.1c.ru/8.1/data/enterprise/current-config" xmlns:cmi="http://v8.1c.ru/8.2/managed-application/cmi" xmlns:ent="http://v8.1c.ru/8.1/data/enterprise" xmlns:lf="http://v8.1c.ru/8.2/managed-application/logform" xmlns:style="http://v8.1c.ru/8.1/data/ui/style" xmlns:sys="http://v8.1c.ru/8.1/data/ui/fonts/system" xmlns:v8="http://v8.1c.ru/8.1/data/core" xmlns:v8ui="http://v8.1c.ru/8.1/data/ui" xmlns:web="http://v8.1c.ru/8.1/data/ui/colors/web" xmlns:win="http://v8.1c.ru/8.1/data/ui/colors/windows" xmlns:xen="http://v8.1c.ru/8.3/xcf/enums" xmlns:xpr="http://v8.1c.ru/8.3/xcf/predef" xmlns:xr="http://v8.1c.ru/8.3/xcf/readable" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="2.12">
+<MetaDataObject xmlns="http://v8.1c.ru/8.3/MDClasses" xmlns:app="http://v8.1c.ru/8.2/managed-application/core" xmlns:cfg="http://v8.1c.ru/8.1/data/enterprise/current-config" xmlns:cmi="http://v8.1c.ru/8.2/managed-application/cmi" xmlns:ent="http://v8.1c.ru/8.1/data/enterprise" xmlns:lf="http://v8.1c.ru/8.2/managed-application/logform" xmlns:style="http://v8.1c.ru/8.1/data/ui/style" xmlns:sys="http://v8.1c.ru/8.1/data/ui/fonts/system" xmlns:v8="http://v8.1c.ru/8.1/data/core" xmlns:v8ui="http://v8.1c.ru/8.1/data/ui" xmlns:web="http://v8.1c.ru/8.1/data/ui/colors/web" xmlns:win="http://v8.1c.ru/8.1/data/ui/colors/windows" xmlns:xen="http://v8.1c.ru/8.3/xcf/enums" xmlns:xpr="http://v8.1c.ru/8.3/xcf/predef" xmlns:xr="http://v8.1c.ru/8.3/xcf/readable" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="2.9">
 	<InformationRegister uuid="c698a8e8-9fc2-480b-bd3f-96bae0e5279c">
 		<InternalInfo>
 			<xr:GeneratedType name="InformationRegisterRecord.SabatexExchangeNodeConfig" category="Record">
@@ -36,7 +36,11 @@
 			<Synonym>
 				<v8:item>
 					<v8:lang>uk</v8:lang>
-					<v8:content>Налаштування обміну</v8:content>
+					<v8:content>SabatexExchangeNodeConfig</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>SabatexExchangeNodeConfig</v8:content>
 				</v8:item>
 			</Synonym>
 			<Comment>Configuration for exchange</Comment>
@@ -178,6 +182,10 @@
 							<v8:lang>uk</v8:lang>
 							<v8:content>Destination id</v8:content>
 						</v8:item>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Destination id</v8:content>
+						</v8:item>
 					</Synonym>
 					<Comment>Вузел призначення обміну</Comment>
 					<Type>
@@ -219,6 +227,10 @@
 					<Synonym>
 						<v8:item>
 							<v8:lang>uk</v8:lang>
+							<v8:content>Активний</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
 							<v8:content>Активний</v8:content>
 						</v8:item>
 					</Synonym>
@@ -265,6 +277,10 @@
 							<v8:lang>uk</v8:lang>
 							<v8:content>Кількість повідомлень за обмін</v8:content>
 						</v8:item>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Кількість повідомлень за обмін</v8:content>
+						</v8:item>
 					</Synonym>
 					<Comment>Кількість повідомлень за один сеанс обміну</Comment>
 					<Type>
@@ -306,11 +322,11 @@
 					<Name>LogLevel</Name>
 					<Synonym>
 						<v8:item>
-							<v8:lang>ru</v8:lang>
-							<v8:content>Log level</v8:content>
+							<v8:lang>uk</v8:lang>
+							<v8:content>Рівень інформаційних повідомлень</v8:content>
 						</v8:item>
 						<v8:item>
-							<v8:lang>uk</v8:lang>
+							<v8:lang>ru</v8:lang>
 							<v8:content>Рівень інформаційних повідомлень</v8:content>
 						</v8:item>
 					</Synonym>
@@ -357,6 +373,10 @@
 							<v8:lang>uk</v8:lang>
 							<v8:content>Оновлювати довідники </v8:content>
 						</v8:item>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Оновлювати довідники </v8:content>
+						</v8:item>
 					</Synonym>
 					<Comment>Оновлювати довідники (Перезаповнення полів довідників)</Comment>
 					<Type>
@@ -396,6 +416,10 @@
 							<v8:lang>uk</v8:lang>
 							<v8:content>Назва загальнго модуля додаткових обробок</v8:content>
 						</v8:item>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Назва загальнго модуля додаткових обробок</v8:content>
+						</v8:item>
 					</Synonym>
 					<Comment>модуль в якому  будуть оброблятись вхідні обєкти</Comment>
 					<Type>
@@ -416,7 +440,7 @@
 					<MinValue xsi:nil="true"/>
 					<MaxValue xsi:nil="true"/>
 					<FillFromFillingValue>false</FillFromFillingValue>
-					<FillValue xsi:type="xs:string">UserDefinedModuleDemo</FillValue>
+					<FillValue xsi:type="xs:string">SabatexExchangeAdapter</FillValue>
 					<FillChecking>DontCheck</FillChecking>
 					<ChoiceFoldersAndItems>Items</ChoiceFoldersAndItems>
 					<ChoiceParameterLinks/>
@@ -437,10 +461,14 @@
 					<Synonym>
 						<v8:item>
 							<v8:lang>uk</v8:lang>
-							<v8:content>Підтримка запитів </v8:content>
+							<v8:content>Підтримка запитів від даного нода до цієї бази</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Підтримка запитів від даного нода до цієї бази</v8:content>
 						</v8:item>
 					</Synonym>
-					<Comment>Підтримка запитів до поточної бази</Comment>
+					<Comment>Підтримка запитів від даного нода до цієї бази</Comment>
 					<Type>
 						<v8:Type>xs:boolean</v8:Type>
 					</Type>
@@ -478,6 +506,10 @@
 							<v8:lang>uk</v8:lang>
 							<v8:content>Exchange mode</v8:content>
 						</v8:item>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Exchange mode</v8:content>
+						</v8:item>
 					</Synonym>
 					<Comment/>
 					<Type>
@@ -509,12 +541,198 @@
 					<DataHistory>Use</DataHistory>
 				</Properties>
 			</Resource>
+			<Resource uuid="edeb6590-dd73-4ddf-aaee-2ddae8c591d6">
+				<Properties>
+					<Name>Send</Name>
+					<Synonym>
+						<v8:item>
+							<v8:lang>uk</v8:lang>
+							<v8:content>Send</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Send</v8:content>
+						</v8:item>
+					</Synonym>
+					<Comment/>
+					<Type>
+						<v8:Type>xs:boolean</v8:Type>
+					</Type>
+					<PasswordMode>false</PasswordMode>
+					<Format/>
+					<EditFormat/>
+					<ToolTip/>
+					<MarkNegatives>false</MarkNegatives>
+					<Mask/>
+					<MultiLine>false</MultiLine>
+					<ExtendedEdit>false</ExtendedEdit>
+					<MinValue xsi:nil="true"/>
+					<MaxValue xsi:nil="true"/>
+					<FillFromFillingValue>false</FillFromFillingValue>
+					<FillValue xsi:nil="true"/>
+					<FillChecking>DontCheck</FillChecking>
+					<ChoiceFoldersAndItems>Items</ChoiceFoldersAndItems>
+					<ChoiceParameterLinks/>
+					<ChoiceParameters/>
+					<QuickChoice>Auto</QuickChoice>
+					<CreateOnInput>Auto</CreateOnInput>
+					<ChoiceForm/>
+					<LinkByType/>
+					<ChoiceHistoryOnInput>Auto</ChoiceHistoryOnInput>
+					<Indexing>DontIndex</Indexing>
+					<FullTextSearch>Use</FullTextSearch>
+					<DataHistory>Use</DataHistory>
+				</Properties>
+			</Resource>
+			<Resource uuid="009b43ab-a64d-4847-9a19-96f6193dd7d2">
+				<Properties>
+					<Name>Parse</Name>
+					<Synonym>
+						<v8:item>
+							<v8:lang>uk</v8:lang>
+							<v8:content>Parse</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Parse</v8:content>
+						</v8:item>
+					</Synonym>
+					<Comment/>
+					<Type>
+						<v8:Type>xs:boolean</v8:Type>
+					</Type>
+					<PasswordMode>false</PasswordMode>
+					<Format/>
+					<EditFormat/>
+					<ToolTip/>
+					<MarkNegatives>false</MarkNegatives>
+					<Mask/>
+					<MultiLine>false</MultiLine>
+					<ExtendedEdit>false</ExtendedEdit>
+					<MinValue xsi:nil="true"/>
+					<MaxValue xsi:nil="true"/>
+					<FillFromFillingValue>false</FillFromFillingValue>
+					<FillValue xsi:nil="true"/>
+					<FillChecking>DontCheck</FillChecking>
+					<ChoiceFoldersAndItems>Items</ChoiceFoldersAndItems>
+					<ChoiceParameterLinks/>
+					<ChoiceParameters/>
+					<QuickChoice>Auto</QuickChoice>
+					<CreateOnInput>Auto</CreateOnInput>
+					<ChoiceForm/>
+					<LinkByType/>
+					<ChoiceHistoryOnInput>Auto</ChoiceHistoryOnInput>
+					<Indexing>DontIndex</Indexing>
+					<FullTextSearch>Use</FullTextSearch>
+					<DataHistory>Use</DataHistory>
+				</Properties>
+			</Resource>
+			<Resource uuid="f472da8b-3b26-4a30-b0f4-9cf87bf15495">
+				<Properties>
+					<Name>TakeOneMessageAtATime</Name>
+					<Synonym>
+						<v8:item>
+							<v8:lang>uk</v8:lang>
+							<v8:content>Take one message at a time</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Take one message at a time</v8:content>
+						</v8:item>
+					</Synonym>
+					<Comment/>
+					<Type>
+						<v8:Type>xs:boolean</v8:Type>
+					</Type>
+					<PasswordMode>false</PasswordMode>
+					<Format/>
+					<EditFormat/>
+					<ToolTip>
+						<v8:item>
+							<v8:lang>uk</v8:lang>
+							<v8:content>При стандартному режимі з сервера завантажується пакет повідомлень, в даному режимі повідомлення завантажуються по одному.</v8:content>
+						</v8:item>
+					</ToolTip>
+					<MarkNegatives>false</MarkNegatives>
+					<Mask/>
+					<MultiLine>false</MultiLine>
+					<ExtendedEdit>false</ExtendedEdit>
+					<MinValue xsi:nil="true"/>
+					<MaxValue xsi:nil="true"/>
+					<FillFromFillingValue>false</FillFromFillingValue>
+					<FillValue xsi:nil="true"/>
+					<FillChecking>DontCheck</FillChecking>
+					<ChoiceFoldersAndItems>Items</ChoiceFoldersAndItems>
+					<ChoiceParameterLinks/>
+					<ChoiceParameters/>
+					<QuickChoice>Auto</QuickChoice>
+					<CreateOnInput>Auto</CreateOnInput>
+					<ChoiceForm/>
+					<LinkByType/>
+					<ChoiceHistoryOnInput>Auto</ChoiceHistoryOnInput>
+					<Indexing>DontIndex</Indexing>
+					<FullTextSearch>Use</FullTextSearch>
+					<DataHistory>Use</DataHistory>
+				</Properties>
+			</Resource>
+			<Resource uuid="580f76b4-806e-41e7-9b27-e96d19bc5f39">
+				<Properties>
+					<Name>UpdateTransacted</Name>
+					<Synonym>
+						<v8:item>
+							<v8:lang>uk</v8:lang>
+							<v8:content>Заборона повторного імпорту проведених документів в годинах</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Заборона повторного імпорту проведених документів в годинах</v8:content>
+						</v8:item>
+					</Synonym>
+					<Comment>Заборона повторного імпорту проведених документів прт різниці в  годинах (0-заборонено,1.2...)</Comment>
+					<Type>
+						<v8:Type>xs:decimal</v8:Type>
+						<v8:NumberQualifiers>
+							<v8:Digits>3</v8:Digits>
+							<v8:FractionDigits>0</v8:FractionDigits>
+							<v8:AllowedSign>Nonnegative</v8:AllowedSign>
+						</v8:NumberQualifiers>
+					</Type>
+					<PasswordMode>false</PasswordMode>
+					<Format/>
+					<EditFormat/>
+					<ToolTip/>
+					<MarkNegatives>false</MarkNegatives>
+					<Mask/>
+					<MultiLine>false</MultiLine>
+					<ExtendedEdit>false</ExtendedEdit>
+					<MinValue xsi:nil="true"/>
+					<MaxValue xsi:nil="true"/>
+					<FillFromFillingValue>false</FillFromFillingValue>
+					<FillValue xsi:nil="true"/>
+					<FillChecking>DontCheck</FillChecking>
+					<ChoiceFoldersAndItems>Items</ChoiceFoldersAndItems>
+					<ChoiceParameterLinks/>
+					<ChoiceParameters/>
+					<QuickChoice>Auto</QuickChoice>
+					<CreateOnInput>Auto</CreateOnInput>
+					<ChoiceForm/>
+					<LinkByType/>
+					<ChoiceHistoryOnInput>Auto</ChoiceHistoryOnInput>
+					<Indexing>DontIndex</Indexing>
+					<FullTextSearch>Use</FullTextSearch>
+					<DataHistory>Use</DataHistory>
+				</Properties>
+			</Resource>
 			<Dimension uuid="178476bc-4fc6-4f61-9362-732e89c12b00">
 				<Properties>
 					<Name>NodeName</Name>
 					<Synonym>
 						<v8:item>
 							<v8:lang>uk</v8:lang>
+							<v8:content>Назва вузла</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
 							<v8:content>Назва вузла</v8:content>
 						</v8:item>
 					</Synonym>

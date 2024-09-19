@@ -1,7 +1,6 @@
 ﻿// Copyright (c) 2021-2024 by Serhiy Lakas
 // https://sabatex.github.io
 
-#region ExchangeConfig
 // Функция - Get node config
 // 
 // Возвращаемое значение:
@@ -13,7 +12,7 @@ function GetHostConfig() export
 	result = new structure;
 	result.Insert("clientId",Sabatex.ValueOrDefault(rootNode["clientId"],""));
 	result.Insert("https",Sabatex.ValueOrDefault(rootNode["https"],true));
-	result.Insert("Host",Sabatex.ValueOrDefault(rootNode["Host"],"sabatex-exchange.francecentral.cloudapp.azure.com"));
+	result.Insert("Host",Sabatex.ValueOrDefault(rootNode["Host"],"sabatex.francecentral.cloudapp.azure.com"));
 	result.Insert("Port",Sabatex.ValueOrDefault(rootNode["Port"],443));
 	result.Insert("password",Sabatex.ValueOrDefault(rootNode["password"],""));
 	return result;
@@ -25,10 +24,16 @@ procedure SetHostConfig(hostConfig) export
 	reg.Write(true);
 endprocedure
 
-// отримати конфігурацію для обміну даними
-//  - destinationNode список налаштувань для віддаленого вузла обміну
+//  Get config for destination node
+//
+// Параметры:
+//  destinationNode	 - string	 - Node name
+// 
+// Возвращаемое значение:
+//  structure - Config for Node
+//
 function GetConfig(destinationNode)
-	config = new structure;
+	config = new structure("Owner",undefined);
 	config.Insert("nodeConfig",GetHostConfig());
 	config.Insert("accessToken",GetAccessToken());
 	config.Insert("nodeName",destinationNode.nodeName);
@@ -38,25 +43,35 @@ function GetConfig(destinationNode)
 	config.Insert("updateCatalogs",destinationNode.updateCatalogs);
 	config.Insert("userDefinedModule",destinationNode.userDefinedModule);		
 	config.Insert("IsQueryEnable",destinationNode.IsQueryEnable);
-	config.Insert("ExchangeMode",destinationNode.ExchangeMode);
+	config.Insert("ExchangeMode",destinationNode.ExchangeMode); 
+	config.Insert("Send",Sabatex.ValueOrDefault(destinationNode.Send,false));
+	config.Insert("Parse",Sabatex.ValueOrDefault(destinationNode.Parse,false));
+	config.Insert("TakeOneMessageAtATime",Sabatex.ValueOrDefault(destinationNode.TakeOneMessageAtATime,false));
+	config.Insert("UpdateTransacted",Sabatex.ValueOrDefault(destinationNode.UpdateTransacted,0));
+	#region DefaultExchangeConfiguration
+	SabatexExchange.ConfigureAutoQuerySending(config);
 	
-	#region DefaultExchangeConfiguration		
 	config.Insert("IsIdenticalConfiguration",false);
 	config.Insert("WriteUnresolved",false);
 	config.Insert("Transact",false); 
 	config.Insert("IsEnumAutoImport",false);
-	// ігнорувати  пропущені значення в вхідному повідомленні 
+	// ignore missed property in incomming message
 	config.Insert("ignoreMissedObject",false);
 	//  Оновлювати уже існуючі обєкти
 	config.Insert("IsUpdated",false);
 	// заборона додавати нові обєкти
 	config.Insert("UnInserted",false);
+	//number - limit hours for update transacted document
+	//config.Insert("UpdateTransacted",undefined); 
+
+	
+	config.Insert("senderDateStamp",undefined);
 
 	
 	#endregion
 	config.Insert("IdAttributeType",Enums.SabatexExchangeIdAttributeType.UUID);
 	
-	config.Insert("Owner",undefined);
+
 
 	config.Insert("Log","");
 	
@@ -103,7 +118,11 @@ function GetConfigByNodeName(nodeName) export
 			|	SabatexExchangeNodeConfig.updateCatalogs AS updateCatalogs,
 			|	SabatexExchangeNodeConfig.userDefinedModule AS userDefinedModule,
 			|	SabatexExchangeNodeConfig.IsQueryEnable AS IsQueryEnable,
-			|	SabatexExchangeNodeConfig.ExchangeMode AS ExchangeMode
+			|	SabatexExchangeNodeConfig.ExchangeMode AS ExchangeMode,
+			|	SabatexExchangeNodeConfig.Send AS Send,
+			|	SabatexExchangeNodeConfig.Parse AS Parse,
+			|	SabatexExchangeNodeConfig.TakeOneMessageAtATime AS TakeOneMessageAtATime,
+			|	SabatexExchangeNodeConfig.UpdateTransacted AS UpdateTransacted
 			|FROM
 			|	InformationRegister.SabatexExchangeNodeConfig AS SabatexExchangeNodeConfig
 			|WHERE
@@ -114,12 +133,18 @@ function GetConfigByNodeName(nodeName) export
 		Query.Parameters.Insert("NodeName",nodeName);
 		QueryResult = Query.Execute();
 		SelectionDetailRecords = QueryResult.Select();
-		While SelectionDetailRecords.Next() Do
+		if SelectionDetailRecords.Next() then
 			return GetConfig(SelectionDetailRecords);
-		enddo;	
+		endif;	
         return undefined;
 endfunction	
 
+
+// Функция - Get destination nodes
+// 
+// Возвращаемое значение:
+// array node config  -  масив конфігурацій нодів
+//
 function GetDestinationNodes() export
 		Query = new Query;
 		Query.Text = 
@@ -132,7 +157,11 @@ function GetDestinationNodes() export
 			|	SabatexExchangeNodeConfig.updateCatalogs AS updateCatalogs,
 			|	SabatexExchangeNodeConfig.userDefinedModule AS userDefinedModule,
 			|	SabatexExchangeNodeConfig.IsQueryEnable AS IsQueryEnable,
-			|	SabatexExchangeNodeConfig.ExchangeMode AS ExchangeMode
+			|	SabatexExchangeNodeConfig.ExchangeMode AS ExchangeMode,
+			|	SabatexExchangeNodeConfig.Send AS Send,
+			|	SabatexExchangeNodeConfig.Parse AS Parse,
+			|	SabatexExchangeNodeConfig.TakeOneMessageAtATime AS TakeOneMessageAtATime,
+			|	SabatexExchangeNodeConfig.UpdateTransacted AS UpdateTransacted
 			|FROM
 			|	InformationRegister.SabatexExchangeNodeConfig AS SabatexExchangeNodeConfig
 			|WHERE
@@ -159,13 +188,23 @@ function GetObjectDescription(objectType)
 endfunction
 
 
+// Функция - Validate object
+//
+// Параметры:
+//  objectType	 - 	 - 
+// 
+// Возвращаемое значение:
+//   - 
+//
 function ValidateObject(objectType)
 	if SabatexExchange.IsCatalog(ObjectType)
 		or SabatexExchange.IsDocument(ObjectType)
 		or SabatexExchange.IsEnum(ObjectType)
 		or SabatexExchange.IsChartOfAccounts(objectType)
 		or SabatexExchange.IsChartOfCharacteristicTypes(objectType)
-		or SabatexExchange.IsExchangePlan(objectType) then
+		or SabatexExchange.IsExchangePlan(objectType)
+		or SabatexExchange.IsInformationRegister(objectType)
+		or SabatexExchange.IsStructure(objectType)  then
 		return true;	
 	endif;
 	return false;
@@ -214,50 +253,63 @@ function CreateExternalObjectDescriptor(conf,externalObjectType,parserProc=undef
 	endif;
 	raise "Неправильний тип обьэкта - " + externalObjectType;
 endfunction	
-
 // Функция - Configured object descriptor
 //
 // Параметры:
 //  Conf				 - 	 - 
 //  ObjectType			 - string	 -  тип обьэкта типу "Справочник.Номенклатура"
 //  ExternalObjectType	 - string	 -  (необовязково якщо одинакові) тип обэкта в іншвй базі
-//  IdAttribute			 - string	 -  (необовязково) вказуэться якщо обэкт ідентифікується не через UUID обэкта а через атрибут 
-//  LookObjectProc		 - string	 -  (необовязково) процендура пошуку обєкта по користувацьким алгоритмам (тільки нові) IdAttribute - обовязкове 
-//  uninserted		 	 - boolean 	 -  (необовязково) Обэкт тільки синхронізується з базою 
-//  transact             - boolean   -  (необовязково) Обэкт автоматично проводиься
+//  ignore      		 - boolean	 -  (необовязково) ignore this object 
 // Возвращаемое значение:
 //   structure - objectDescriptor
 //
 function CreateObjectDescriptor(Conf,ObjectType,val ExternalObjectType=undefined,val ignore=false) export
-	if ValidateObject(ObjectType) then
-		normalizedObjectType = GetNormalizedObjectType(objectType);
-		ExternalObjectType = ?(ExternalObjectType = undefined,ObjectType,ExternalObjectType);
-		
-		result = new Structure("Attributes,Tables",New Structure,New Structure);
-		result.Insert("Owner",conf);
-		result.Insert("NormalizedObjectType",normalizedObjectType);
-		result.Insert("ExternalObjectDescriptor",CreateExternalObjectDescriptor(conf,ExternalObjectType,,result));
-		result.Insert("ObjectType",ObjectType);
-		result.Insert("UseIdAttribute",false);
-		result.Insert("UnInserted",false);
-		result.Insert("Transact",undefined);
-		result.Insert("ignoreMissedObject",undefined);
-		result.Insert("writeUnresolved",undefined); // take global conf.writeUnresolved
-		result.Insert("IsUpdated", undefined);
-		result.Insert("OnAfterSave",undefined);
-		result.Insert("OnBeforeSave",undefined);
-		result.Insert("EnumResolverProc",undefined);
-		result.Insert("Ignore",ignore); // 
-		result.Insert("LookObjectProc",undefined);
-        result.Insert("IdAttributeType",undefined);
-
-
-
-		conf.Objects.Insert(normalizedObjectType,result);
-		return result;
+	if not ValidateObject(ObjectType) then
+		raise "Неправильний тип обьэкта - " + ObjectType;
 	endif;
-	raise "Неправильний тип обьэкта - " + ObjectType;
+	
+	normalizedObjectType = GetNormalizedObjectType(objectType);
+	ExternalObjectType = ?(ExternalObjectType = undefined,ObjectType,ExternalObjectType);
+		
+	result = new Structure("Attributes,Tables",New Structure,New Structure);
+	result.Insert("Owner",conf);
+	result.Insert("NormalizedObjectType",normalizedObjectType);
+	result.Insert("ExternalObjectDescriptor",CreateExternalObjectDescriptor(conf,ExternalObjectType,,result));
+	result.Insert("ObjectType",ObjectType);
+	result.Insert("UseIdAttribute",false); 
+	result.Insert("UnInserted",false);   // true - object support only update
+	result.Insert("Transact",undefined); // true - tansact document
+	result.Insert("UpdateTransacted",undefined); //true - update transacted document
+	
+	result.Insert("ignoreMissedObject",undefined); // ignore missed property in incomming message
+	result.Insert("writeUnresolved",undefined); // take global conf.writeUnresolved
+	result.Insert("IsUpdated", undefined);
+	result.Insert("OnAfterSave",undefined);
+	result.Insert("OnBeforeSave",undefined);
+	result.Insert("EnumResolverProc",undefined);
+	result.Insert("Ignore",ignore); // ignore this object
+	result.Insert("LookObjectProc",undefined);
+    result.Insert("IdAttributeType",undefined);
+    SabatexExchange.ConfigureAutoQuerySending(result);
+	conf.Objects.Insert(normalizedObjectType,result);
+	return result;
 endfunction
+// Процедура - Create enum object descriptor
+//
+// Параметры:
+//  Conf			 - 	 - 
+//  EnumName		 - 	 - 
+//  EnumRelolverProc - 	 - 
+//
+procedure CreateEnumObjectDescriptor(Conf,EnumName,EnumRelolverProc=undefined) export
+	for each value in StrSplit(EnumName,",") do
+		objectDescriptor = SabatexExchangeConfig.CreateObjectDescriptor(Conf,"Перечисление."+value);
+		objectDescriptor.EnumResolverProc=EnumRelolverProc;
+	enddo;	
+endprocedure	
+
+
+
 // Процедура - Add attribute property
 //
 // Параметры:
@@ -301,10 +353,6 @@ function AddTableProperty(objectConf,attrName,Ignore=true,destinationName=undefi
 	attr.Insert("ignoreMissedObject",undefined);
 	return attr;
 endfunction
-
-
-
-
 
 // Процедура - Configure update startegy
 //
@@ -352,8 +400,9 @@ endprocedure
 //  objectDescriptor - 	 - 
 //  transact		 - boolean	 -   Обэкт автоматично проводиься   
 
-procedure ConfigureTransactDocumentStartegy(objectDescriptor,transact) export
+procedure ConfigureTransactDocumentStartegy(objectDescriptor,transact,updateTransacted=undefined) export
 	objectDescriptor.transact = transact;
+	objectDescriptor.UpdateTransacted = updateTransacted; //true - update transacted document
 endprocedure	
 
 
@@ -371,12 +420,8 @@ procedure ConfigureParserActions(conf,objectDescriptor,OnBeforeSave=false,OnAfte
 	objectDescriptor.OnBeforeSave = OnBeforeSave;
 endprocedure
 
-procedure CreateEnumObjectDescriptor(Conf,EnumName,EnumRelolverProc=undefined) export
-	for each value in StrSplit(EnumName,",") do
-		objectDescriptor = SabatexExchangeConfig.CreateObjectDescriptor(Conf,"Перечисление."+value);
-		objectDescriptor.EnumResolverProc=EnumRelolverProc;
-	enddo;	
-endprocedure	
+
+
 
 // Процедура - Додати парсер зовнішнього обєкта
 //
@@ -451,6 +496,9 @@ function GetInternalObjectType(conf, val objectType=undefined) export
 	return result.ObjectType;
 endfunction
 
+
+
+
 function GetAccessToken()
 	reg =  InformationRegisters.SabatexExchangeConfig.Get(new structure("Key","AccessToken"));
 	token =  SabatexJSON.Deserialize(Sabatex.ValueOrDefault(reg.Value,"{}"));
@@ -486,5 +534,4 @@ endprocedure
 
 
 
-#endregion
 

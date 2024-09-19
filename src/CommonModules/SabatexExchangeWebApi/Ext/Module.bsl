@@ -92,8 +92,13 @@ function updateToken(conf)
 endfunction
 // download objects from server bay sender nodeName
 function GetObjectsExchange(conf,first=true) export
-	connection = CreateHTTPSConnection(conf);
-	request = new HTTPRequest(BuildUrl("api/v1/objects",new structure("take",conf.take)));
+	connection = CreateHTTPSConnection(conf); 
+	if conf.TakeOneMessageAtATime then
+		take = 1;
+	else
+		take =conf.take;
+	endif;	
+	request = new HTTPRequest(BuildUrl("api/v1/objects",new structure("take",take)));
 	request.Headers.Insert("accept","*/*");
 	request.Headers.Insert("clientId",conf.nodeConfig.clientId);
 	request.Headers.Insert("destinationId",conf.destinationId);

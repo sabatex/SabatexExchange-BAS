@@ -1,178 +1,474 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
-<Form xmlns="http://v8.1c.ru/8.3/xcf/logform" xmlns:app="http://v8.1c.ru/8.2/managed-application/core" xmlns:cfg="http://v8.1c.ru/8.1/data/enterprise/current-config" xmlns:dcscor="http://v8.1c.ru/8.1/data-composition-system/core" xmlns:dcsset="http://v8.1c.ru/8.1/data-composition-system/settings" xmlns:ent="http://v8.1c.ru/8.1/data/enterprise" xmlns:lf="http://v8.1c.ru/8.2/managed-application/logform" xmlns:style="http://v8.1c.ru/8.1/data/ui/style" xmlns:sys="http://v8.1c.ru/8.1/data/ui/fonts/system" xmlns:v8="http://v8.1c.ru/8.1/data/core" xmlns:v8ui="http://v8.1c.ru/8.1/data/ui" xmlns:web="http://v8.1c.ru/8.1/data/ui/colors/web" xmlns:win="http://v8.1c.ru/8.1/data/ui/colors/windows" xmlns:xr="http://v8.1c.ru/8.3/xcf/readable" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="2.12">
+<Form xmlns="http://v8.1c.ru/8.3/xcf/logform" xmlns:app="http://v8.1c.ru/8.2/managed-application/core" xmlns:cfg="http://v8.1c.ru/8.1/data/enterprise/current-config" xmlns:dcscor="http://v8.1c.ru/8.1/data-composition-system/core" xmlns:dcsset="http://v8.1c.ru/8.1/data-composition-system/settings" xmlns:ent="http://v8.1c.ru/8.1/data/enterprise" xmlns:lf="http://v8.1c.ru/8.2/managed-application/logform" xmlns:style="http://v8.1c.ru/8.1/data/ui/style" xmlns:sys="http://v8.1c.ru/8.1/data/ui/fonts/system" xmlns:v8="http://v8.1c.ru/8.1/data/core" xmlns:v8ui="http://v8.1c.ru/8.1/data/ui" xmlns:web="http://v8.1c.ru/8.1/data/ui/colors/web" xmlns:win="http://v8.1c.ru/8.1/data/ui/colors/windows" xmlns:xr="http://v8.1c.ru/8.3/xcf/readable" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="2.9">
 	<AutoCommandBar name="FormCommandBar" id="-1"/>
 	<Events>
 		<Event name="OnOpen">OnOpen</Event>
 		<Event name="OnCreateAtServer">OnCreateAtServer</Event>
 	</Events>
 	<ChildItems>
-		<UsualGroup name="Group2" id="13">
-			<Title>
-				<v8:item>
-					<v8:lang>uk</v8:lang>
-					<v8:content>Ручний обмін з сервером</v8:content>
-				</v8:item>
-			</Title>
-			<ExtendedTooltip name="Group2ExtendedTooltip" id="14"/>
+		<Pages name="Group3" id="44">
+			<ExtendedTooltip name="Group3ExtendedTooltip" id="45"/>
 			<ChildItems>
-				<LabelDecoration name="Decoration1" id="15">
-					<Title formatted="false">
+				<Page name="ExchangeGroup" id="46">
+					<Title>
 						<v8:item>
 							<v8:lang>uk</v8:lang>
-							<v8:content>Запустити омнін для нодів з позначкою manual</v8:content>
+							<v8:content>Ручний обмін з сервером</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Ручний обмін з сервером</v8:content>
 						</v8:item>
 					</Title>
-					<ContextMenu name="Decoration1ContextMenu" id="16"/>
-					<ExtendedTooltip name="Decoration1ExtendedTooltip" id="17"/>
-				</LabelDecoration>
-				<Button name="CommonCommandSabatexCommonStartExchange" id="4">
-					<Type>UsualButton</Type>
-					<CommandName>CommonCommand.SabatexCommonStartExchange</CommandName>
-					<ExtendedTooltip name="CommonCommandSabatexCommonStartExchangeExtendedTooltip" id="5"/>
-				</Button>
+					<ToolTip>
+						<v8:item>
+							<v8:lang>uk</v8:lang>
+							<v8:content>Exchange group</v8:content>
+						</v8:item>
+					</ToolTip>
+					<ExtendedTooltip name="ExchangeGroupExtendedTooltip" id="47"/>
+					<ChildItems>
+						<LabelDecoration name="Decoration1" id="15">
+							<Title formatted="false">
+								<v8:item>
+									<v8:lang>uk</v8:lang>
+									<v8:content>Запустити омнін для нодів з позначкою manual</v8:content>
+								</v8:item>
+							</Title>
+							<ContextMenu name="Decoration1ContextMenu" id="16"/>
+							<ExtendedTooltip name="Decoration1ExtendedTooltip" id="17"/>
+						</LabelDecoration>
+						<Button name="CommonCommandSabatexCommonStartExchange" id="4">
+							<Type>UsualButton</Type>
+							<CommandName>CommonCommand.SabatexCommonStartExchange</CommandName>
+							<ExtendedTooltip name="CommonCommandSabatexCommonStartExchangeExtendedTooltip" id="5"/>
+						</Button>
+					</ChildItems>
+				</Page>
+				<Page name="QueryGroup" id="48">
+					<Title>
+						<v8:item>
+							<v8:lang>uk</v8:lang>
+							<v8:content>Запити до нода</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Запити до нода</v8:content>
+						</v8:item>
+					</Title>
+					<ToolTip>
+						<v8:item>
+							<v8:lang>uk</v8:lang>
+							<v8:content>Query group</v8:content>
+						</v8:item>
+					</ToolTip>
+					<ExtendedTooltip name="QueryGroupExtendedTooltip" id="49"/>
+					<ChildItems>
+						<UsualGroup name="Group1" id="11">
+							<Title>
+								<v8:item>
+									<v8:lang>uk</v8:lang>
+									<v8:content>Відпраіка запитів до нода</v8:content>
+								</v8:item>
+							</Title>
+							<ShowTitle>false</ShowTitle>
+							<ExtendedTooltip name="Group1ExtendedTooltip" id="12"/>
+							<ChildItems>
+								<InputField name="NodeSelector" id="1">
+									<DataPath>Object.NodeSelector</DataPath>
+									<Title>
+										<v8:item>
+											<v8:lang>uk</v8:lang>
+											<v8:content>Нод обміну</v8:content>
+										</v8:item>
+									</Title>
+									<EditMode>EnterOnInput</EditMode>
+									<ListChoiceMode>true</ListChoiceMode>
+									<ContextMenu name="NodeSelectorContextMenu" id="2"/>
+									<ExtendedTooltip name="NodeSelectorExtendedTooltip" id="3"/>
+									<Events>
+										<Event name="OnChange">NodeSelectorOnChange</Event>
+									</Events>
+								</InputField>
+								<InputField name="DateQuery" id="6">
+									<DataPath>Object.DateQuery</DataPath>
+									<Title>
+										<v8:item>
+											<v8:lang>uk</v8:lang>
+											<v8:content>Дата запиту</v8:content>
+										</v8:item>
+									</Title>
+									<ContextMenu name="DateQueryContextMenu" id="7"/>
+									<ExtendedTooltip name="DateQueryExtendedTooltip" id="8"/>
+									<Events>
+										<Event name="OnChange">DateQueryOnChange</Event>
+									</Events>
+								</InputField>
+								<Button name="SendQuery" id="9">
+									<Type>UsualButton</Type>
+									<CommandName>Form.Command.SendQuery</CommandName>
+									<Title>
+										<v8:item>
+											<v8:lang>uk</v8:lang>
+											<v8:content>Створити запит</v8:content>
+										</v8:item>
+									</Title>
+									<ExtendedTooltip name="SendQueryExtendedTooltip" id="10"/>
+								</Button>
+							</ChildItems>
+						</UsualGroup>
+						<Table name="ObjectTypes" id="21">
+							<Representation>List</Representation>
+							<ChangeRowSet>false</ChangeRowSet>
+							<ChangeRowOrder>false</ChangeRowOrder>
+							<AutoInsertNewRow>true</AutoInsertNewRow>
+							<EnableStartDrag>true</EnableStartDrag>
+							<EnableDrag>true</EnableDrag>
+							<DataPath>ObjectTypes</DataPath>
+							<RowFilter xsi:nil="true"/>
+							<ContextMenu name="ObjectTypesContextMenu" id="22"/>
+							<AutoCommandBar name="ObjectTypesCommandBar" id="23">
+								<ChildItems>
+									<Button name="SelectAll" id="40">
+										<Type>CommandBarButton</Type>
+										<CommandName>Form.Command.SelectAll</CommandName>
+										<Title>
+											<v8:item>
+												<v8:lang>uk</v8:lang>
+												<v8:content>Виділити всі</v8:content>
+											</v8:item>
+										</Title>
+										<ExtendedTooltip name="SelectAllExtendedTooltip" id="41"/>
+									</Button>
+									<Button name="ObjectTypesUnSelectAll" id="42">
+										<Type>CommandBarButton</Type>
+										<CommandName>Form.Command.UnSelectAll</CommandName>
+										<Title>
+											<v8:item>
+												<v8:lang>uk</v8:lang>
+												<v8:content>Зняти виділення з усіх</v8:content>
+											</v8:item>
+										</Title>
+										<ExtendedTooltip name="ObjectTypesUnSelectAllExtendedTooltip" id="43"/>
+									</Button>
+								</ChildItems>
+							</AutoCommandBar>
+							<ExtendedTooltip name="ObjectTypesExtendedTooltip" id="24"/>
+							<SearchStringAddition name="ObjectTypesSearchString" id="25">
+								<AdditionSource>
+									<Item>ObjectTypes</Item>
+									<Type>SearchStringRepresentation</Type>
+								</AdditionSource>
+								<ContextMenu name="ObjectTypesSearchStringContextMenu" id="26"/>
+								<ExtendedTooltip name="ObjectTypesSearchStringExtendedTooltip" id="27"/>
+							</SearchStringAddition>
+							<ViewStatusAddition name="ObjectTypesViewStatus" id="28">
+								<AdditionSource>
+									<Item>ObjectTypes</Item>
+									<Type>ViewStatusRepresentation</Type>
+								</AdditionSource>
+								<ContextMenu name="ObjectTypesViewStatusContextMenu" id="29"/>
+								<ExtendedTooltip name="ObjectTypesViewStatusExtendedTooltip" id="30"/>
+							</ViewStatusAddition>
+							<SearchControlAddition name="ObjectTypesSearchControl" id="31">
+								<AdditionSource>
+									<Item>ObjectTypes</Item>
+									<Type>SearchControl</Type>
+								</AdditionSource>
+								<ContextMenu name="ObjectTypesSearchControlContextMenu" id="32"/>
+								<ExtendedTooltip name="ObjectTypesSearchControlExtendedTooltip" id="33"/>
+							</SearchControlAddition>
+							<ChildItems>
+								<CheckBoxField name="ObjectTypesChecked" id="34">
+									<DataPath>ObjectTypes.Checked</DataPath>
+									<Title>
+										<v8:item>
+											<v8:lang>uk</v8:lang>
+											<v8:content> </v8:content>
+										</v8:item>
+									</Title>
+									<EditMode>EnterOnInput</EditMode>
+									<CheckBoxType>Auto</CheckBoxType>
+									<ContextMenu name="ObjectTypesCheckedContextMenu" id="35"/>
+									<ExtendedTooltip name="ObjectTypesCheckedExtendedTooltip" id="36"/>
+								</CheckBoxField>
+								<InputField name="ObjectTypesName" id="37">
+									<DataPath>ObjectTypes.Name</DataPath>
+									<Title>
+										<v8:item>
+											<v8:lang>uk</v8:lang>
+											<v8:content>Назва документа</v8:content>
+										</v8:item>
+									</Title>
+									<EditMode>EnterOnInput</EditMode>
+									<ContextMenu name="ObjectTypesNameContextMenu" id="38"/>
+									<ExtendedTooltip name="ObjectTypesNameExtendedTooltip" id="39"/>
+								</InputField>
+							</ChildItems>
+						</Table>
+					</ChildItems>
+				</Page>
+				<Page name="SendGroup" id="50">
+					<Title>
+						<v8:item>
+							<v8:lang>uk</v8:lang>
+							<v8:content>Вивантаження даних на нод</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Вивантаження даних на нод</v8:content>
+						</v8:item>
+					</Title>
+					<ToolTip>
+						<v8:item>
+							<v8:lang>uk</v8:lang>
+							<v8:content>Send group</v8:content>
+						</v8:item>
+					</ToolTip>
+					<ExtendedTooltip name="SendGroupExtendedTooltip" id="51"/>
+					<ChildItems>
+						<UsualGroup name="Group2" id="52">
+							<Title>
+								<v8:item>
+									<v8:lang>uk</v8:lang>
+									<v8:content>Відпраіка запитів до нода</v8:content>
+								</v8:item>
+							</Title>
+							<ShowTitle>false</ShowTitle>
+							<ExtendedTooltip name="Group2ExtendedTooltip" id="53"/>
+							<ChildItems>
+								<InputField name="NodeSelectorForSend" id="64">
+									<DataPath>Object.NodeSelectorForSend</DataPath>
+									<Title>
+										<v8:item>
+											<v8:lang>uk</v8:lang>
+											<v8:content>Нод для відправлення даних </v8:content>
+										</v8:item>
+									</Title>
+									<ListChoiceMode>true</ListChoiceMode>
+									<ContextMenu name="NodeSelectorForSendContextMenu" id="65"/>
+									<ExtendedTooltip name="NodeSelectorForSendExtendedTooltip" id="66"/>
+									<Events>
+										<Event name="OnChange">NodeSelectorForSendOnChange</Event>
+									</Events>
+								</InputField>
+								<InputField name="DateSelect" id="67">
+									<DataPath>Object.DateSelect</DataPath>
+									<Title>
+										<v8:item>
+											<v8:lang>uk</v8:lang>
+											<v8:content>Дата</v8:content>
+										</v8:item>
+									</Title>
+									<ContextMenu name="DateSelectContextMenu" id="68"/>
+									<ExtendedTooltip name="DateSelectExtendedTooltip" id="69"/>
+								</InputField>
+								<Button name="SendData" id="62">
+									<Type>UsualButton</Type>
+									<CommandName>Form.Command.SendData</CommandName>
+									<ExtendedTooltip name="SendDataExtendedTooltip" id="63"/>
+								</Button>
+							</ChildItems>
+						</UsualGroup>
+						<Table name="ObjectTypesSend" id="70">
+							<Representation>List</Representation>
+							<AutoInsertNewRow>true</AutoInsertNewRow>
+							<EnableStartDrag>true</EnableStartDrag>
+							<EnableDrag>true</EnableDrag>
+							<DataPath>ObjectTypesSend</DataPath>
+							<CommandSet>
+								<ExcludedCommand>Add</ExcludedCommand>
+								<ExcludedCommand>CancelSearch</ExcludedCommand>
+								<ExcludedCommand>Change</ExcludedCommand>
+								<ExcludedCommand>Copy</ExcludedCommand>
+								<ExcludedCommand>CopyToClipboard</ExcludedCommand>
+								<ExcludedCommand>Delete</ExcludedCommand>
+								<ExcludedCommand>EndEdit</ExcludedCommand>
+								<ExcludedCommand>Find</ExcludedCommand>
+								<ExcludedCommand>FindByCurrentValue</ExcludedCommand>
+								<ExcludedCommand>MoveDown</ExcludedCommand>
+								<ExcludedCommand>MoveUp</ExcludedCommand>
+								<ExcludedCommand>OutputList</ExcludedCommand>
+								<ExcludedCommand>SearchEverywhere</ExcludedCommand>
+								<ExcludedCommand>SearchHistory</ExcludedCommand>
+								<ExcludedCommand>SelectAll</ExcludedCommand>
+								<ExcludedCommand>ShowMultipleSelection</ExcludedCommand>
+								<ExcludedCommand>ShowRowRearrangement</ExcludedCommand>
+								<ExcludedCommand>SortListAsc</ExcludedCommand>
+								<ExcludedCommand>SortListDesc</ExcludedCommand>
+							</CommandSet>
+							<RowFilter xsi:nil="true"/>
+							<ContextMenu name="ObjectTypesSendContextMenu" id="71"/>
+							<AutoCommandBar name="ObjectTypesSendCommandBar" id="72">
+								<ChildItems>
+									<Button name="ObjectTypesSendSelectAllSend" id="89">
+										<Type>CommandBarButton</Type>
+										<CommandName>Form.Command.SelectAllSend</CommandName>
+										<ExtendedTooltip name="ObjectTypesSendSelectAllSendExtendedTooltip" id="90"/>
+									</Button>
+									<Button name="ObjectTypesSendUnSelectAllSend" id="91">
+										<Type>CommandBarButton</Type>
+										<CommandName>Form.Command.UnSelectAllSend</CommandName>
+										<ExtendedTooltip name="ObjectTypesSendUnSelectAllSendExtendedTooltip" id="92"/>
+									</Button>
+								</ChildItems>
+							</AutoCommandBar>
+							<ExtendedTooltip name="ObjectTypesSendExtendedTooltip" id="73"/>
+							<SearchStringAddition name="ObjectTypesSendSearchString" id="74">
+								<AdditionSource>
+									<Item>ObjectTypesSend</Item>
+									<Type>SearchStringRepresentation</Type>
+								</AdditionSource>
+								<ContextMenu name="ObjectTypesSendSearchStringContextMenu" id="75"/>
+								<ExtendedTooltip name="ObjectTypesSendSearchStringExtendedTooltip" id="76"/>
+							</SearchStringAddition>
+							<ViewStatusAddition name="ObjectTypesSendViewStatus" id="77">
+								<AdditionSource>
+									<Item>ObjectTypesSend</Item>
+									<Type>ViewStatusRepresentation</Type>
+								</AdditionSource>
+								<ContextMenu name="ObjectTypesSendViewStatusContextMenu" id="78"/>
+								<ExtendedTooltip name="ObjectTypesSendViewStatusExtendedTooltip" id="79"/>
+							</ViewStatusAddition>
+							<SearchControlAddition name="ObjectTypesSendSearchControl" id="80">
+								<AdditionSource>
+									<Item>ObjectTypesSend</Item>
+									<Type>SearchControl</Type>
+								</AdditionSource>
+								<ContextMenu name="ObjectTypesSendSearchControlContextMenu" id="81"/>
+								<ExtendedTooltip name="ObjectTypesSendSearchControlExtendedTooltip" id="82"/>
+							</SearchControlAddition>
+							<ChildItems>
+								<CheckBoxField name="ObjectTypesSendChecked" id="83">
+									<DataPath>ObjectTypesSend.Checked</DataPath>
+									<EditMode>EnterOnInput</EditMode>
+									<CheckBoxType>Auto</CheckBoxType>
+									<ContextMenu name="ObjectTypesSendCheckedContextMenu" id="84"/>
+									<ExtendedTooltip name="ObjectTypesSendCheckedExtendedTooltip" id="85"/>
+								</CheckBoxField>
+								<InputField name="ObjectTypesSendName" id="86">
+									<DataPath>ObjectTypesSend.Name</DataPath>
+									<ReadOnly>true</ReadOnly>
+									<EditMode>EnterOnInput</EditMode>
+									<ContextMenu name="ObjectTypesSendNameContextMenu" id="87"/>
+									<ExtendedTooltip name="ObjectTypesSendNameExtendedTooltip" id="88"/>
+								</InputField>
+							</ChildItems>
+						</Table>
+					</ChildItems>
+				</Page>
+				<Page name="ObjectSinchronized" id="93">
+					<Title>
+						<v8:item>
+							<v8:lang>uk</v8:lang>
+							<v8:content>Обєкти синхронізації</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Обєкти синхронізації</v8:content>
+						</v8:item>
+					</Title>
+					<ToolTip>
+						<v8:item>
+							<v8:lang>uk</v8:lang>
+							<v8:content>Object sinchronized</v8:content>
+						</v8:item>
+					</ToolTip>
+					<ExtendedTooltip name="ObjectSinchronizedExtendedTooltip" id="94"/>
+					<ChildItems>
+						<InputField name="NodeObjectsSelector" id="95">
+							<DataPath>Object.NodeObjectSelector</DataPath>
+							<ListChoiceMode>true</ListChoiceMode>
+							<ContextMenu name="NodeObjectsSelectorContextMenu" id="96"/>
+							<ExtendedTooltip name="NodeObjectsSelectorExtendedTooltip" id="97"/>
+							<Events>
+								<Event name="OnChange">NodeObjectsSelectorOnChange</Event>
+							</Events>
+						</InputField>
+						<InputField name="ObjectSelector" id="98">
+							<DataPath>Object.ObjectSelector</DataPath>
+							<ListChoiceMode>true</ListChoiceMode>
+							<ContextMenu name="ObjectSelectorContextMenu" id="99"/>
+							<ExtendedTooltip name="ObjectSelectorExtendedTooltip" id="100"/>
+							<Events>
+								<Event name="OnChange">ObjectSelectorOnChange</Event>
+							</Events>
+						</InputField>
+						<Table name="UniversalO" id="101">
+							<UseAlternationRowColor>true</UseAlternationRowColor>
+							<EnableStartDrag>true</EnableStartDrag>
+							<DataPath>UniversalO</DataPath>
+							<RowPictureDataPath>UniversalO.DefaultPicture</RowPictureDataPath>
+							<AutoRefresh>false</AutoRefresh>
+							<AutoRefreshPeriod>60</AutoRefreshPeriod>
+							<Period>
+								<v8:variant xsi:type="v8:StandardPeriodVariant">Custom</v8:variant>
+								<v8:startDate>0001-01-01T00:00:00</v8:startDate>
+								<v8:endDate>0001-01-01T00:00:00</v8:endDate>
+							</Period>
+							<ChoiceFoldersAndItems>Items</ChoiceFoldersAndItems>
+							<RestoreCurrentRow>false</RestoreCurrentRow>
+							<TopLevelParent xsi:nil="true"/>
+							<ShowRoot>true</ShowRoot>
+							<AllowRootChoice>false</AllowRootChoice>
+							<UpdateOnDataChange>Auto</UpdateOnDataChange>
+							<ContextMenu name="UniversalOContextMenu" id="102"/>
+							<AutoCommandBar name="UniversalOCommandBar" id="103"/>
+							<ExtendedTooltip name="UniversalOExtendedTooltip" id="104"/>
+							<SearchStringAddition name="UniversalOSearchString" id="105">
+								<AdditionSource>
+									<Item>UniversalO</Item>
+									<Type>SearchStringRepresentation</Type>
+								</AdditionSource>
+								<ContextMenu name="UniversalOSearchStringContextMenu" id="106"/>
+								<ExtendedTooltip name="UniversalOSearchStringExtendedTooltip" id="107"/>
+							</SearchStringAddition>
+							<ViewStatusAddition name="UniversalOViewStatus" id="108">
+								<AdditionSource>
+									<Item>UniversalO</Item>
+									<Type>ViewStatusRepresentation</Type>
+								</AdditionSource>
+								<ContextMenu name="UniversalOViewStatusContextMenu" id="109"/>
+								<ExtendedTooltip name="UniversalOViewStatusExtendedTooltip" id="110"/>
+							</ViewStatusAddition>
+							<SearchControlAddition name="UniversalOSearchControl" id="111">
+								<AdditionSource>
+									<Item>UniversalO</Item>
+									<Type>SearchControl</Type>
+								</AdditionSource>
+								<ContextMenu name="UniversalOSearchControlContextMenu" id="112"/>
+								<ExtendedTooltip name="UniversalOSearchControlExtendedTooltip" id="113"/>
+							</SearchControlAddition>
+							<Events>
+								<Event name="BeforeRowChange">UniversalOBeforeRowChange</Event>
+							</Events>
+							<ChildItems>
+								<LabelField name="UniversalODefaultPicture" id="114">
+									<DataPath>UniversalO.DefaultPicture</DataPath>
+									<ContextMenu name="UniversalODefaultPictureContextMenu" id="115"/>
+									<ExtendedTooltip name="UniversalODefaultPictureExtendedTooltip" id="116"/>
+								</LabelField>
+								<LabelField name="UniversalORef" id="117">
+									<DataPath>UniversalO.Ref</DataPath>
+									<ContextMenu name="UniversalORefContextMenu" id="118"/>
+									<ExtendedTooltip name="UniversalORefExtendedTooltip" id="119"/>
+								</LabelField>
+								<LabelField name="UniversalOSabatexExchangeId" id="120">
+									<DataPath>UniversalO.SabatexExchangeId</DataPath>
+									<ContextMenu name="UniversalOSabatexExchangeIdContextMenu" id="121"/>
+									<ExtendedTooltip name="UniversalOSabatexExchangeIdExtendedTooltip" id="122"/>
+								</LabelField>
+								<LabelField name="UniversalODefaultPicture1" id="123">
+									<DataPath>UniversalO.DefaultPicture</DataPath>
+									<ContextMenu name="UniversalODefaultPicture1ContextMenu" id="124"/>
+									<ExtendedTooltip name="UniversalODefaultPicture1ExtendedTooltip" id="125"/>
+								</LabelField>
+							</ChildItems>
+						</Table>
+					</ChildItems>
+				</Page>
 			</ChildItems>
-		</UsualGroup>
-		<UsualGroup name="Group1" id="11">
-			<Title>
-				<v8:item>
-					<v8:lang>uk</v8:lang>
-					<v8:content>Відпраіка запитів до нода</v8:content>
-				</v8:item>
-			</Title>
-			<ExtendedTooltip name="Group1ExtendedTooltip" id="12"/>
-			<ChildItems>
-				<InputField name="NodeSelector" id="1">
-					<DataPath>Object.NodeSelector</DataPath>
-					<Title>
-						<v8:item>
-							<v8:lang>uk</v8:lang>
-							<v8:content>Нод обміну</v8:content>
-						</v8:item>
-					</Title>
-					<EditMode>EnterOnInput</EditMode>
-					<ListChoiceMode>true</ListChoiceMode>
-					<ContextMenu name="NodeSelectorContextMenu" id="2"/>
-					<ExtendedTooltip name="NodeSelectorExtendedTooltip" id="3"/>
-					<Events>
-						<Event name="OnChange">NodeSelectorOnChange</Event>
-					</Events>
-				</InputField>
-				<InputField name="DateQuery" id="6">
-					<DataPath>Object.DateQuery</DataPath>
-					<Title>
-						<v8:item>
-							<v8:lang>uk</v8:lang>
-							<v8:content>Дата запиту</v8:content>
-						</v8:item>
-					</Title>
-					<ContextMenu name="DateQueryContextMenu" id="7"/>
-					<ExtendedTooltip name="DateQueryExtendedTooltip" id="8"/>
-					<Events>
-						<Event name="OnChange">DateQueryOnChange</Event>
-					</Events>
-				</InputField>
-				<Button name="SendQuery" id="9">
-					<Type>UsualButton</Type>
-					<CommandName>Form.Command.SendQuery</CommandName>
-					<Title>
-						<v8:item>
-							<v8:lang>uk</v8:lang>
-							<v8:content>Створити запит</v8:content>
-						</v8:item>
-					</Title>
-					<ExtendedTooltip name="SendQueryExtendedTooltip" id="10"/>
-				</Button>
-			</ChildItems>
-		</UsualGroup>
-		<Table name="ObjectTypes" id="21">
-			<Representation>List</Representation>
-			<ChangeRowSet>false</ChangeRowSet>
-			<ChangeRowOrder>false</ChangeRowOrder>
-			<AutoInsertNewRow>true</AutoInsertNewRow>
-			<EnableStartDrag>true</EnableStartDrag>
-			<EnableDrag>true</EnableDrag>
-			<DataPath>ObjectTypes</DataPath>
-			<RowFilter xsi:nil="true"/>
-			<ContextMenu name="ObjectTypesContextMenu" id="22"/>
-			<AutoCommandBar name="ObjectTypesCommandBar" id="23">
-				<ChildItems>
-					<Button name="SelectAll" id="40">
-						<Type>CommandBarButton</Type>
-						<CommandName>Form.Command.SelectAll</CommandName>
-						<Title>
-							<v8:item>
-								<v8:lang>uk</v8:lang>
-								<v8:content>Виділити всі</v8:content>
-							</v8:item>
-						</Title>
-						<ExtendedTooltip name="SelectAllExtendedTooltip" id="41"/>
-					</Button>
-					<Button name="ObjectTypesUnSelectAll" id="42">
-						<Type>CommandBarButton</Type>
-						<CommandName>Form.Command.UnSelectAll</CommandName>
-						<Title>
-							<v8:item>
-								<v8:lang>uk</v8:lang>
-								<v8:content>Зняти виділення з усіх</v8:content>
-							</v8:item>
-						</Title>
-						<ExtendedTooltip name="ObjectTypesUnSelectAllExtendedTooltip" id="43"/>
-					</Button>
-				</ChildItems>
-			</AutoCommandBar>
-			<ExtendedTooltip name="ObjectTypesExtendedTooltip" id="24"/>
-			<SearchStringAddition name="ObjectTypesSearchString" id="25">
-				<AdditionSource>
-					<Item>ObjectTypes</Item>
-					<Type>SearchStringRepresentation</Type>
-				</AdditionSource>
-				<ContextMenu name="ObjectTypesSearchStringContextMenu" id="26"/>
-				<ExtendedTooltip name="ObjectTypesSearchStringExtendedTooltip" id="27"/>
-			</SearchStringAddition>
-			<ViewStatusAddition name="ObjectTypesViewStatus" id="28">
-				<AdditionSource>
-					<Item>ObjectTypes</Item>
-					<Type>ViewStatusRepresentation</Type>
-				</AdditionSource>
-				<ContextMenu name="ObjectTypesViewStatusContextMenu" id="29"/>
-				<ExtendedTooltip name="ObjectTypesViewStatusExtendedTooltip" id="30"/>
-			</ViewStatusAddition>
-			<SearchControlAddition name="ObjectTypesSearchControl" id="31">
-				<AdditionSource>
-					<Item>ObjectTypes</Item>
-					<Type>SearchControl</Type>
-				</AdditionSource>
-				<ContextMenu name="ObjectTypesSearchControlContextMenu" id="32"/>
-				<ExtendedTooltip name="ObjectTypesSearchControlExtendedTooltip" id="33"/>
-			</SearchControlAddition>
-			<ChildItems>
-				<CheckBoxField name="ObjectTypesChecked" id="34">
-					<DataPath>ObjectTypes.Checked</DataPath>
-					<Title>
-						<v8:item>
-							<v8:lang>uk</v8:lang>
-							<v8:content> </v8:content>
-						</v8:item>
-					</Title>
-					<EditMode>EnterOnInput</EditMode>
-					<CheckBoxType>Auto</CheckBoxType>
-					<ContextMenu name="ObjectTypesCheckedContextMenu" id="35"/>
-					<ExtendedTooltip name="ObjectTypesCheckedExtendedTooltip" id="36"/>
-				</CheckBoxField>
-				<InputField name="ObjectTypesName" id="37">
-					<DataPath>ObjectTypes.Name</DataPath>
-					<Title>
-						<v8:item>
-							<v8:lang>uk</v8:lang>
-							<v8:content>Назва документа</v8:content>
-						</v8:item>
-					</Title>
-					<EditMode>EnterOnInput</EditMode>
-					<ContextMenu name="ObjectTypesNameContextMenu" id="38"/>
-					<ExtendedTooltip name="ObjectTypesNameExtendedTooltip" id="39"/>
-				</InputField>
-			</ChildItems>
-		</Table>
+		</Pages>
 	</ChildItems>
 	<Attributes>
 		<Attribute name="Object" id="1">
@@ -221,6 +517,81 @@
 				</Column>
 			</Columns>
 		</Attribute>
+		<Attribute name="ObjectTypesSend" id="3">
+			<Title>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Типи обьэктів</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>v8:ValueTable</v8:Type>
+			</Type>
+			<Columns>
+				<Column name="Checked" id="1">
+					<Title>
+						<v8:item>
+							<v8:lang>uk</v8:lang>
+							<v8:content>Checked</v8:content>
+						</v8:item>
+					</Title>
+					<Type>
+						<v8:Type>xs:boolean</v8:Type>
+					</Type>
+				</Column>
+				<Column name="Name" id="2">
+					<Title>
+						<v8:item>
+							<v8:lang>uk</v8:lang>
+							<v8:content>Name</v8:content>
+						</v8:item>
+					</Title>
+					<Type>
+						<v8:Type>xs:string</v8:Type>
+						<v8:StringQualifiers>
+							<v8:Length>0</v8:Length>
+							<v8:AllowedLength>Variable</v8:AllowedLength>
+						</v8:StringQualifiers>
+					</Type>
+				</Column>
+			</Columns>
+		</Attribute>
+		<Attribute name="UniversalO" id="4">
+			<Title>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Universal O</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>cfg:DynamicList</v8:Type>
+			</Type>
+			<Settings xsi:type="DynamicList">
+				<ManualQuery>true</ManualQuery>
+				<DynamicDataRead>false</DynamicDataRead>
+				<QueryText>SELECT
+	Валюты.SabatexExchangeId AS SabatexExchangeId,
+	Валюты.Ref AS Ref
+FROM
+	Catalog.SabatexExchangeObjectSinchro AS Валюты</QueryText>
+				<ListSettings>
+					<dcsset:filter>
+						<dcsset:viewMode>Normal</dcsset:viewMode>
+						<dcsset:userSettingID>dfcece9d-5077-440b-b6b3-45a5cb4538eb</dcsset:userSettingID>
+					</dcsset:filter>
+					<dcsset:order>
+						<dcsset:viewMode>Normal</dcsset:viewMode>
+						<dcsset:userSettingID>88619765-ccb3-46c6-ac52-38e9c992ebd4</dcsset:userSettingID>
+					</dcsset:order>
+					<dcsset:conditionalAppearance>
+						<dcsset:viewMode>Normal</dcsset:viewMode>
+						<dcsset:userSettingID>b75fecce-942b-4aed-abc9-e6a02e460fb3</dcsset:userSettingID>
+					</dcsset:conditionalAppearance>
+					<dcsset:itemsViewMode>Normal</dcsset:itemsViewMode>
+					<dcsset:itemsUserSettingID>911b6018-f537-43e8-a417-da56b22f9aec</dcsset:itemsUserSettingID>
+				</ListSettings>
+			</Settings>
+		</Attribute>
 	</Attributes>
 	<Commands>
 		<Command name="SendQuery" id="1">
@@ -267,6 +638,51 @@
 				</v8:item>
 			</ToolTip>
 			<Action>UnSelectAll</Action>
+		</Command>
+		<Command name="SendData" id="4">
+			<Title>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Відправити</v8:content>
+				</v8:item>
+			</Title>
+			<ToolTip>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Send data</v8:content>
+				</v8:item>
+			</ToolTip>
+			<Action>SendData</Action>
+		</Command>
+		<Command name="SelectAllSend" id="5">
+			<Title>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Select all</v8:content>
+				</v8:item>
+			</Title>
+			<ToolTip>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Select all</v8:content>
+				</v8:item>
+			</ToolTip>
+			<Action>SelectAllSend</Action>
+		</Command>
+		<Command name="UnSelectAllSend" id="6">
+			<Title>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Un select all</v8:content>
+				</v8:item>
+			</Title>
+			<ToolTip>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Un select all</v8:content>
+				</v8:item>
+			</ToolTip>
+			<Action>UnSelectAllSend</Action>
 		</Command>
 	</Commands>
 </Form>

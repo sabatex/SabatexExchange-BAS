@@ -4,9 +4,33 @@
 // incoming objects analize   
 
 #region AnalizeObjects
+// Перевірка доступності аналізу вхідних документів
+// - conf структура з параметрами
+function IsAnalizeEnable(conf)
+	result =false;
+	if conf.Property("Parse",result) then
+		return result;
+	endif;
+	return false;
+endfunction	
+function IsFolder(object)
+	try
+		return object.IsFolder;
+	except
+		return false;
+	endtry	
+endfunction	
 
 
-function IsAcceptMissData(descriptor,iteraction=5)
+function IsAcceptMissData(object,descriptor,iteraction=5)
+	
+	if iteraction=5 then
+		if IsFolder(object) then
+			// for folder always accept missed data
+			return true;
+		endif;
+	endif;
+	
 	if iteraction <= 0 then
 		raise "Перевищена глибина рекурсивних викликів";	
 	endif;	
@@ -14,10 +38,11 @@ function IsAcceptMissData(descriptor,iteraction=5)
 		return descriptor.ignoreMissedObject;
 	endif;
 	if descriptor.Owner <> undefined then
-		return IsAcceptMissData(descriptor.Owner,iteraction-1);
+		return IsAcceptMissData(object,descriptor.Owner,iteraction-1);
 	endif;
 	raise "Помилка в ланцюжку Owner";  
 endfunction	
+
 function IsUpdated(conf,localObject=undefined)
 	if localObject <> undefined then
 		if localObject.isNew() then
@@ -51,6 +76,45 @@ function IsAcceptWrite(conf)
 	Return IsWriteUnresilved(conf);
 endfunction
 
+function IsUpdateTransacted(conf,object)
+	updateTransacted=conf.updateTransacted;
+	
+	if conf.ObjectDescriptor.updateTransacted <> undefined then
+		// add additional shift time for current object		
+		updateTransacted = updateTransacted+conf.ObjectDescriptor.updateTransacted;
+	endif;	
+	
+	if updateTransacted = 0 then
+			return false;
+	endif;
+	
+		try
+	
+			Query = New Query;
+			Query.Text = "SELECT DATEDIFF(&docDate, &CurrenDate, HOUR) AS DIFF";
+	
+			Query.SetParameter("CurrenDate", CurrentDate());
+			Query.SetParameter("docDate", object.Date);
+	
+			QueryResult = Query.Execute().Select();
+			
+			diff = ?(QueryResult.Next(), ?(QueryResult.DIFF <> Null, QueryResult.DIFF, 0), 0);
+			
+			result = diff < updateTransacted; 
+			
+			if not result then
+				SabatexExchangeLogged.Error(conf,"Заборонено імпортувати документи з різницею в часі більше ніж "+updateTransacted+" годин");
+				return false;
+			endif;
+			return true;
+		except
+				SabatexExchangeLogged.Error(conf,ErrorDescription());
+				return false;
+		endtry ;
+	return false;
+endfunction	
+
+
 procedure LevelUpUnresolvedObject(conf,item)
 	reg = InformationRegisters.sabatexExchangeUnresolvedObjects.CreateRecordManager();
 	reg.sender = item.sender;
@@ -75,7 +139,6 @@ endprocedure
 //  destination	 - 	 - 
 //  attr		 - 	 - 
 //  success		 - 	 - 
-//
 procedure SetAttribute(conf,objectConf,source,destination,attr,tableName=undefined)
 	var attrConf;
 	sourceAttrName = attr.Name;
@@ -113,7 +176,7 @@ procedure SetAttribute(conf,objectConf,source,destination,attr,tableName=undefin
 		
 		importValue = source[sourceAttrName];
 		if importValue = undefined then
-			if IsAcceptMissData(?(attrConf<>undefined,attrConf,objectConf)) then
+			if IsAcceptMissData(destination,?(attrConf<>undefined,attrConf,objectConf)) then
 				return;
 			else
 				raise "Атрибут "+ sourceAttrName + " відсутній в файлі імпорта.";
@@ -143,7 +206,7 @@ procedure SetAttribute(conf,objectConf,source,destination,attr,tableName=undefin
 	else
 		importValue = source[sourceAttrName];
 		if importValue = undefined then
-			if IsAcceptMissData(?(attrConf<>undefined,attrConf,?(objectConf<>undefined,objectConf,conf.objectDescriptor))) then
+			if IsAcceptMissData(destination,?(attrConf<>undefined,attrConf,?(objectConf<>undefined,objectConf,conf.objectDescriptor))) then
   				return;
 			else
 				raise "Атрибут "+ sourceAttrName + " відсутній в файлі імпорта.";
@@ -177,6 +240,31 @@ procedure SetAttribute(conf,objectConf,source,destination,attr,tableName=undefin
 	endif;
 
 endprocedure	
+
+procedure ResolveAccountingFlags(conf,localobject,mdata)
+	for each attr in mdata.AccountingFlags do
+		try
+			SetAttribute(conf,conf.objectDescriptor ,conf.source,localObject,attr);
+		except
+			SabatexExchangeLogged.Error(conf,"Помилка встановлення атрибуту "+ attr.Name+ " Error:"+ErrorDescription());  
+		endtry;
+		
+	enddo;	
+
+endprocedure
+
+procedure ResolveExtDimensionAccountingFlags(conf,localobject,mdata)
+	for each attr in mdata.ExtDimensionAccountingFlags do
+		try
+			SetAttribute(conf,conf.objectDescriptor ,conf.source,localObject,attr);
+		except
+			SabatexExchangeLogged.Error(conf,"Помилка встановлення атрибуту "+ attr.Name+ " Error:"+ErrorDescription());  
+		endtry;
+		
+	enddo;	
+
+endprocedure
+
 
 // Процедура - Resolve attributes and tabular sections
 //
@@ -289,6 +377,12 @@ procedure ResolveObjectCatalog(conf,localObject)
 			localObject.Description = conf.source["Description"];
 		endif;
 		
+		PredefinedDataName = conf.source["PredefinedDataName"];
+		if PredefinedDataName <> undefined then
+			localObject.PredefinedDataName = PredefinedDataName;
+		endif;
+		
+		
 		if mdata.Owners.Count() <> 0 then
 			owner = conf.source["Owner"];
 			if owner <> undefined then
@@ -301,9 +395,9 @@ procedure ResolveObjectCatalog(conf,localObject)
 			if parent <> undefined then
 				localObject.Parent = SabatexExchange.GetObjectRef(conf,mdata.FullName(),conf.source["Parent"]);
 			endif;	
-			if localObject.IsFolder then
-				return;
-			endif;	
+			//if localObject.IsFolder then
+			//	return;
+			//endif;	
 		endif;	
 		
 		ResolveAttributesAndTabularSections(conf,localObject,mdata);
@@ -325,9 +419,50 @@ procedure ResolveObjectDocument(conf,localObject)
 	
 endprocedure	
 
+procedure ResolveInformationRegister(conf,objectManager)
+	mdata = Metadata.InformationRegisters[SabatexExchange.GetNameObject(conf.ObjectDescriptor.ObjectType)];
+	localObject = objectManager.CreateRecordManager();
+		for each attr in mdata.Attributes do
+			try
+				SetAttribute(conf,conf.objectDescriptor ,conf.Source,localObject,attr);
+			except
+				SabatexExchangeLogged.Error(conf,"Помилка встановлення атрибуту "+ attr.Name+ " Error:"+ErrorDescription());  
+			endtry;
+			
+		enddo;	
+		
+		for each attr in mdata.Resources do
+			try
+				SetAttribute(conf,conf.objectDescriptor ,conf.Source,localObject,attr);
+			except
+				SabatexExchangeLogged.Error(conf,"Помилка встановлення Resources "+ attr.Name+ " Error:"+ErrorDescription());  
+			endtry;
+		enddo;	
+		
+		for each attr in mdata.Dimensions do
+			try
+				SetAttribute(conf,conf.objectDescriptor, conf.Source,localObject,attr);
+			except
+				SabatexExchangeLogged.Error(conf,"Помилка встановлення Dimensions "+ attr.Name+ " Error:"+ErrorDescription());  
+			endtry;
+		enddo;	
+		
+	if conf.success then
+		localObject.Write();	
+	endif;	
+endprocedure	
+
+
+
+
 function GetValueTypes(conf,value)
 	//{"Type":["{http://www.w3.org/2001/XMLSchema}boolean"]}
-	result = new Array;
+	result = new Array; 
+	valueTypes =value["Type"];
+	if valueTypes = undefined then
+		return undefined;
+	endif;
+	
 	for each item in value["Type"] do
 		str = StrReplace(item,"{http://www.w3.org/2001/XMLSchema}","");
 		str = StrReplace(str,"{http://v8.1c.ru/8.1/data/enterprise/current-config}","");
@@ -372,16 +507,108 @@ procedure ResolveObjectChartOfCharacteristicTypes(conf,localObject)
 		ResolveAttributesAndTabularSections(conf,localObject,mdata);
 	endif;
 endprocedure	
+procedure ResolveObjectChartOfAccounts(conf,localObject)
+	if localObject = undefined then 
+		objectManager = SabatexExchange.GetObjectManager(conf.ObjectDescriptor.ObjectType);
+		localObject = objectManager.CreateAccount();
+	endif;
+	
+	if IsUpdated(conf,localObject) then		
+		
+		localObject.DeletionMark = conf.source["DeletionMark"];
+		mdata = localObject.Metadata();
+		
+		if mdata.CodeLength <> 0 then
+			code = conf.source["Code"];
+			if code <> undefined then
+				localObject.Code = code;
+			endif;
+		endif;
+		
+		if mdata.DescriptionLength <> 0 then
+			localObject.Description = conf.source["Description"];
+		endif;
+		
+		
+		localObject.Order = conf.source["Order"];
+		localObject.Type = conf.source["Type"];
+		localObject.OffBalance = conf.source["OffBalance"];
+		
+		PredefinedDataName = conf.source["PredefinedDataName"];
+		if PredefinedDataName <> undefined then
+			localObject.PredefinedDataName = PredefinedDataName;
+		endif;
+
+		
+		if not conf.ObjectDescriptor.UseIdAttribute then
+			parent = conf.source["Parent"];
+			if parent <> undefined then
+				localObject.Parent = SabatexExchange.GetObjectRef(conf,mdata.FullName(),conf.source["Parent"]);
+			endif;	
+		endif;
+		
+		
+		ResolveAttributesAndTabularSections(conf,localObject,mdata);
+		ResolveAccountingFlags(conf,localobject,mdata);
+		ResolveExtDimensionAccountingFlags(conf,localobject,mdata);
+
+	endif;
+endprocedure	
+
+function IsPredefined(object)
+	try
+		return object.Predefined;
+	except
+		return false;
+	endtry;
+endfunction
+
+
 
 procedure WriteObject(conf,object)
-	if IsAcceptWrite(conf) then
-		try
-			object.ОбменДанными.Загрузка = true;
-			object.Write();
-		except
-			SabatexExchangeLogged.Error(conf,"Помилка запису. Error:"+ErrorDescription());
-		endtry;
-	endif;
+	try
+		if IsAcceptWrite(conf) then
+			try
+				object.ОбменДанными.Загрузка = true;
+				if IsPredefined(object) then
+					objectManager = SabatexExchange.GetObjectManager(conf.ObjectDescriptor.ObjectType);	
+					try
+						pObject = objectManager[object.PredefinedDataName];
+						object.Write();
+					except
+						pObject = object;
+					endtry;	
+					if pObject.Ref <> object.Ref then 
+						pObject = pObject.GetObject();
+ 						pObject.ОбменДанными.Загрузка = true;
+						pObject.PredefinedDataName = "";
+						if SabatexExchange.IsChartOfAccounts(conf.ObjectDescriptor.ObjectType) then
+							for each attr in pObject.ВидыСубконто do
+								try
+									attr.Predefined = false;
+								except
+									SabatexExchangeLogged.Error(conf,"Помилка встановлення атрибуту "+ attr.Name+ " Error:"+ErrorDescription());  
+								endtry;
+		
+							enddo;	
+
+						endif;
+						pObject.Write();
+						pObject.SetDeletionMark(true);
+						pObject.Write();
+					else
+						object.Write();	
+					endif;
+				else
+					object.Write();	
+				endif;
+			except
+				SabatexExchangeLogged.Error(conf,"Помилка запису. Error:"+ErrorDescription());
+			endtry; 
+		endif;
+	except
+		SabatexExchangeLogged.Error(conf,"Помилка запису. Error:"+ErrorDescription());
+	endtry;
 endprocedure
 
 procedure SetObjectId(conf,localObject,objectManager)
@@ -507,24 +734,17 @@ procedure ResolveObject(conf)
 		return;
 	endif;
 	
+	// імпорт регістрів відомостей
+	if SabatexExchange.IsInformationRegister(conf.ObjectDescriptor.ObjectType) then
+		ResolveInformationRegister(conf,objectManager);
+		return;
+	endif;	
+	
+	
+	
+	
 	objectRef = SabatexExchange.GetObjectRefById(objectManager,conf.ObjectDescriptor,conf.objectId);
 	
-	// пошук обэкта по UUID або атрибуту SabatexExchangeId
-	//if conf.ObjectDescriptor.UseIdAttribute then
-	//	if conf.IdAttributeType = Enums.SabatexExchangeIdAttributeType.UUID then
-	//		objectRef = objectManager.FindByAttribute("SabatexExchangeId",new UUID(conf.objectId)); 
-	//	else
-	//		objectRef = objectManager.FindByAttribute("SabatexExchangeId",conf.objectId);
-	//	endif;
-	//else
-	//	lO = objectManager.GetRef(new UUID(conf.objectId)).GetObject();
-	//	if lO = undefined then
-	//		objectRef = objectManager.EmptyRef();
-	//	else
-	//		objectRef = lO.Ref;
-	//	endif;	
-	//endif;
-
 	
 	// спроба пошуку по користувацьким параметрам
 	onlySinchro = false;
@@ -564,13 +784,17 @@ procedure ResolveObject(conf)
 		elsif SabatexExchange.IsDocument(conf.ObjectDescriptor.ObjectType) then
 			if localObject <> undefined then
 				if localObject.Проведен then
-					return;
+					if not IsUpdateTransacted(conf,localObject) then
+						// miss transacted documents
+						return;
+					endif;	
 				endif;
 			endif;
 			ResolveObjectDocument(conf,localObject);
 		elsif SabatexExchange.IsChartOfCharacteristicTypes(conf.ObjectDescriptor.ObjectType) then
-			ResolveObjectChartOfCharacteristicTypes(conf,localObject);
-			
+			ResolveObjectChartOfCharacteristicTypes(conf,localObject); 
+		elsif SabatexExchange.IsChartOfAccounts(conf.ObjectDescriptor.ObjectType) then
+			ResolveObjectChartOfAccounts(conf,localObject);
 		else
 			raise "Обробка даного типу не підтримуэться - "+conf.ObjectType;
 		endif;
@@ -640,28 +864,35 @@ procedure AnalizeUnresolvedObjects(conf) export
 				try
 					messageHeader = SabatexJSON.Deserialize(message);
 				except
-					SabatexExchangeLogged.Error(conf,"Помилка десереалызації messageHeader");
+					SabatexExchangeLogged.Error(conf,"Помилка десереалізації messageHeader");
 					continue;
 				endtry;
 				
 					
-			    query = messageHeader["query"];
-				if query = undefined then 
-					conf.objectId = messageHeader["id"];
-					conf.objectType = messageHeader["type"];
-					try
-						conf.source = SabatexJSON.Deserialize(SelectionDetailRecords.objectAsText);
-					except
-						SabatexExchangeLogged.Error(conf,"Помилка десереалізації повідомлення! Error Message: " + ОписаниеОшибки());
-					endtry;
-				
-					if conf.success then
+				query = messageHeader["query"];
+				if query = undefined then
+					if IsAnalizeEnable(conf) then
+						conf.objectId = messageHeader["id"];
+						conf.objectType = messageHeader["type"];
+						conf.senderDateStamp = SelectionDetailRecords.senderDateStamp;
+						SabatexExchangeLogged.Information(conf,"Аналіз повідомлення "+conf.objectType+" id = "+ conf.objectId);
 						try
-							ResolveObject(conf);
+							conf.source = SabatexJSON.Deserialize(SelectionDetailRecords.objectAsText);
 						except
-							SabatexExchangeLogged.Error(conf,"Помилка  аналіза Error:" + ОписаниеОшибки(),true);
+							SabatexExchangeLogged.Error(conf,"Помилка десереалізації повідомлення! Error Message: " + ОписаниеОшибки());
 						endtry;
+						
+						if conf.success then
+							try
+								ResolveObject(conf);
+							except
+								SabatexExchangeLogged.Error(conf,"Помилка  аналіза Error:" + ОписаниеОшибки(),true);
+							endtry;
+						endif;
+					else
+						SabatexExchangeLogged.Error(conf,"Аналіз вхідних документів вимкнено.");
 					endif;
+					
 				else
 					SabatexExchangeQuery.QyeryAnalize(conf,query);	
 				endif;

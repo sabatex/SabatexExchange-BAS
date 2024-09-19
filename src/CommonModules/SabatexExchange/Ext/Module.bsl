@@ -1,7 +1,6 @@
 ﻿// Copyright (c) 2021-2024 by Serhiy Lakas
 // https://sabatex.github.io
 
-#region GetObjects
 
 #region CheckObgectType
 // Функция - Is enum
@@ -51,40 +50,14 @@ endfunction
 function IsExchangePlan(objectType) export
 	return Sabatex.StringStartWith(upper(objectType),Upper("ПланОбмена"));
 endfunction
-#endregion
 
-function IsUnserted(objectDescriptor,val recursiveLevel = 5) export
-	if recursiveLevel <= 0 then
-		raise "Перевищено кількість рекурсивниї звернень.";	
-	endif;
-	
-	if objectDescriptor.Uninserted <> undefined then
-		return  objectDescriptor.Uninserted;
-	endif;
-	
-	if objectDescriptor.Owner = undefined then
-		return true;
-	endif;
-	
-	return IsUnserted(objectDescriptor.Owner,recursiveLevel-1);
-
+function IsInformationRegister(objectType) export
+	return Sabatex.StringStartWith(upper(objectType),Upper("РегистрСведений"));
+endfunction
+function IsStructure(objectType) export
+	return Sabatex.StringStartWith(upper(objectType),Upper("Structure"));
 endfunction
 
-// Функция - Get name object
-//
-// Параметры:
-//  objectType	 - 	 - 
-// 
-// Возвращаемое значение:
-//   - 
-//
-function GetNameObject(objectType) export
-	pos = Найти(objectType,".");
-	if pos = -1 then
-		raise "Задано неправильний тип objectType=" + objectType;
-	endif;	
-	return Сред(objectType,pos+1);
-endfunction	
 
 function checkComplexType(conf,complexValue,objectId,objectType) export
 	try
@@ -117,8 +90,112 @@ function checkComplexType(conf,complexValue,objectId,objectType) export
 			return false;
 		endif;
 	except
+		SabatexExchangeLogged.Error(conf,"Перевірка комплексного типу " + complexType+ " " + ErrorDescription());
 		return false;
 	endtry;
+endfunction	
+
+
+#endregion
+
+ #region CheckObjectState
+ // methods for check object state
+function IsUnserted(objectDescriptor,val recursiveLevel = 5) export
+	if recursiveLevel <= 0 then
+		raise "Перевищено кількість рекурсивниї звернень.";	
+	endif;
+	
+	if objectDescriptor.Uninserted <> undefined then
+		return  objectDescriptor.Uninserted;
+	endif;
+	
+	if objectDescriptor.Owner = undefined then
+		return true;
+	endif;
+	
+	return IsUnserted(objectDescriptor.Owner,recursiveLevel-1);
+
+endfunction
+
+// Функция - Is deletion mark
+//
+// Параметры:
+//  object	 - any object	 -  любий обєкт
+// 
+// Возвращаемое значение:
+//   - boolean - 
+//
+function IsDeletionMark(object)
+	try
+		return object.DeletionMark;
+	except
+		return false;
+	endtry;	
+endfunction	
+
+
+
+ #endregion
+
+ #region Configuration
+// Процедура - Configure auto query sending.
+// By default, the system supports sending requests for unresolved objects.
+// If set to unsupported, queries are handled separately for each object descriptor. 
+//
+// Параметры:
+//  descriptor	 - structure - exchange or object descriptor
+//  enable		 - boolean	 - default true
+//
+procedure ConfigureAutoQuerySending(descriptor,enable = undefined) export
+	descriptor.Insert("AutoQuerySending",enable);	
+endprocedure	
+
+// Функция - Is enable query to destination
+//
+// Параметры:
+//  conf			 - 	 - 
+//  objectDescriptor - 	 - 
+// 
+// Возвращаемое значение:
+//  boolean - true default value
+//
+function IsAutoQuerySending(objectDescriptor)
+	if objectDescriptor = undefined then
+		return true;
+	endif;
+	
+	if  objectDescriptor.AutoQuerySending = undefined then
+		if objectDescriptor.Owner = undefined then
+			return true;
+		else
+			return IsAutoQuerySending(objectDescriptor.Owner);
+		endif;
+	else
+		return objectDescriptor.AutoQuerySending;
+	endif;	
+endfunction	
+
+
+
+ #endregion
+
+#region GetObjects
+
+
+// Функция - Get name object
+//
+// Параметры:
+//  objectType	 - 	 - 
+// 
+// Возвращаемое значение:
+//   - 
+//
+function GetNameObject(objectType) export
+	pos = Найти(objectType,".");
+	if pos = -1 then
+		raise "Задано неправильний тип objectType=" + objectType;
+	endif;	
+	return Сред(objectType,pos+1);
 endfunction	
 
 // Функция - Отримати object manager ро символьному представленню
@@ -158,6 +235,12 @@ function GetObjectManager(val objectType) export
 	elsif IsExchangePlan(objectType) then
 		try
 			result = ExchangePlans[GetNameObject(objectType)];
+		except
+			raise "Спроба отримати локальний тип " + objectType +". Встановіть відповідність внутрішнього та зовнішнього обєктів";  
+		endtry;
+	elsif IsInformationRegister(objectType) then
+		try
+			result = InformationRegisters[GetNameObject(objectType)];
 		except
 			raise "Спроба отримати локальний тип " + objectType +". Встановіть відповідність внутрішнього та зовнішнього обєктів";  
 		endtry;
@@ -255,6 +338,13 @@ function GetObjectRefById(objectManager,objectDescriptor,id) export
 	return objectManager.EmptyRef();
 endfunction	
 
+function GetQueryHeader(query)
+	return SabatexJSON.Serialize(new Structure("query",query));
+endfunction
+
+function GetObjectHeader(type,id)
+	return SabatexJSON.Serialize(new structure("type,id",type,id));
+endfunction
 
 
 // Функция - Пошук обьєкта по Id
@@ -316,33 +406,64 @@ function GetObjectRef(conf,val objectType,val objectId,val objectDescriptor=unde
 	endif;	
 	
 	result = GetObjectRefById(objectManager,objectDescriptor,objectId);
-	//if objectDescriptor.UseIdAttribute then
-	//	result = objectManager.FindByAttribute("SabatexExchangeId",new UUID(objectId))
-	//else
-	//	result = objectManager.GetRef(new UUID(objectId));
-	//endif;	
 
 	if result= objectManager.EmptyRef() or  result.GetObject() = undefined then
-		if IsUnserted(objectDescriptor) then
-			return SabatexExchangeLogged.Error(conf,"В системі відсутній обєкт "+objectType + " з Id " + objectId,objectManager.EmptyRef());
-		else
+		conf.success = false;
+		if IsAutoQuerySending(objectDescriptor) then
 			destinationFullName = objectDescriptor.ExternalObjectDescriptor.ObjectType;
-			conf.success = false;
-			AddQueryForExchange(conf,destinationFullName,objectId);
-			return objectManager.EmptyRef();
+		    AddQueryForExchange(conf,destinationFullName,objectId);
+		else
+			SabatexExchangeLogged.Information(conf,"Відправка запиту на отримання "+ objectType + " з Id=" + objectId +" заборонена.");	
 		endif;
+		
+		return objectManager.EmptyRef();
 	endif;
 	return result;
 endfunction	
 
 #endregion
+
+
+#region ExchangeObjects
+
+
+// Процедура - Реэстрація повідомлення до відправлення
+//
+// Параметры:
+//  nodeName		 - string 		- назва ноду  node name as SabatexExchangeNodeConfig.NodeName
+//  messageHeader	 - structure	- заголовок повідомлення, udefined (default) - auto serialize id and type object
+//  object			 - object 		- Object
+//  serializeNow     - boolean      - серіалізувати зразу (для обєктів які помічені до видалення серіалізуються зразу) 
+procedure RegisterMessageForNode(nodeName,messageHeader=undefined,object=undefined,serializeNow=false) export
+	if messageHeader = undefined and object = undefined then
+    	raise "Параметри messageHeader та object не можуть бути оночасно undefined!";
+	endif;
+	
+	reg = InformationRegisters.sabatexExchangeObject.CreateRecordManager();
+	reg.NodeName  = nodeName;
+	reg.dateStamp = CurrentDate();
+	
+	if messageHeader = undefined then
+		reg.MessageHeader =	SabatexJSON.Serialize(new structure("type,id",object.Ref.Метаданные().FullName(),XMLString(object.Ref.UUID())));	
+	else
+		reg.MessageHeader =	SabatexJSON.Serialize(messageHeader);	
+	endif;
+	
+	if object <> undefined then
+		if serializeNow or IsDeletionMark(object) then
+	       reg.JSONText = SabatexJSON.Serialize(object);
+	   endif;
+	endif;
+ 	reg.Write(true);
+endprocedure	
+
 // Add query for exchange
 // params:
 // 		conf 		Configuration structure
 //      objectType  Queried object type (50) as (Справочник.Контрагенты)
 //      objectId    destination objectId or object code
 procedure AddQueryForExchange(conf,objectType,objectId) export
-	query = SabatexJSON.Serialize(new Structure("id,type",objectId,objectType));
+	query = SabatexJSON.Serialize(new Structure("type,id",objectType,objectId));
 	
 	Запрос = Новый Запрос;
 	Запрос.Текст = 
@@ -369,38 +490,6 @@ procedure AddQueryForExchange(conf,objectType,objectId) export
 	RegisterQueryObjectForNode(conf,objectId,objectType);	
 	SabatexExchangeLogged.Information(conf,"Відправлено запит на отримання "+ objectType + " з Id=" + objectId);
 endprocedure	
-
-
-#region ExchangeObjects
-
-// Процедура - Register message for node
-//
-// Параметры:
-//  nodeName		 - string 		- node name as SabatexExchangeNodeConfig.NodeName
-//  messageHeader	 - structure	- 
-//  message			 - ref	 		- Object reference
-//
-procedure RegisterMessageForNode(nodeName,messageHeader=undefined,object=undefined) export
-	reg = InformationRegisters.sabatexExchangeObject.CreateRecordManager();
-	reg.NodeName  = nodeName;
-	reg.dateStamp = CurrentDate();
-	if messageHeader = undefined then
-		if object = undefined then
-			raise "Параметри messageHeader та object не можуть бути оночасно undefined!";
-		endif;	
-		reg.MessageHeader =	SabatexJSON.Serialize(new structure("id,type",XMLString(object.Ref.UUID()),object.Ref.Метаданные().FullName()));	
-	else
-		if object <> undefined then
-			raise "Параметри messageHeader та object не можуть мати оночасно значення!";
-		endif;
-		if TypeOf(messageHeader) <> Type("Structure") then
-			raise "Тип "+ TypeOf(messageHeader) + " параметру messageHeader не відповідає типу Structure";
-		endif;
-        reg.MessageHeader = SabatexJSON.Serialize(messageHeader);
-	endif;
- 	reg.Write(true);
-endprocedure	
-
 
 
 // Register object in cashe for send to destination
@@ -467,6 +556,7 @@ procedure AddUnresolvedObject(conf,item,newObject = true)
 	reg.serverDateStamp= XMLValue(Type("Date"),item["senderDateStamp"]);
 	reg.senderDateStamp =XMLValue(Type("Date"),item["dateStamp"]);
 	reg.objectAsText = item["message"];
+	reg.NodeName = conf.NodeName;
 	reg.Log = ?(newObject,"",conf.Log);
 	reg.Write();
 endprocedure
@@ -474,32 +564,38 @@ endprocedure
 // завантаження обєктів в систему
 // conf - конфігурація
 procedure ReciveObjects(conf)
-		// read incoming objects 
-		incoming = SabatexExchangeWebApi.GetObjectsExchange(conf);
-		for each item in incoming do
-			BeginTransaction();
-			try
-				AddUnresolvedObject(conf,item);
-				SabatexExchangeWebApi.DeleteExchangeObject(conf,item["id"]);
-				CommitTransaction();
-			except
-				RollbackTransaction();
-				SabatexExchangeLogged.Error(conf,"Do not load message Error Message: " + ОписаниеОшибки());
-			endtry;
+		// read incoming objects
+		if conf.TakeOneMessageAtATime then
+			counter = conf.take;
+		else
+			counter =1;
+		endif;
+		
+		while counter > 0 do
+			counter = counter -1;
+			
+			incoming = SabatexExchangeWebApi.GetObjectsExchange(conf);
+			for each item in incoming do
+				BeginTransaction();
+				try
+					AddUnresolvedObject(conf,item);
+					SabatexExchangeWebApi.DeleteExchangeObject(conf,item["id"]);
+					CommitTransaction();
+				except
+					RollbackTransaction();
+					SabatexExchangeLogged.Error(conf,"Do not load message Error Message: " + ОписаниеОшибки());
+				endtry;
+			enddo;
 		enddo;
 endprocedure
 procedure PostObjects(conf)
 	// post queries
-	//conf.queryList.GroupBy("objectType,objectId");
-	//for each query in conf.queryList do 
-	//	SabatexExchangeWebApi.PostQueries(conf,query.objectId,query.objectType);
-	//enddo;	
-	//
 	Query = Новый Запрос;
 	Query.Текст = 
-		"SELECT TOP "+ XMLString(conf.take)+"
+		"SELECT TOP " + XMLString(conf.take)+ "
 		|	sabatexExchangeObject.dateStamp AS dateStamp,
-		|	sabatexExchangeObject.MessageHeader AS MessageHeader
+		|	sabatexExchangeObject.MessageHeader AS MessageHeader,
+		|	sabatexExchangeObject.JSONText AS JSONText
 		|FROM
 		|	InformationRegister.sabatexExchangeObject AS sabatexExchangeObject
 		|WHERE
@@ -512,19 +608,25 @@ procedure PostObjects(conf)
 	
 	while items.Next() do
 		try
-			messageHeader = SabatexJSON.Deserialize(items.MessageHeader);
-			message = undefined;
-			if messageHeader["query"] = undefined then
-				objectType = messageHeader["type"]; 
-			    objectId = messageHeader["id"];
-			    objectManager = GetObjectManager(objectType);	
-			    object	= objectManager.GetRef(new UUID(objectId)).GetObject();
-			    if object <> undefined then
-				  message =SabatexJSON.Serialize(object);
+			if TrimAll(items.JSONText) = "" then
+				// серыалізація обєкта під час відправлення
+				messageHeader = SabatexJSON.Deserialize(items.MessageHeader);
+				message = undefined;
+				if messageHeader["query"] = undefined then
+					objectType = messageHeader["type"]; 
+					objectId = messageHeader["id"];
+					objectManager = GetObjectManager(objectType);	
+					object	= objectManager.GetRef(new UUID(objectId)).GetObject();
+					if object <> undefined then
+						message =SabatexJSON.Serialize(object);
+					endif;
 				endif;
-		    endif;
-		    SabatexExchangeWebApi.POSTExchangeMessage(conf,items.MessageHeader,items.dateStamp,message);
-
+			else
+				message =items.JSONText;
+			endif;
+			
+			SabatexExchangeWebApi.POSTExchangeMessage(conf,items.MessageHeader,items.dateStamp,message);
+			
 			DeleteObjectForExchange(items.MessageHeader,conf.nodeName);
 		except
 			SabatexExchangeLogged.Error(conf,ErrorDescription());	
@@ -533,7 +635,18 @@ procedure PostObjects(conf)
 endprocedure	
 #endregion
 
-
+#region Actions
+procedure BeforeSend(conf)
+	if conf.userDefinedModule <> "" then
+		try
+			Execute(conf.userDefinedModule+".BeforeSend(conf)");
+		except
+			SabatexExchangeLogged.Information(conf,"Не встановлено обробник користувача BeforeSend(conf)");
+		endtry;	
+	endif;	
+	
+endprocedure	
+#endregion
 
 // Процедура - процесс обміну
 //
@@ -558,17 +671,18 @@ function ExchangeProcess(exchangeMode) export
 		skip = false;
 		if exchangeMode =  conf.ExchangeMode then
 			try
-				// ansver the query and set to queue
-				//DoQueriedObjects(conf);
-				
 				// read  input objects
 				ReciveObjects(conf);
 				
 				// Аналіз поступивших обєктів
 				SabatexExchangeObjectAnalizer.AnalizeUnresolvedObjects(conf);
 				
+                BeforeSend(conf);
+				
 				// Відправка на сервер
-				PostObjects(conf);
+				if conf.Send then
+					PostObjects(conf);
+				endif;	
 			except
 				message = string(conf.nodeConfig.clientId) + " - Програмна помилка -" + ErrorDescription();
 				SabatexExchangeLogged.ErrorJournaled(conf,message);

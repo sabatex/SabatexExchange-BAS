@@ -1,21 +1,12 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
-<Form xmlns="http://v8.1c.ru/8.3/xcf/logform" xmlns:app="http://v8.1c.ru/8.2/managed-application/core" xmlns:cfg="http://v8.1c.ru/8.1/data/enterprise/current-config" xmlns:dcscor="http://v8.1c.ru/8.1/data-composition-system/core" xmlns:dcsset="http://v8.1c.ru/8.1/data-composition-system/settings" xmlns:ent="http://v8.1c.ru/8.1/data/enterprise" xmlns:lf="http://v8.1c.ru/8.2/managed-application/logform" xmlns:style="http://v8.1c.ru/8.1/data/ui/style" xmlns:sys="http://v8.1c.ru/8.1/data/ui/fonts/system" xmlns:v8="http://v8.1c.ru/8.1/data/core" xmlns:v8ui="http://v8.1c.ru/8.1/data/ui" xmlns:web="http://v8.1c.ru/8.1/data/ui/colors/web" xmlns:win="http://v8.1c.ru/8.1/data/ui/colors/windows" xmlns:xr="http://v8.1c.ru/8.3/xcf/readable" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="2.12">
+<Form xmlns="http://v8.1c.ru/8.3/xcf/logform" xmlns:app="http://v8.1c.ru/8.2/managed-application/core" xmlns:cfg="http://v8.1c.ru/8.1/data/enterprise/current-config" xmlns:dcscor="http://v8.1c.ru/8.1/data-composition-system/core" xmlns:dcsset="http://v8.1c.ru/8.1/data-composition-system/settings" xmlns:ent="http://v8.1c.ru/8.1/data/enterprise" xmlns:lf="http://v8.1c.ru/8.2/managed-application/logform" xmlns:style="http://v8.1c.ru/8.1/data/ui/style" xmlns:sys="http://v8.1c.ru/8.1/data/ui/fonts/system" xmlns:v8="http://v8.1c.ru/8.1/data/core" xmlns:v8ui="http://v8.1c.ru/8.1/data/ui" xmlns:web="http://v8.1c.ru/8.1/data/ui/colors/web" xmlns:win="http://v8.1c.ru/8.1/data/ui/colors/windows" xmlns:xr="http://v8.1c.ru/8.3/xcf/readable" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="2.9">
 	<WindowOpeningMode>LockOwnerWindow</WindowOpeningMode>
 	<AutoCommandBar name="FormCommandBar" id="-1"/>
 	<Events>
 		<Event name="OnReadAtServer">OnReadAtServer</Event>
+		<Event name="OnCreateAtServer">OnCreateAtServer</Event>
 	</Events>
 	<ChildItems>
-		<InputField name="NodeName" id="1">
-			<DataPath>Record.NodeName</DataPath>
-			<ContextMenu name="NodeNameContextMenu" id="2"/>
-			<ExtendedTooltip name="NodeNameExtendedTooltip" id="3"/>
-		</InputField>
-		<InputField name="destinationId" id="4">
-			<DataPath>Record.destinationId</DataPath>
-			<ContextMenu name="destinationIdContextMenu" id="5"/>
-			<ExtendedTooltip name="destinationIdExtendedTooltip" id="6"/>
-		</InputField>
 		<InputField name="ExchangeMode" id="28">
 			<DataPath>Record.ExchangeMode</DataPath>
 			<ContextMenu name="ExchangeModeContextMenu" id="29"/>
@@ -37,33 +28,105 @@
 			<ContextMenu name="LogLevelContextMenu" id="14"/>
 			<ExtendedTooltip name="LogLevelExtendedTooltip" id="15"/>
 		</InputField>
-		<CheckBoxField name="updateCatalogs" id="16">
-			<DataPath>Record.updateCatalogs</DataPath>
-			<CheckBoxType>Auto</CheckBoxType>
-			<ContextMenu name="updateCatalogsContextMenu" id="17"/>
-			<ExtendedTooltip name="updateCatalogsExtendedTooltip" id="18"/>
-		</CheckBoxField>
-		<InputField name="userDefinedModule" id="19">
-			<DataPath>Record.userDefinedModule</DataPath>
-			<ContextMenu name="userDefinedModuleContextMenu" id="20"/>
-			<ExtendedTooltip name="userDefinedModuleExtendedTooltip" id="21"/>
-		</InputField>
 		<CheckBoxField name="useObjectCashe" id="22">
 			<CheckBoxType>Auto</CheckBoxType>
 			<ContextMenu name="useObjectCasheContextMenu" id="23"/>
 			<ExtendedTooltip name="useObjectCasheExtendedTooltip" id="24"/>
-		</CheckBoxField>
-		<CheckBoxField name="IsQueryEnable" id="25">
-			<DataPath>Record.IsQueryEnable</DataPath>
-			<CheckBoxType>Auto</CheckBoxType>
-			<ContextMenu name="IsQueryEnableContextMenu" id="26"/>
-			<ExtendedTooltip name="IsQueryEnableExtendedTooltip" id="27"/>
 		</CheckBoxField>
 		<CheckBoxField name="IsIdenticalConfiguration" id="31">
 			<CheckBoxType>Auto</CheckBoxType>
 			<ContextMenu name="IsIdenticalConfigurationContextMenu" id="32"/>
 			<ExtendedTooltip name="IsIdenticalConfigurationExtendedTooltip" id="33"/>
 		</CheckBoxField>
+		<CheckBoxField name="Send" id="34">
+			<DataPath>Record.Send</DataPath>
+			<CheckBoxType>Auto</CheckBoxType>
+			<ContextMenu name="SendContextMenu" id="35"/>
+			<ExtendedTooltip name="SendExtendedTooltip" id="36"/>
+		</CheckBoxField>
+		<CheckBoxField name="Parse" id="37">
+			<DataPath>Record.Parse</DataPath>
+			<CheckBoxType>Auto</CheckBoxType>
+			<ContextMenu name="ParseContextMenu" id="38"/>
+			<ExtendedTooltip name="ParseExtendedTooltip" id="39"/>
+		</CheckBoxField>
+		<CheckBoxField name="TakeOneMessageAtATime" id="40">
+			<DataPath>Record.TakeOneMessageAtATime</DataPath>
+			<CheckBoxType>Auto</CheckBoxType>
+			<ContextMenu name="TakeOneMessageAtATimeContextMenu" id="41"/>
+			<ExtendedTooltip name="TakeOneMessageAtATimeExtendedTooltip" id="42"/>
+		</CheckBoxField>
+		<InputField name="UpdateTransacted" id="48">
+			<DataPath>Record.UpdateTransacted</DataPath>
+			<ContextMenu name="UpdateTransactedContextMenu" id="49"/>
+			<ExtendedTooltip name="UpdateTransactedExtendedTooltip" id="50"/>
+		</InputField>
+		<UsualGroup name="GroupAdminProperty" id="43">
+			<Title>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Властивості нода</v8:content>
+				</v8:item>
+			</Title>
+			<ToolTip>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Group admin property</v8:content>
+				</v8:item>
+			</ToolTip>
+			<Group>Vertical</Group>
+			<Behavior>Collapsible</Behavior>
+			<Collapsed>true</Collapsed>
+			<Representation>StrongSeparation</Representation>
+			<ExtendedTooltip name="GroupAdminPropertyExtendedTooltip" id="44"/>
+			<ChildItems>
+				<LabelDecoration name="WarningNodeProperty" id="45">
+					<TextColor>style:SpecialTextColor</TextColor>
+					<Title formatted="false">
+						<v8:item>
+							<v8:lang>uk</v8:lang>
+							<v8:content>УВАГА! Зміна налаштувань в даному розділі може нанести шкоду цілістності даних бази.</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>УВАГА! Зміна налаштувань в даному розділі може нанести шкоду цілістності даних бази.</v8:content>
+						</v8:item>
+					</Title>
+					<ContextMenu name="WarningNodePropertyContextMenu" id="46"/>
+					<ExtendedTooltip name="WarningNodePropertyExtendedTooltip" id="47"/>
+				</LabelDecoration>
+				<InputField name="destinationId" id="4">
+					<DataPath>Record.destinationId</DataPath>
+					<ContextMenu name="destinationIdContextMenu" id="5"/>
+					<ExtendedTooltip name="destinationIdExtendedTooltip" id="6"/>
+				</InputField>
+				<InputField name="NodeName" id="1">
+					<DataPath>Record.NodeName</DataPath>
+					<ContextMenu name="NodeNameContextMenu" id="2"/>
+					<ExtendedTooltip name="NodeNameExtendedTooltip" id="3"/>
+					<Events>
+						<Event name="OnChange">NodeNameOnChange</Event>
+					</Events>
+				</InputField>
+				<InputField name="userDefinedModule" id="19">
+					<DataPath>Record.userDefinedModule</DataPath>
+					<ContextMenu name="userDefinedModuleContextMenu" id="20"/>
+					<ExtendedTooltip name="userDefinedModuleExtendedTooltip" id="21"/>
+				</InputField>
+				<CheckBoxField name="IsQueryEnable" id="25">
+					<DataPath>Record.IsQueryEnable</DataPath>
+					<CheckBoxType>Auto</CheckBoxType>
+					<ContextMenu name="IsQueryEnableContextMenu" id="26"/>
+					<ExtendedTooltip name="IsQueryEnableExtendedTooltip" id="27"/>
+				</CheckBoxField>
+				<CheckBoxField name="updateCatalogs" id="16">
+					<DataPath>Record.updateCatalogs</DataPath>
+					<CheckBoxType>Auto</CheckBoxType>
+					<ContextMenu name="updateCatalogsContextMenu" id="17"/>
+					<ExtendedTooltip name="updateCatalogsExtendedTooltip" id="18"/>
+				</CheckBoxField>
+			</ChildItems>
+		</UsualGroup>
 	</ChildItems>
 	<Attributes>
 		<Attribute name="Record" id="1">

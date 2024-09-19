@@ -2,7 +2,7 @@
 #region SabatexExchangeAdapter
 // Copyright (c) 2021-2024 by Serhiy Lakas
 // https://sabatex.github.io
-// version 4.0.0-rc28
+// version 4.0.5
 
 // Функция - Пошук обьєкта по Id
 //
@@ -37,7 +37,19 @@ endprocedure
 #endregion
 
 
- #region Configuration
+#region Configuration
+ 
+// Функция - Get destination nodes
+// 
+// Возвращаемое значение:
+// array node config  -  масив конфігурацій нодів
+//
+
+function GetDestinationNodes()
+	return SabatexExchangeConfig.GetDestinationNodes();
+endfunction
+ 
+ 
 // Процедура - Add attribute property
 //
 // Параметры:
@@ -89,9 +101,7 @@ endprocedure
 //  Conf				 - 	 - 
 //  ObjectType			 - string	 -  тип обьэкта типу "Справочник.Номенклатура"
 //  ExternalObjectType	 - string	 -  (необовязково якщо одинакові) тип обэкта в іншвй базі
-//  IdAttribute			 - string	 -  (необовязково) вказуэться якщо обэкт ідентифікується не через UUID обэкта а через атрибут 
-//  LookObjectProc		 - string	 -  (необовязково) процендура пошуку обєкта по користувацьким алгоритмам (тільки нові) IdAttribute - обовязкове 
-//  UnInserted		 	 - bool 	 -  (необовязково) Обэкт тільки синхронізується з базою 
+//  ignore			     - boolean	 -  (необовязково) вказуэться якщо обэкт ідентифікується не через UUID обэкта а через атрибут 
 // 
 // Возвращаемое значение:
 //   structure - objectDescriptor
@@ -146,8 +156,8 @@ endprocedure
 //  objectDescriptor - 	 - 
 //  transact		 - 	 - 
 //
-procedure ConfigureTransactDocumentStartegy(objectDescriptor,transact)
-	SabatexExchangeConfig.ConfigureTransactDocumentStartegy(objectDescriptor,transact);
+procedure ConfigureTransactDocumentStartegy(objectDescriptor,transact,updateTransacted=undefined)
+	SabatexExchangeConfig.ConfigureTransactDocumentStartegy(objectDescriptor,transact,updateTransacted);
 endprocedure	
 
 	
@@ -172,8 +182,20 @@ endprocedure
 function AddTableProperty(objectConf,attrName,Ignore=false,destinationName=undefined,procName=undefined,postParser=undefined) export
 	return SabatexExchangeConfig.AddTableProperty(objectConf,attrName,Ignore,destinationName,procName,postParser);	
 endfunction
- 	
- #endregion
+
+// Procedure - Configure auto query sending.
+// By default, the system supports sending requests for unresolved objects.
+// If set to unsupported, queries are handled separately for each object descriptor. 
+//
+// Parameters:
+//  descriptor	 - structure - exchange or object descriptor
+//  enable		 - boolean	 - default true
+//
+procedure ConfigureAutoQuerySending(descriptor,enable = true) export
+	SabatexExchange.ConfigureAutoQuerySending(descriptor,enable);	
+endprocedure	
+
+#endregion
 
 
 #region Logged
@@ -222,6 +244,14 @@ endfunction
 #endregion
 
 
+procedure SetКлассификаторЕдиницИзмерения(conf,source,destination,attr) export
+	// в ерп це УпаковкиЕдиницыИзмерения
+	value = SabatexExchange.GetObjectRef(conf,"Справочник.УпаковкиЕдиницыИзмерения",source["ЕдиницаИзмерения"]);
+	if value <>Catalogs.УпаковкиЕдиницыИзмерения.EmptyRef() then
+		destination[attr.Name] = value.КлассификаторЕдиницИзмерения;
+	endif;	
+endprocedure	
+
 
 
 // Процедура - Викликаэться при ініціалізації обміну (наявність обовязкова)
@@ -256,6 +286,21 @@ procedure QueryObject(conf,query,object) export
 endprocedure	
 
 // Процедура додає список обєктів по яким можна зробити запит до нода
+//
+// Параметры:
+//  conf	 - 	 - 
+//  items	 - 	 - 
+//
 procedure ObjectQueriesList(conf,items) export
+	//items.Add("Документ.ЧекККМ");
+endprocedure	
 
+// Процедура додає список обєктів по які можна вивантажити до нода
+//
+// Параметры:
+//  conf	 - structure	 -  конфігурація обміну
+//  items	 - array	     -  масив строк з назвами доступних обєктів
+//
+procedure ObjectPostList(conf,items) export
+	//items.Add("Документ.ЧекККМ");
 endprocedure	

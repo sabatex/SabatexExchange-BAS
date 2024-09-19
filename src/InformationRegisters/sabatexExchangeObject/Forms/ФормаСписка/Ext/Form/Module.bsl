@@ -1,0 +1,18 @@
+﻿
+&AtServer
+Procedure OnCreateAtServer(Cancel, StandardProcessing)
+	Query = New Query;
+	Query.Text = 
+		"SELECT
+		|	COUNT(sabatexExchangeObject.NodeName) AS CountItems
+		|FROM
+		|	InformationRegister.sabatexExchangeObject AS sabatexExchangeObject";
+	
+	QueryResult = Query.Execute();
+	
+	SelectionDetailRecords = QueryResult.Select();
+	
+	if SelectionDetailRecords.Next() then
+		recordCount = SelectionDetailRecords.CountItems;	
+	endif;
+EndProcedure

@@ -1,4 +1,8 @@
-﻿// Перевірка доступності відповіді на запит
+﻿// Copyright (c) 2021-2024 by Serhiy Lakas
+// https://sabatex.github.io
+
+
+// Перевірка доступності відповіді на запит
 // - conf структура з параметрами
 function IsQueryEnable(conf)
 	result =false;
@@ -18,7 +22,6 @@ function GetObjectTypeKind(conf,objectType)
 endfunction	
 
 
-
 // Обробка запитів до системи
 procedure QyeryAnalize(conf,query) export
 	try
@@ -26,6 +29,7 @@ procedure QyeryAnalize(conf,query) export
 		objectId = query["id"];
 		objectType = query["type"];
 		if objectId <> undefined and objectType <> undefined then
+			
 			if Sabatex.IsEmptyUUID(objectId) then
 				SabatexExchangeLogged.Error("Передано хибний запит з пустим Id");
 				return;
