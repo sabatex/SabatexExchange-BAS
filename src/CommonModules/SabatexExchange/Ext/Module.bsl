@@ -2,6 +2,9 @@
 // https://sabatex.github.io
 
 
+
+
+
 #region CheckObgectType
 // Функция - Is enum
 //

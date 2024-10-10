@@ -199,7 +199,8 @@ EndProcedure
 &AtClient
 Procedure UniversalOBeforeRowChange(Item, Cancel)
 	obj = Items.UniversalO.CurrentData;
-    OpenForm("Обработка.SabatexExchangeManualControl.Форма.ObjectEditForm",new structure("ObjectRef",obj.Ref),ThisForm);
+    OpenFormModal("Обработка.SabatexExchangeManualControl.Форма.ObjectEditForm",new structure("ObjectRef",obj.Ref),ThisForm);
+	
 	Cancel=true; 
 	Items.UniversalO.Refresh();
 

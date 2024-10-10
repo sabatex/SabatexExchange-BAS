@@ -114,6 +114,13 @@ function IsUpdateTransacted(conf,object)
 	return false;
 endfunction	
 
+function IsPredefinedAccepted(conf)
+	if conf.ObjectDescriptor.PredefinedAccepted <> undefined then
+		return conf.ObjectDescriptor.PredefinedAccepted;
+	endif;
+	return conf.PredefinedAccepted;
+endfunction
+
 
 procedure LevelUpUnresolvedObject(conf,item)
 	reg = InformationRegisters.sabatexExchangeUnresolvedObjects.CreateRecordManager();
@@ -377,11 +384,14 @@ procedure ResolveObjectCatalog(conf,localObject)
 			localObject.Description = conf.source["Description"];
 		endif;
 		
-		PredefinedDataName = conf.source["PredefinedDataName"];
-		if PredefinedDataName <> undefined then
-			localObject.PredefinedDataName = PredefinedDataName;
+		if IsPredefinedAccepted(conf) then
+			
+			PredefinedDataName = conf.source["PredefinedDataName"];
+			if PredefinedDataName <> undefined then
+				localObject.PredefinedDataName = PredefinedDataName;
+			endif;
+			
 		endif;
-		
 		
 		if mdata.Owners.Count() <> 0 then
 			owner = conf.source["Owner"];

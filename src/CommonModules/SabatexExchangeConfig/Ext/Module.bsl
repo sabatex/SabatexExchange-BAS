@@ -65,6 +65,8 @@ function GetConfig(destinationNode)
 	//config.Insert("UpdateTransacted",undefined); 
 
 	
+	// support predefined data types
+	config.Insert("PredefinedAccepted",true);
 	config.Insert("senderDateStamp",undefined);
 
 	
@@ -290,6 +292,7 @@ function CreateObjectDescriptor(Conf,ObjectType,val ExternalObjectType=undefined
 	result.Insert("Ignore",ignore); // ignore this object
 	result.Insert("LookObjectProc",undefined);
     result.Insert("IdAttributeType",undefined);
+	result.Insert("PredefinedAccepted",Undefined);
     SabatexExchange.ConfigureAutoQuerySending(result);
 	conf.Objects.Insert(normalizedObjectType,result);
 	return result;
