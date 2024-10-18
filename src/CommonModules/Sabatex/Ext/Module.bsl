@@ -64,24 +64,9 @@ function DigitStrCompare(str1,str2)
 	endif;	
 endfunction
 
-// Функция - Get empty UUID as string
-// 
-// Возвращаемое значение:
-//   -   UUID в вигляды строки  00000000-0000-0000-0000-000000000000
-//
-function GetEmptyUUIDAsString() export
-	return "00000000-0000-0000-0000-000000000000";
-endfunction	
-
-// Функция - Get empty UUID
-// 
-// Возвращаемое значение:
-//   -  new UUID("00000000-0000-0000-0000-000000000000")
-//
 function GetEmptyUUID() export
-	return new UUID(GetEmptyUUIDAsString());
+	return new UUID("00000000-0000-0000-0000-000000000000");
 endfunction
-
 
 // Перевірка на пустий UUID
 //  - value (UUID or string)

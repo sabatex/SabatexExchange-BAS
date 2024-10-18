@@ -2,7 +2,7 @@
 #region SabatexExchangeAdapter
 // Copyright (c) 2021-2024 by Serhiy Lakas
 // https://sabatex.github.io
-// version 4.0.5
+// version 4.0.7
 
 // Функция - Пошук обьєкта по Id
 //
@@ -37,19 +37,7 @@ endprocedure
 #endregion
 
 
-#region Configuration
- 
-// Функция - Get destination nodes
-// 
-// Возвращаемое значение:
-// array node config  -  масив конфігурацій нодів
-//
-
-function GetDestinationNodes()
-	return SabatexExchangeConfig.GetDestinationNodes();
-endfunction
- 
- 
+ #region Configuration
 // Процедура - Add attribute property
 //
 // Параметры:
@@ -101,7 +89,9 @@ endprocedure
 //  Conf				 - 	 - 
 //  ObjectType			 - string	 -  тип обьэкта типу "Справочник.Номенклатура"
 //  ExternalObjectType	 - string	 -  (необовязково якщо одинакові) тип обэкта в іншвй базі
-//  ignore			     - boolean	 -  (необовязково) вказуэться якщо обэкт ідентифікується не через UUID обэкта а через атрибут 
+//  IdAttribute			 - string	 -  (необовязково) вказуэться якщо обэкт ідентифікується не через UUID обэкта а через атрибут 
+//  LookObjectProc		 - string	 -  (необовязково) процендура пошуку обєкта по користувацьким алгоритмам (тільки нові) IdAttribute - обовязкове 
+//  UnInserted		 	 - bool 	 -  (необовязково) Обэкт тільки синхронізується з базою 
 // 
 // Возвращаемое значение:
 //   structure - objectDescriptor
@@ -238,19 +228,17 @@ endprocedure
  function IsEmptyUUID(value)
 	return Sabatex.IsEmptyUUID(value);
 endfunction	
-
+ 
  #endregion
-  
+
+ procedure AddPostObjectDescription(items,objectType,filter)
+	items.Add(new structure("ObjectType,Filter",objectType,filter));	 
+	 
+ endprocedure
+ 
+ 
 #endregion
 
-
-procedure SetКлассификаторЕдиницИзмерения(conf,source,destination,attr) export
-	// в ерп це УпаковкиЕдиницыИзмерения
-	value = SabatexExchange.GetObjectRef(conf,"Справочник.УпаковкиЕдиницыИзмерения",source["ЕдиницаИзмерения"]);
-	if value <>Catalogs.УпаковкиЕдиницыИзмерения.EmptyRef() then
-		destination[attr.Name] = value.КлассификаторЕдиницИзмерения;
-	endif;	
-endprocedure	
 
 
 
@@ -262,10 +250,10 @@ endprocedure
 procedure Initialize(conf) export
 	// конфігурація ідентична хосту (підтримуэться правило повного обміну, перезапис обєктів, крім проведених)
 	//conf.IsIdenticalConfiguration = false; 
-    // вказується тип ключа обєкта в випадку викоритання SabatexExchangeId (UUID - default, string)	
+	
+	// вказується тип ключа обєкта в випадку викоритання SabatexExchangeId (UUID - default, string)	
 	//conf.IdAttributeType =Enums.SabatexExchangeIdAttributeType.UUID;
-	
-	
+		
 	// загальне правило додавання обєктів за замовчуванням true.
 	// Блокує додванння нових обєктів (для розблокування обєкта потрібно викликати ConfigureInsertingStartegy
 	//conf.UnInserted = true; 
@@ -298,9 +286,10 @@ endprocedure
 // Процедура додає список обєктів по які можна вивантажити до нода
 //
 // Параметры:
-//  conf	 - structure	 -  конфігурація обміну
-//  items	 - array	     -  масив строк з назвами доступних обєктів
+//  conf	 - 	 - 
+//  items	 - array - масив елементів string або structure (ObjectType,Filter) 
 //
 procedure ObjectPostList(conf,items) export
-	//items.Add("Документ.ЧекККМ");
+	//items.Add(new structure("ObjectType,Filter","Документ.ЧекККМ","Организация.Код = 'ER0000123'");
+	//AddPostObjectDescription(items,"Документ.ЧекККМ","Организация.Код = 'ER0000123'");
 endprocedure	

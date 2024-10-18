@@ -2,9 +2,6 @@
 // https://sabatex.github.io
 
 
-
-
-
 #region CheckObgectType
 // Функция - Is enum
 //
@@ -593,18 +590,22 @@ procedure ReciveObjects(conf)
 endprocedure
 procedure PostObjects(conf)
 	// post queries
-	Query = Новый Запрос;
+	Query = Новый Запрос;  //TOP " + XMLString(conf.take)+ "
 	Query.Текст = 
-		"SELECT TOP " + XMLString(conf.take)+ "
+		"SELECT TOP &take
 		|	sabatexExchangeObject.dateStamp AS dateStamp,
 		|	sabatexExchangeObject.MessageHeader AS MessageHeader,
 		|	sabatexExchangeObject.JSONText AS JSONText
 		|FROM
 		|	InformationRegister.sabatexExchangeObject AS sabatexExchangeObject
 		|WHERE
-		|	sabatexExchangeObject.NodeName = &nodeName";
+		|	sabatexExchangeObject.NodeName = &nodeName
+		|
+		|ORDER BY
+		|	dateStamp";
 	
 	Query.SetParameter("nodeName",conf.nodeName);
+	Query.SetParameter("take",XMLString(conf.take));
 	РезультатЗапроса = Query.Выполнить();
 	
 	items = РезультатЗапроса.Выбрать();

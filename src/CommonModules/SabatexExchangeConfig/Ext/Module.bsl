@@ -12,7 +12,7 @@ function GetHostConfig() export
 	result = new structure;
 	result.Insert("clientId",Sabatex.ValueOrDefault(rootNode["clientId"],""));
 	result.Insert("https",Sabatex.ValueOrDefault(rootNode["https"],true));
-	result.Insert("Host",Sabatex.ValueOrDefault(rootNode["Host"],"sabatex.francecentral.cloudapp.azure.com"));
+	result.Insert("Host",Sabatex.ValueOrDefault(rootNode["Host"],"sabatex-exchange.francecentral.cloudapp.azure.com"));
 	result.Insert("Port",Sabatex.ValueOrDefault(rootNode["Port"],443));
 	result.Insert("password",Sabatex.ValueOrDefault(rootNode["password"],""));
 	return result;
@@ -65,8 +65,6 @@ function GetConfig(destinationNode)
 	//config.Insert("UpdateTransacted",undefined); 
 
 	
-	// support predefined data types
-	config.Insert("PredefinedAccepted",true);
 	config.Insert("senderDateStamp",undefined);
 
 	
@@ -141,12 +139,6 @@ function GetConfigByNodeName(nodeName) export
         return undefined;
 endfunction	
 
-
-// Функция - Get destination nodes
-// 
-// Возвращаемое значение:
-// array node config  -  масив конфігурацій нодів
-//
 function GetDestinationNodes() export
 		Query = new Query;
 		Query.Text = 
@@ -261,7 +253,10 @@ endfunction
 //  Conf				 - 	 - 
 //  ObjectType			 - string	 -  тип обьэкта типу "Справочник.Номенклатура"
 //  ExternalObjectType	 - string	 -  (необовязково якщо одинакові) тип обэкта в іншвй базі
-//  ignore      		 - boolean	 -  (необовязково) ignore this object 
+//  IdAttribute			 - string	 -  (необовязково) вказуэться якщо обэкт ідентифікується не через UUID обэкта а через атрибут 
+//  LookObjectProc		 - string	 -  (необовязково) процендура пошуку обєкта по користувацьким алгоритмам (тільки нові) IdAttribute - обовязкове 
+//  uninserted		 	 - boolean 	 -  (необовязково) Обэкт тільки синхронізується з базою 
+//  transact             - boolean   -  (необовязково) Обэкт автоматично проводиься
 // Возвращаемое значение:
 //   structure - objectDescriptor
 //
@@ -292,7 +287,6 @@ function CreateObjectDescriptor(Conf,ObjectType,val ExternalObjectType=undefined
 	result.Insert("Ignore",ignore); // ignore this object
 	result.Insert("LookObjectProc",undefined);
     result.Insert("IdAttributeType",undefined);
-	result.Insert("PredefinedAccepted",Undefined);
     SabatexExchange.ConfigureAutoQuerySending(result);
 	conf.Objects.Insert(normalizedObjectType,result);
 	return result;
