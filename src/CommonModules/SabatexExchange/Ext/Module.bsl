@@ -2,6 +2,9 @@
 // https://sabatex.github.io
 
 
+
+
+
 #region CheckObgectType
 // Функция - Is enum
 //
@@ -590,7 +593,7 @@ procedure ReciveObjects(conf)
 endprocedure
 procedure PostObjects(conf)
 	// post queries
-	Query = Новый Запрос;  //TOP " + XMLString(conf.take)+ "
+	Query = Новый Запрос;
 	Query.Текст = 
 		"SELECT TOP &take
 		|	sabatexExchangeObject.dateStamp AS dateStamp,

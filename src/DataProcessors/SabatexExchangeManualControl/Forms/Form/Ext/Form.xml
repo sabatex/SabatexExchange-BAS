@@ -15,6 +15,10 @@
 							<v8:lang>uk</v8:lang>
 							<v8:content>Ручний обмін з сервером</v8:content>
 						</v8:item>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Ручний обмін з сервером</v8:content>
+						</v8:item>
 					</Title>
 					<ToolTip>
 						<v8:item>
@@ -45,6 +49,10 @@
 					<Title>
 						<v8:item>
 							<v8:lang>uk</v8:lang>
+							<v8:content>Запити до нода</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
 							<v8:content>Запити до нода</v8:content>
 						</v8:item>
 					</Title>
@@ -206,6 +214,10 @@
 							<v8:lang>uk</v8:lang>
 							<v8:content>Вивантаження даних на нод</v8:content>
 						</v8:item>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Вивантаження даних на нод</v8:content>
+						</v8:item>
 					</Title>
 					<ToolTip>
 						<v8:item>
@@ -334,13 +346,13 @@
 									<ContextMenu name="ObjectTypesSendCheckedContextMenu" id="84"/>
 									<ExtendedTooltip name="ObjectTypesSendCheckedExtendedTooltip" id="85"/>
 								</CheckBoxField>
-								<CheckBoxField name="ObjectTypesSendPredefined" id="96">
+								<CheckBoxField name="ObjectTypesSendPredefined" id="129">
 									<DataPath>ObjectTypesSend.Predefined</DataPath>
 									<ReadOnly>true</ReadOnly>
 									<EditMode>EnterOnInput</EditMode>
 									<CheckBoxType>Auto</CheckBoxType>
-									<ContextMenu name="ObjectTypesSendPredefinedContextMenu" id="97"/>
-									<ExtendedTooltip name="ObjectTypesSendPredefinedExtendedTooltip" id="98"/>
+									<ContextMenu name="ObjectTypesSendPredefinedContextMenu" id="130"/>
+									<ExtendedTooltip name="ObjectTypesSendPredefinedExtendedTooltip" id="131"/>
 								</CheckBoxField>
 								<InputField name="ObjectTypesSendName" id="86">
 									<DataPath>ObjectTypesSend.Name</DataPath>
@@ -349,12 +361,122 @@
 									<ContextMenu name="ObjectTypesSendNameContextMenu" id="87"/>
 									<ExtendedTooltip name="ObjectTypesSendNameExtendedTooltip" id="88"/>
 								</InputField>
-								<InputField name="ObjectTypesSendFilter" id="93">
+								<InputField name="ObjectTypesSendFilter" id="126">
 									<DataPath>ObjectTypesSend.Filter</DataPath>
 									<EditMode>EnterOnInput</EditMode>
-									<ContextMenu name="ObjectTypesSendFilterContextMenu" id="94"/>
-									<ExtendedTooltip name="ObjectTypesSendFilterExtendedTooltip" id="95"/>
+									<ContextMenu name="ObjectTypesSendFilterContextMenu" id="127"/>
+									<ExtendedTooltip name="ObjectTypesSendFilterExtendedTooltip" id="128"/>
 								</InputField>
+							</ChildItems>
+						</Table>
+					</ChildItems>
+				</Page>
+				<Page name="ObjectSinchronized" id="93">
+					<Title>
+						<v8:item>
+							<v8:lang>uk</v8:lang>
+							<v8:content>Обєкти синхронізації</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Обєкти синхронізації</v8:content>
+						</v8:item>
+					</Title>
+					<ToolTip>
+						<v8:item>
+							<v8:lang>uk</v8:lang>
+							<v8:content>Object sinchronized</v8:content>
+						</v8:item>
+					</ToolTip>
+					<ExtendedTooltip name="ObjectSinchronizedExtendedTooltip" id="94"/>
+					<ChildItems>
+						<InputField name="NodeObjectsSelector" id="95">
+							<DataPath>Object.NodeObjectSelector</DataPath>
+							<ListChoiceMode>true</ListChoiceMode>
+							<ContextMenu name="NodeObjectsSelectorContextMenu" id="96"/>
+							<ExtendedTooltip name="NodeObjectsSelectorExtendedTooltip" id="97"/>
+							<Events>
+								<Event name="OnChange">NodeObjectsSelectorOnChange</Event>
+							</Events>
+						</InputField>
+						<InputField name="ObjectSelector" id="98">
+							<DataPath>Object.ObjectSelector</DataPath>
+							<ListChoiceMode>true</ListChoiceMode>
+							<ContextMenu name="ObjectSelectorContextMenu" id="99"/>
+							<ExtendedTooltip name="ObjectSelectorExtendedTooltip" id="100"/>
+							<Events>
+								<Event name="OnChange">ObjectSelectorOnChange</Event>
+							</Events>
+						</InputField>
+						<Table name="UniversalO" id="101">
+							<UseAlternationRowColor>true</UseAlternationRowColor>
+							<EnableStartDrag>true</EnableStartDrag>
+							<DataPath>UniversalO</DataPath>
+							<RowPictureDataPath>UniversalO.DefaultPicture</RowPictureDataPath>
+							<AutoRefresh>false</AutoRefresh>
+							<AutoRefreshPeriod>60</AutoRefreshPeriod>
+							<Period>
+								<v8:variant xsi:type="v8:StandardPeriodVariant">Custom</v8:variant>
+								<v8:startDate>0001-01-01T00:00:00</v8:startDate>
+								<v8:endDate>0001-01-01T00:00:00</v8:endDate>
+							</Period>
+							<ChoiceFoldersAndItems>Items</ChoiceFoldersAndItems>
+							<RestoreCurrentRow>false</RestoreCurrentRow>
+							<TopLevelParent xsi:nil="true"/>
+							<ShowRoot>true</ShowRoot>
+							<AllowRootChoice>false</AllowRootChoice>
+							<UpdateOnDataChange>Auto</UpdateOnDataChange>
+							<ContextMenu name="UniversalOContextMenu" id="102"/>
+							<AutoCommandBar name="UniversalOCommandBar" id="103"/>
+							<ExtendedTooltip name="UniversalOExtendedTooltip" id="104"/>
+							<SearchStringAddition name="UniversalOSearchString" id="105">
+								<AdditionSource>
+									<Item>UniversalO</Item>
+									<Type>SearchStringRepresentation</Type>
+								</AdditionSource>
+								<ContextMenu name="UniversalOSearchStringContextMenu" id="106"/>
+								<ExtendedTooltip name="UniversalOSearchStringExtendedTooltip" id="107"/>
+							</SearchStringAddition>
+							<ViewStatusAddition name="UniversalOViewStatus" id="108">
+								<AdditionSource>
+									<Item>UniversalO</Item>
+									<Type>ViewStatusRepresentation</Type>
+								</AdditionSource>
+								<ContextMenu name="UniversalOViewStatusContextMenu" id="109"/>
+								<ExtendedTooltip name="UniversalOViewStatusExtendedTooltip" id="110"/>
+							</ViewStatusAddition>
+							<SearchControlAddition name="UniversalOSearchControl" id="111">
+								<AdditionSource>
+									<Item>UniversalO</Item>
+									<Type>SearchControl</Type>
+								</AdditionSource>
+								<ContextMenu name="UniversalOSearchControlContextMenu" id="112"/>
+								<ExtendedTooltip name="UniversalOSearchControlExtendedTooltip" id="113"/>
+							</SearchControlAddition>
+							<Events>
+								<Event name="BeforeRowChange">UniversalOBeforeRowChange</Event>
+							</Events>
+							<ChildItems>
+								<LabelField name="UniversalODefaultPicture" id="114">
+									<DataPath>UniversalO.DefaultPicture</DataPath>
+									<ContextMenu name="UniversalODefaultPictureContextMenu" id="115"/>
+									<ExtendedTooltip name="UniversalODefaultPictureExtendedTooltip" id="116"/>
+								</LabelField>
+								<LabelField name="UniversalORef" id="117">
+									<DataPath>UniversalO.Ref</DataPath>
+									<ContextMenu name="UniversalORefContextMenu" id="118"/>
+									<ExtendedTooltip name="UniversalORefExtendedTooltip" id="119"/>
+								</LabelField>
+								<LabelField name="UniversalOSabatexExchangeId" id="120">
+									<DataPath>UniversalO.SabatexExchangeId</DataPath>
+									<ContextMenu name="UniversalOSabatexExchangeIdContextMenu" id="121"/>
+									<ExtendedTooltip name="UniversalOSabatexExchangeIdExtendedTooltip" id="122"/>
+								</LabelField>
+								<LabelField name="UniversalODefaultPicture1" id="123">
+									<DataPath>UniversalO.DefaultPicture</DataPath>
+									<ContextMenu name="UniversalODefaultPicture1ContextMenu" id="124"/>
+									<ExtendedTooltip name="UniversalODefaultPicture1ExtendedTooltip" id="125"/>
+								</LabelField>
 							</ChildItems>
 						</Table>
 					</ChildItems>
@@ -452,6 +574,10 @@
 							<v8:lang>uk</v8:lang>
 							<v8:content>Filter</v8:content>
 						</v8:item>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Filter</v8:content>
+						</v8:item>
 					</Title>
 					<Type>
 						<v8:Type>xs:string</v8:Type>
@@ -467,12 +593,52 @@
 							<v8:lang>uk</v8:lang>
 							<v8:content>Predefined</v8:content>
 						</v8:item>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Predefined</v8:content>
+						</v8:item>
 					</Title>
 					<Type>
 						<v8:Type>xs:boolean</v8:Type>
 					</Type>
 				</Column>
 			</Columns>
+		</Attribute>
+		<Attribute name="UniversalO" id="4">
+			<Title>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Universal O</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>cfg:DynamicList</v8:Type>
+			</Type>
+			<Settings xsi:type="DynamicList">
+				<ManualQuery>true</ManualQuery>
+				<DynamicDataRead>false</DynamicDataRead>
+				<QueryText>SELECT
+	Валюты.SabatexExchangeId AS SabatexExchangeId,
+	Валюты.Ref AS Ref
+FROM
+	Catalog.SabatexExchangeObjectSinchro AS Валюты</QueryText>
+				<ListSettings>
+					<dcsset:filter>
+						<dcsset:viewMode>Normal</dcsset:viewMode>
+						<dcsset:userSettingID>dfcece9d-5077-440b-b6b3-45a5cb4538eb</dcsset:userSettingID>
+					</dcsset:filter>
+					<dcsset:order>
+						<dcsset:viewMode>Normal</dcsset:viewMode>
+						<dcsset:userSettingID>88619765-ccb3-46c6-ac52-38e9c992ebd4</dcsset:userSettingID>
+					</dcsset:order>
+					<dcsset:conditionalAppearance>
+						<dcsset:viewMode>Normal</dcsset:viewMode>
+						<dcsset:userSettingID>b75fecce-942b-4aed-abc9-e6a02e460fb3</dcsset:userSettingID>
+					</dcsset:conditionalAppearance>
+					<dcsset:itemsViewMode>Normal</dcsset:itemsViewMode>
+					<dcsset:itemsUserSettingID>911b6018-f537-43e8-a417-da56b22f9aec</dcsset:itemsUserSettingID>
+				</ListSettings>
+			</Settings>
 		</Attribute>
 	</Attributes>
 	<Commands>

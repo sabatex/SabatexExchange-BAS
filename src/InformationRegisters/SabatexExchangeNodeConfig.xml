@@ -36,7 +36,11 @@
 			<Synonym>
 				<v8:item>
 					<v8:lang>uk</v8:lang>
-					<v8:content>Налаштування обміну</v8:content>
+					<v8:content>SabatexExchangeNodeConfig</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>SabatexExchangeNodeConfig</v8:content>
 				</v8:item>
 			</Synonym>
 			<Comment>Configuration for exchange</Comment>
@@ -178,6 +182,10 @@
 							<v8:lang>uk</v8:lang>
 							<v8:content>Destination id</v8:content>
 						</v8:item>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Destination id</v8:content>
+						</v8:item>
 					</Synonym>
 					<Comment>Вузел призначення обміну</Comment>
 					<Type>
@@ -219,6 +227,10 @@
 					<Synonym>
 						<v8:item>
 							<v8:lang>uk</v8:lang>
+							<v8:content>Активний</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
 							<v8:content>Активний</v8:content>
 						</v8:item>
 					</Synonym>
@@ -265,6 +277,10 @@
 							<v8:lang>uk</v8:lang>
 							<v8:content>Кількість повідомлень за обмін</v8:content>
 						</v8:item>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Кількість повідомлень за обмін</v8:content>
+						</v8:item>
 					</Synonym>
 					<Comment>Кількість повідомлень за один сеанс обміну</Comment>
 					<Type>
@@ -306,11 +322,11 @@
 					<Name>LogLevel</Name>
 					<Synonym>
 						<v8:item>
-							<v8:lang>ru</v8:lang>
-							<v8:content>Log level</v8:content>
+							<v8:lang>uk</v8:lang>
+							<v8:content>Рівень інформаційних повідомлень</v8:content>
 						</v8:item>
 						<v8:item>
-							<v8:lang>uk</v8:lang>
+							<v8:lang>ru</v8:lang>
 							<v8:content>Рівень інформаційних повідомлень</v8:content>
 						</v8:item>
 					</Synonym>
@@ -357,6 +373,10 @@
 							<v8:lang>uk</v8:lang>
 							<v8:content>Оновлювати довідники </v8:content>
 						</v8:item>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Оновлювати довідники </v8:content>
+						</v8:item>
 					</Synonym>
 					<Comment>Оновлювати довідники (Перезаповнення полів довідників)</Comment>
 					<Type>
@@ -396,6 +416,10 @@
 							<v8:lang>uk</v8:lang>
 							<v8:content>Назва загальнго модуля додаткових обробок</v8:content>
 						</v8:item>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Назва загальнго модуля додаткових обробок</v8:content>
+						</v8:item>
 					</Synonym>
 					<Comment>модуль в якому  будуть оброблятись вхідні обєкти</Comment>
 					<Type>
@@ -416,7 +440,7 @@
 					<MinValue xsi:nil="true"/>
 					<MaxValue xsi:nil="true"/>
 					<FillFromFillingValue>false</FillFromFillingValue>
-					<FillValue xsi:type="xs:string">UserDefinedModuleDemo</FillValue>
+					<FillValue xsi:type="xs:string">SabatexExchangeAdapter</FillValue>
 					<FillChecking>DontCheck</FillChecking>
 					<ChoiceFoldersAndItems>Items</ChoiceFoldersAndItems>
 					<ChoiceParameterLinks/>
@@ -437,6 +461,10 @@
 					<Synonym>
 						<v8:item>
 							<v8:lang>uk</v8:lang>
+							<v8:content>Підтримка запитів від даного нода до цієї бази</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
 							<v8:content>Підтримка запитів від даного нода до цієї бази</v8:content>
 						</v8:item>
 					</Synonym>
@@ -478,6 +506,10 @@
 							<v8:lang>uk</v8:lang>
 							<v8:content>Exchange mode</v8:content>
 						</v8:item>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Exchange mode</v8:content>
+						</v8:item>
 					</Synonym>
 					<Comment/>
 					<Type>
@@ -515,6 +547,10 @@
 					<Synonym>
 						<v8:item>
 							<v8:lang>uk</v8:lang>
+							<v8:content>Send</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
 							<v8:content>Send</v8:content>
 						</v8:item>
 					</Synonym>
@@ -556,6 +592,10 @@
 							<v8:lang>uk</v8:lang>
 							<v8:content>Parse</v8:content>
 						</v8:item>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Parse</v8:content>
+						</v8:item>
 					</Synonym>
 					<Comment/>
 					<Type>
@@ -593,6 +633,10 @@
 					<Synonym>
 						<v8:item>
 							<v8:lang>uk</v8:lang>
+							<v8:content>Take one message at a time</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
 							<v8:content>Take one message at a time</v8:content>
 						</v8:item>
 					</Synonym>
@@ -639,6 +683,10 @@
 							<v8:lang>uk</v8:lang>
 							<v8:content>Заборона повторного імпорту проведених документів в годинах</v8:content>
 						</v8:item>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Заборона повторного імпорту проведених документів в годинах</v8:content>
+						</v8:item>
 					</Synonym>
 					<Comment>Заборона повторного імпорту проведених документів прт різниці в  годинах (0-заборонено,1.2...)</Comment>
 					<Type>
@@ -681,6 +729,10 @@
 					<Synonym>
 						<v8:item>
 							<v8:lang>uk</v8:lang>
+							<v8:content>Назва вузла</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
 							<v8:content>Назва вузла</v8:content>
 						</v8:item>
 					</Synonym>

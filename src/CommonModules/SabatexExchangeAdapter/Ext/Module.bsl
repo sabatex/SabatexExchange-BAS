@@ -1,5 +1,6 @@
 ﻿
 #region SabatexExchangeAdapter
+
 // Copyright (c) 2021-2024 by Serhiy Lakas
 // https://sabatex.github.io
 // version 4.0.7
@@ -37,7 +38,19 @@ endprocedure
 #endregion
 
 
- #region Configuration
+#region Configuration
+ 
+// Функция - Get destination nodes
+// 
+// Возвращаемое значение:
+// array node config  -  масив конфігурацій нодів
+//
+
+function GetDestinationNodes()
+	return SabatexExchangeConfig.GetDestinationNodes();
+endfunction
+ 
+ 
 // Процедура - Add attribute property
 //
 // Параметры:
@@ -89,9 +102,7 @@ endprocedure
 //  Conf				 - 	 - 
 //  ObjectType			 - string	 -  тип обьэкта типу "Справочник.Номенклатура"
 //  ExternalObjectType	 - string	 -  (необовязково якщо одинакові) тип обэкта в іншвй базі
-//  IdAttribute			 - string	 -  (необовязково) вказуэться якщо обэкт ідентифікується не через UUID обэкта а через атрибут 
-//  LookObjectProc		 - string	 -  (необовязково) процендура пошуку обєкта по користувацьким алгоритмам (тільки нові) IdAttribute - обовязкове 
-//  UnInserted		 	 - bool 	 -  (необовязково) Обэкт тільки синхронізується з базою 
+//  ignore			     - boolean	 -  (необовязково) вказуэться якщо обэкт ідентифікується не через UUID обэкта а через атрибут 
 // 
 // Возвращаемое значение:
 //   structure - objectDescriptor
@@ -228,18 +239,14 @@ endprocedure
  function IsEmptyUUID(value)
 	return Sabatex.IsEmptyUUID(value);
 endfunction	
- 
- #endregion
 
+ #endregion
+ 
  procedure AddPostObjectDescription(items,objectType,filter)
 	items.Add(new structure("ObjectType,Filter",objectType,filter));	 
 	 
  endprocedure
- 
- 
 #endregion
-
-
 
 
 // Процедура - Викликаэться при ініціалізації обміну (наявність обовязкова)
@@ -250,10 +257,10 @@ endfunction
 procedure Initialize(conf) export
 	// конфігурація ідентична хосту (підтримуэться правило повного обміну, перезапис обєктів, крім проведених)
 	//conf.IsIdenticalConfiguration = false; 
-	
-	// вказується тип ключа обєкта в випадку викоритання SabatexExchangeId (UUID - default, string)	
+    // вказується тип ключа обєкта в випадку викоритання SabatexExchangeId (UUID - default, string)	
 	//conf.IdAttributeType =Enums.SabatexExchangeIdAttributeType.UUID;
-		
+	
+	
 	// загальне правило додавання обєктів за замовчуванням true.
 	// Блокує додванння нових обєктів (для розблокування обєкта потрібно викликати ConfigureInsertingStartegy
 	//conf.UnInserted = true; 
@@ -286,8 +293,8 @@ endprocedure
 // Процедура додає список обєктів по які можна вивантажити до нода
 //
 // Параметры:
-//  conf	 - 	 - 
-//  items	 - array - масив елементів string або structure (ObjectType,Filter) 
+//  conf	 - structure  - конфігурація обміну 
+//  items	 - array 	  - масив елементів string або structure (ObjectType,Filter) 
 //
 procedure ObjectPostList(conf,items) export
 	//items.Add(new structure("ObjectType,Filter","Документ.ЧекККМ","Организация.Код = 'ER0000123'");

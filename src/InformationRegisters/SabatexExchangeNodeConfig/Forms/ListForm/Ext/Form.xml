@@ -28,6 +28,10 @@
 							<v8:lang>uk</v8:lang>
 							<v8:content>Налаштування зэднання</v8:content>
 						</v8:item>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Налаштування зэднання</v8:content>
+						</v8:item>
 					</Title>
 					<ToolTip>
 						<v8:item>
@@ -64,6 +68,10 @@
 											<v8:lang>uk</v8:lang>
 											<v8:content>Зэднання</v8:content>
 										</v8:item>
+										<v8:item>
+											<v8:lang>ru</v8:lang>
+											<v8:content>Зэднання</v8:content>
+										</v8:item>
 									</Title>
 									<ToolTip>
 										<v8:item>
@@ -98,6 +106,10 @@
 											<v8:lang>uk</v8:lang>
 											<v8:content>Облікові дані</v8:content>
 										</v8:item>
+										<v8:item>
+											<v8:lang>ru</v8:lang>
+											<v8:content>Облікові дані</v8:content>
+										</v8:item>
 									</Title>
 									<ToolTip>
 										<v8:item>
@@ -129,6 +141,10 @@
 					<Title>
 						<v8:item>
 							<v8:lang>uk</v8:lang>
+							<v8:content>Ноди обміну</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
 							<v8:content>Ноди обміну</v8:content>
 						</v8:item>
 					</Title>
@@ -338,6 +354,10 @@
 			<Title>
 				<v8:item>
 					<v8:lang>uk</v8:lang>
+					<v8:content>Зберегти налаштування нода</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
 					<v8:content>Зберегти налаштування нода</v8:content>
 				</v8:item>
 			</Title>

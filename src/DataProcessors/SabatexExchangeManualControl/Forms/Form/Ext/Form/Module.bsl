@@ -4,6 +4,7 @@ Procedure OnCreateAtServer(Cancel, StandardProcessing)
 	for each node in nodes do
 		Items.NodeSelector.ChoiceList.Add(node.NodeName);
 		Items.NodeSelectorForSend.ChoiceList.Add(node.NodeName);
+		Items.NodeObjectsSelector.ChoiceList.Add(node.NodeName);
 	EndDo;
 	
 	If Object.NodeSelector <> "" then
@@ -13,6 +14,11 @@ Procedure OnCreateAtServer(Cancel, StandardProcessing)
 	If Object.NodeSelectorForSend <> "" then
 		NodeSelectorForSendOnChangeAtServer(Object.NodeSelectorForSend);
 	endif;
+	
+	
+	
+	
+	
 EndProcedure
 
 &AtServer
@@ -138,7 +144,7 @@ Procedure SendDataAtServer()
 				if objectDescriptor.Filter <> "" then
 					Query.Text = Query.Text + " AND " + objectDescriptor.Filter;
 				endif;
-				
+
 				Query.SetParameter("DateBegin",Object.DateSelect);
 				Query.SetParameter("DateEnd", Object.DateSelect);
 				
@@ -158,6 +164,51 @@ EndProcedure
 &AtClient
 Procedure SendData(Command)
 	SendDataAtServer();
+EndProcedure
+
+&AtServer
+Procedure ObjectSelectorOnChangeAtServer()
+	if Object.ObjectSelector = "" then
+		Object.ObjectSelector = "Справочник.SabatexExchangeObjectSinchro"
+	endif;	
+    UniversalO.QueryText = 
+	"SELECT
+	|	Obj.Ref AS Ref,
+	|	Obj.SabatexExchangeId AS SabatexExchangeId
+	|FROM
+	|	" + Object.ObjectSelector + " AS Obj";
+	Items.UniversalO.Refresh();
+
+EndProcedure
+
+&AtClient
+Procedure ObjectSelectorOnChange(Item)
+	ObjectSelectorOnChangeAtServer();
+EndProcedure
+
+&AtServer
+Procedure NodeObjectsSelectorOnChangeAtServer(NodeName)
+	conf = SabatexExchangeConfig.GetConfigByNodeName(NodeName);
+	for each obj in conf.Objects do
+		if obj.Value.UseIdAttribute then
+			Items.ObjectSelector.ChoiceList.Add(obj.Value.ObjectType);
+		endif;
+	enddo;	
+EndProcedure
+
+&AtClient
+Procedure NodeObjectsSelectorOnChange(Item)
+	NodeObjectsSelectorOnChangeAtServer(Object.NodeObjectSelector);
+EndProcedure
+
+&AtClient
+Procedure UniversalOBeforeRowChange(Item, Cancel)
+	obj = Items.UniversalO.CurrentData;
+    OpenFormModal("Обработка.SabatexExchangeManualControl.Форма.ObjectEditForm",new structure("ObjectRef",obj.Ref),ThisForm);
+	
+	Cancel=true; 
+	Items.UniversalO.Refresh();
+
 EndProcedure
 
 

@@ -87,6 +87,10 @@
 							<v8:lang>uk</v8:lang>
 							<v8:content>УВАГА! Зміна налаштувань в даному розділі може нанести шкоду цілістності даних бази.</v8:content>
 						</v8:item>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>УВАГА! Зміна налаштувань в даному розділі може нанести шкоду цілістності даних бази.</v8:content>
+						</v8:item>
 					</Title>
 					<ContextMenu name="WarningNodePropertyContextMenu" id="46"/>
 					<ExtendedTooltip name="WarningNodePropertyExtendedTooltip" id="47"/>
