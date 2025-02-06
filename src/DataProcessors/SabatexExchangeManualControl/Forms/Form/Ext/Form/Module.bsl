@@ -1,10 +1,10 @@
 ﻿&AtServer
 Procedure OnCreateAtServer(Cancel, StandardProcessing)
-	nodes = SabatexExchangeConfig.GetDestinationNodes();
+	nodes = SabatexExchangeConfig.GetActiveDestinationNodes();
 	for each node in nodes do
-		Items.NodeSelector.ChoiceList.Add(node.NodeName);
-		Items.NodeSelectorForSend.ChoiceList.Add(node.NodeName);
-		Items.NodeObjectsSelector.ChoiceList.Add(node.NodeName);
+		Items.NodeSelector.ChoiceList.Add(node);
+		Items.NodeSelectorForSend.ChoiceList.Add(node);
+		Items.NodeObjectsSelector.ChoiceList.Add(node);
 	EndDo;
 	
 	If Object.NodeSelector <> "" then

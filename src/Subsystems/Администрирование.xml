@@ -11,6 +11,7 @@
 				<xr:Item xsi:type="xr:MDObjectRef">InformationRegister.sabatexExchangeObject</xr:Item>
 				<xr:Item xsi:type="xr:MDObjectRef">InformationRegister.SabatexExchangeNodeConfig</xr:Item>
 				<xr:Item xsi:type="xr:MDObjectRef">DataProcessor.SabatexExchangeManualControl</xr:Item>
+				<xr:Item xsi:type="xr:MDObjectRef">Catalog.SabatexExchangeNodeConfig</xr:Item>
 			</Content>
 		</Properties>
 		<ChildObjects/>

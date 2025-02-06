@@ -125,7 +125,7 @@ endfunction
 procedure LevelUpUnresolvedObject(conf,item)
 	reg = InformationRegisters.sabatexExchangeUnresolvedObjects.CreateRecordManager();
 	reg.sender = item.sender;
-	reg.Id = item.id;
+	reg.MessageHeader = item.MessageHeader;
 	reg.Read();
 	reg.levelLive = reg.levelLive +1;
 	reg.Log = conf.Log;
@@ -134,7 +134,7 @@ endprocedure
 procedure DeleteUnresolvedObject(conf,item)
 	reg = InformationRegisters.sabatexExchangeUnresolvedObjects.CreateRecordManager();;
 	reg.sender = item.sender;
-	reg.Id = item.Id;
+	reg.MessageHeader = item.MessageHeader;
 	reg.dateStamp = item.dateStamp;
 	reg.Delete();
 endprocedure	

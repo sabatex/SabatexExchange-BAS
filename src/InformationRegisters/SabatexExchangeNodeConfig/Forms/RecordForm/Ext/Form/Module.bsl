@@ -1,14 +1,54 @@
-﻿
+﻿&AtServer
+Procedure UpdateVisibility()
+	if Record.NodeType = Enums.SabatexExchangeNodeType.USAP then
+		Items.USAPLoginGroup.Visible = true;
+		Items.destinationId.Visible = false;
+	else
+		Items.USAPLoginGroup.Visible = false;
+		Items.destinationId.Visible = true;
+	endif;
+   
+EndProcedure
+
+
+
 &AtServer
 Procedure OnReadAtServer(CurrentObject)
-	// Вставити вміст обробника.
+	if CurrentObject.NodeType = Enums.SabatexExchangeNodeType.USAP then
+		hostConf = SabatexExchangeConfig.GetHostConfig(Enums.SabatexExchangeNodeType.USAP,CurrentObject.NodeName);
+		host = hostConf.host;
+		login = hostConf.login;
+		password = hostConf.password;
+		cid = hostConf.cid;
+	endif;	
 EndProcedure
 
 &AtServer
 Procedure OnCreateAtServer(Cancel, StandardProcessing)
-	Title = Record.NodeName;   
+	Title = Record.NodeName;
+	UpdateVisibility();
+	if Record.NodeType = Enums.SabatexExchangeNodeType.EmptyRef() then
+		Record.NodeType = Enums.SabatexExchangeNodeType.Sabatex;
+	endif;
 EndProcedure
 
 &AtClient
 Procedure NodeNameOnChange(Item)
-	EndProcedure
+EndProcedure
+
+&AtClient
+Procedure NodeTypeOnChange(Item)
+	UpdateVisibility();
+EndProcedure
+
+&AtServer
+Procedure OnWriteAtServer(Cancel, CurrentObject, WriteParameters)
+	if CurrentObject.NodeType = Enums.SabatexExchangeNodeType.USAP then
+		result = new structure;
+		result.Insert("cid",Sabatex.ValueOrDefault(cid,true));
+		result.Insert("Host",Sabatex.ValueOrDefault(Host,""));
+		result.Insert("login",Sabatex.ValueOrDefault(login,""));
+		result.Insert("password",Sabatex.ValueOrDefault(password,""));
+		SabatexExchangeConfig.SetHostConfig(result,CurrentObject.NodeType,Record.NodeName);
+	endif;	
+EndProcedure

@@ -46,8 +46,8 @@ endprocedure
 // array node config  -  масив конфігурацій нодів
 //
 
-function GetDestinationNodes()
-	return SabatexExchangeConfig.GetDestinationNodes();
+function GetActiveDestinationNodes()
+	return SabatexExchangeConfig.GetActiveDestinationNodes();
 endfunction
  
  

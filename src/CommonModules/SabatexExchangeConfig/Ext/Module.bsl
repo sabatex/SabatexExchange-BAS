@@ -1,25 +1,38 @@
-﻿// Copyright (c) 2021-2024 by Serhiy Lakas
+﻿// Copyright (c) 2021 by Serhiy Lakas
 // https://sabatex.github.io
-
 // Функция - Get node config
 // 
 // Возвращаемое значение:
 //   - 
 //
-function GetHostConfig() export
-	reg = InformationRegisters.SabatexExchangeConfig.Get(new structure("Key","HostConfig"));
-	rootNode =  SabatexJSON.Deserialize(Sabatex.ValueOrDefault(reg.Value,"{}")); 
+function GetHostConfig(nodeType,nodeName="") export
 	result = new structure;
-	result.Insert("clientId",Sabatex.ValueOrDefault(rootNode["clientId"],""));
-	result.Insert("https",Sabatex.ValueOrDefault(rootNode["https"],true));
-	result.Insert("Host",Sabatex.ValueOrDefault(rootNode["Host"],"sabatex.francecentral.cloudapp.azure.com"));
-	result.Insert("Port",Sabatex.ValueOrDefault(rootNode["Port"],443));
-	result.Insert("password",Sabatex.ValueOrDefault(rootNode["password"],""));
+	if nodeType = Enums.SabatexExchangeNodeType.Sabatex then
+		reg = InformationRegisters.SabatexExchangeConfig.Get(new structure("Key","HostConfig"));
+		rootNode =  SabatexJSON.Deserialize(Sabatex.ValueOrDefault(reg.Value,"{}")); 
+		result.Insert("clientId",Sabatex.ValueOrDefault(rootNode["clientId"],""));
+		result.Insert("https",Sabatex.ValueOrDefault(rootNode["https"],true));
+		result.Insert("Host",Sabatex.ValueOrDefault(rootNode["Host"],"sabatex.francecentral.cloudapp.azure.com"));
+		result.Insert("Port",Sabatex.ValueOrDefault(rootNode["Port"],443));
+		result.Insert("password",Sabatex.ValueOrDefault(rootNode["password"],""));
+	else
+		reg = InformationRegisters.SabatexExchangeConfig.Get(new structure("Key","USAP-"+nodeName));
+		rootNode =  SabatexJSON.Deserialize(Sabatex.ValueOrDefault(reg.Value,"{}")); 
+		result.Insert("cid",Sabatex.ValueOrDefault(rootNode["cid"],""));
+		result.Insert("https",Sabatex.ValueOrDefault(rootNode["https"],true));
+		result.Insert("Host",Sabatex.ValueOrDefault(rootNode["Host"],"my.usap.online"));
+		result.Insert("Port",443);
+		result.Insert("login",Sabatex.ValueOrDefault(rootNode["login"],""));
+		result.Insert("password",Sabatex.ValueOrDefault(rootNode["password"],""));
+	endif;
+	
 	return result;
 endfunction
-procedure SetHostConfig(hostConfig) export
+
+procedure SetHostConfig(hostConfig,nodeType,nodeName="") export
 	reg = InformationRegisters.SabatexExchangeConfig.CreateRecordManager();
-	reg.Key = "HostConfig";
+	keyName = ?(nodeType = Enums.SabatexExchangeNodeType.Sabatex,"HostConfig","USAP-"+nodeName);
+	reg.Key = keyName;
 	reg.Value  = SabatexJSON.Serialize(hostConfig);;
 	reg.Write(true);
 endprocedure
@@ -33,10 +46,13 @@ endprocedure
 //  structure - Config for Node
 //
 function GetConfig(destinationNode)
-	config = new structure("Owner",undefined);
-	config.Insert("nodeConfig",GetHostConfig());
-	config.Insert("accessToken",GetAccessToken());
+	config = new structure("Owner,connection",undefined,undefined);
 	config.Insert("nodeName",destinationNode.nodeName);
+	config.Insert("NodeType",destinationNode.NodeType);
+	config.Insert("nodeConfig",GetHostConfig(destinationNode.NodeType,destinationNode.nodeName));
+	config.Insert("accessToken",GetAccessToken());
+	config.Insert("Connection",undefined); // current connection to api
+	
 	config.Insert("destinationId",new UUID(destinationNode.destinationId));
 	config.Insert("Take",destinationNode.Take);
 	config.Insert("LogLevel",destinationNode.LogLevel);
@@ -124,7 +140,8 @@ function GetConfigByNodeName(nodeName) export
 			|	SabatexExchangeNodeConfig.Send AS Send,
 			|	SabatexExchangeNodeConfig.Parse AS Parse,
 			|	SabatexExchangeNodeConfig.TakeOneMessageAtATime AS TakeOneMessageAtATime,
-			|	SabatexExchangeNodeConfig.UpdateTransacted AS UpdateTransacted
+			|	SabatexExchangeNodeConfig.UpdateTransacted AS UpdateTransacted,
+			|	SabatexExchangeNodeConfig.NodeType AS NodeType
 			|FROM
 			|	InformationRegister.SabatexExchangeNodeConfig AS SabatexExchangeNodeConfig
 			|WHERE
@@ -142,40 +159,23 @@ function GetConfigByNodeName(nodeName) export
 endfunction	
 
 
-// Функция - Get destination nodes
+// Функция - Get active destination nodes
 // 
 // Возвращаемое значение:
-// array node config  -  масив конфігурацій нодів
+// array node config  -  масив назв активних нодів
 //
-function GetDestinationNodes() export
+function GetActiveDestinationNodes() export
 		Query = new Query;
 		Query.Text = 
 			"SELECT
-			|	SabatexExchangeNodeConfig.NodeName AS NodeName,
-			|	SabatexExchangeNodeConfig.destinationId AS destinationId,
-			|	SabatexExchangeNodeConfig.isActive AS isActive,
-			|	SabatexExchangeNodeConfig.Take AS Take,
-			|	SabatexExchangeNodeConfig.LogLevel AS LogLevel,
-			|	SabatexExchangeNodeConfig.updateCatalogs AS updateCatalogs,
-			|	SabatexExchangeNodeConfig.userDefinedModule AS userDefinedModule,
-			|	SabatexExchangeNodeConfig.IsQueryEnable AS IsQueryEnable,
-			|	SabatexExchangeNodeConfig.ExchangeMode AS ExchangeMode,
-			|	SabatexExchangeNodeConfig.Send AS Send,
-			|	SabatexExchangeNodeConfig.Parse AS Parse,
-			|	SabatexExchangeNodeConfig.TakeOneMessageAtATime AS TakeOneMessageAtATime,
-			|	SabatexExchangeNodeConfig.UpdateTransacted AS UpdateTransacted
+			|	SabatexExchangeNodeConfig.NodeName AS NodeName
 			|FROM
 			|	InformationRegister.SabatexExchangeNodeConfig AS SabatexExchangeNodeConfig
 			|WHERE
 			|	SabatexExchangeNodeConfig.isActive = TRUE";
 		result = new Array;
 			
-		QueryResult = Query.Execute();
-		SelectionDetailRecords = QueryResult.Select();
-		While SelectionDetailRecords.Next() Do
-			result.Add(GetConfig(SelectionDetailRecords));
-		enddo;	
-		return result;	
+		return Query.Execute().Unload().UnloadColumn("NodeName");
 endfunction
 
 function GetObjectDescription(objectType)

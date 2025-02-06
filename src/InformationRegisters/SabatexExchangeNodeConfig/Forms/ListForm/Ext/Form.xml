@@ -236,11 +236,10 @@
 									<ContextMenu name="TakeКонтекстноеМеню" id="41"/>
 									<ExtendedTooltip name="TakeРасширеннаяПодсказка" id="42"/>
 								</LabelField>
-								<LabelField name="LogLevel" id="43">
-									<DataPath>Список.LogLevel</DataPath>
-									<DefaultItem>true</DefaultItem>
-									<ContextMenu name="LogLevelКонтекстноеМеню" id="44"/>
-									<ExtendedTooltip name="LogLevelРасширеннаяПодсказка" id="45"/>
+								<LabelField name="NodeType" id="82">
+									<DataPath>Список.NodeType</DataPath>
+									<ContextMenu name="NodeTypeContextMenu" id="83"/>
+									<ExtendedTooltip name="NodeTypeExtendedTooltip" id="84"/>
 								</LabelField>
 							</ChildItems>
 						</Table>

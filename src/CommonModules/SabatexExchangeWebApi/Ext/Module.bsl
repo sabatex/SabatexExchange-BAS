@@ -3,7 +3,7 @@
 
 function CreateHTTPSConnection(conf)
 	nodeConfig = conf.nodeConfig;
-	ssl = ?(nodeConfig.https,new ЗащищенноеСоединениеOpenSSL( undefined, undefined ),undefined);
+	ssl = ?(nodeConfig.https,new OpenSSLSecureConnection( undefined, undefined ),undefined);
 	host = nodeConfig.host;
 	port = nodeConfig.port;
 	result = new HTTPConnection(host,port,,,,,ssl);
@@ -29,7 +29,7 @@ endfunction
 // Ідентифікація на сервері обміну
 // - nodeConfig параметри зєднання
 // result:
-//  accessToken
+// bearer accessToken 
 function Login(conf)
 	connection = CreateHTTPSConnection(conf);
 	request = new HTTPRequest(BuildUrl("api/v1/login"));
@@ -42,14 +42,45 @@ function Login(conf)
 	if response.StatusCode <> 200 then
 		raise "Login error with StatusCode="+ response.StatusCode;
 	endif;
-		
-	apiToken = response.GetBodyAsString();
+	
+   	apiToken = response.GetBodyAsString();
 	
 	if apiToken = "" then
 		raise "Не отримано токен";
-	endif;	
+	endif;
+	
 	return SabatexJSON.Deserialize(apiToken);
+endfunction 
+
+// Функция - Login USAP
+//
+// Параметры:
+//  conf - 	 - 
+// 
+// Возвращаемое значение:
+//   - 
+//
+function LoginUSAP(conf)
+	connection = CreateHTTPSConnection(conf);
+	request = new HTTPRequest(BuildUrl("login"));
+	request.Headers.Insert("Content-Type","application/json; charset=utf-8");
+	jsonString = SabatexJSON.Serialize(new structure("cid,login,password",conf.nodeConfig.cid,conf.nodeConfig.login,conf.nodeConfig.password));
+	request.SetBodyFromString(jsonString,"UTF-8",ByteOrderMarkUse.DontUse);
+	response = connection.Post(request);
+	
+	if response.StatusCode <> 200 then
+		raise "Login error with StatusCode="+ response.StatusCode;
+	endif;
+	
+	cookie = response.Headers["Set-Cookie"];
+	if not ValueIsFilled(cookie) then 
+		raise "Login error with cookie not found Responce:"+ response.StatusCode;
+	endif;
+    return cookie;
 endfunction
+
+
+
 // отримати новий токен за допомогою  refresh_token
 function RefreshToken(conf)
 	connection = CreateHTTPSConnection(conf);
@@ -90,6 +121,7 @@ function updateToken(conf)
 	endtry;	
 	return false;
 endfunction
+
 // download objects from server bay sender nodeName
 function GetObjectsExchange(conf,first=true) export
 	connection = CreateHTTPSConnection(conf); 
@@ -123,6 +155,9 @@ function GetObjectsExchange(conf,first=true) export
 		raise "GetObjectsExchange error request with error:"+ОписаниеОшибки();
 	endtry;	
 endfunction
+
+
+
 // Процедура - Delete exchange object
 //
 // Параметры:

@@ -1,0 +1,280 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<Form xmlns="http://v8.1c.ru/8.3/xcf/logform" xmlns:app="http://v8.1c.ru/8.2/managed-application/core" xmlns:cfg="http://v8.1c.ru/8.1/data/enterprise/current-config" xmlns:dcscor="http://v8.1c.ru/8.1/data-composition-system/core" xmlns:dcsset="http://v8.1c.ru/8.1/data-composition-system/settings" xmlns:ent="http://v8.1c.ru/8.1/data/enterprise" xmlns:lf="http://v8.1c.ru/8.2/managed-application/logform" xmlns:style="http://v8.1c.ru/8.1/data/ui/style" xmlns:sys="http://v8.1c.ru/8.1/data/ui/fonts/system" xmlns:v8="http://v8.1c.ru/8.1/data/core" xmlns:v8ui="http://v8.1c.ru/8.1/data/ui" xmlns:web="http://v8.1c.ru/8.1/data/ui/colors/web" xmlns:win="http://v8.1c.ru/8.1/data/ui/colors/windows" xmlns:xr="http://v8.1c.ru/8.3/xcf/readable" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="2.12">
+	<WindowOpeningMode>LockOwnerWindow</WindowOpeningMode>
+	<UseForFoldersAndItems>Items</UseForFoldersAndItems>
+	<AutoCommandBar name="FormCommandBar" id="-1"/>
+	<ChildItems>
+		<InputField name="ExchangeMode" id="28">
+			<DataPath>Object.ExchangeMode</DataPath>
+			<EditMode>EnterOnInput</EditMode>
+			<ContextMenu name="ExchangeModeContextMenu" id="29"/>
+			<ExtendedTooltip name="ExchangeModeExtendedTooltip" id="30"/>
+		</InputField>
+		<CheckBoxField name="isActive" id="10">
+			<DataPath>Object.isActive</DataPath>
+			<EditMode>EnterOnInput</EditMode>
+			<CheckBoxType>Auto</CheckBoxType>
+			<ContextMenu name="isActiveContextMenu" id="11"/>
+			<ExtendedTooltip name="isActiveExtendedTooltip" id="12"/>
+		</CheckBoxField>
+		<InputField name="Take" id="13">
+			<DataPath>Object.Take</DataPath>
+			<EditMode>EnterOnInput</EditMode>
+			<ContextMenu name="TakeContextMenu" id="14"/>
+			<ExtendedTooltip name="TakeExtendedTooltip" id="15"/>
+		</InputField>
+		<InputField name="LogLevel" id="16">
+			<DataPath>Object.LogLevel</DataPath>
+			<EditMode>EnterOnInput</EditMode>
+			<ContextMenu name="LogLevelContextMenu" id="17"/>
+			<ExtendedTooltip name="LogLevelExtendedTooltip" id="18"/>
+		</InputField>
+		<CheckBoxField name="Send" id="31">
+			<DataPath>Object.Send</DataPath>
+			<EditMode>EnterOnInput</EditMode>
+			<CheckBoxType>Auto</CheckBoxType>
+			<ContextMenu name="SendContextMenu" id="32"/>
+			<ExtendedTooltip name="SendExtendedTooltip" id="33"/>
+		</CheckBoxField>
+		<CheckBoxField name="Parse" id="34">
+			<DataPath>Object.Parse</DataPath>
+			<EditMode>EnterOnInput</EditMode>
+			<CheckBoxType>Auto</CheckBoxType>
+			<ContextMenu name="ParseContextMenu" id="35"/>
+			<ExtendedTooltip name="ParseExtendedTooltip" id="36"/>
+		</CheckBoxField>
+		<CheckBoxField name="TakeOneMessageAtATime" id="37">
+			<DataPath>Object.TakeOneMessageAtATime</DataPath>
+			<EditMode>EnterOnInput</EditMode>
+			<CheckBoxType>Auto</CheckBoxType>
+			<ContextMenu name="TakeOneMessageAtATimeContextMenu" id="38"/>
+			<ExtendedTooltip name="TakeOneMessageAtATimeExtendedTooltip" id="39"/>
+		</CheckBoxField>
+		<InputField name="UpdateTransacted" id="40">
+			<DataPath>Object.UpdateTransacted</DataPath>
+			<EditMode>EnterOnInput</EditMode>
+			<ContextMenu name="UpdateTransactedContextMenu" id="41"/>
+			<ExtendedTooltip name="UpdateTransactedExtendedTooltip" id="42"/>
+		</InputField>
+		<InputField name="Code" id="1">
+			<DataPath>Object.Code</DataPath>
+			<EditMode>EnterOnInput</EditMode>
+			<ContextMenu name="CodeContextMenu" id="2"/>
+			<ExtendedTooltip name="CodeExtendedTooltip" id="3"/>
+		</InputField>
+		<InputField name="Description" id="4">
+			<DataPath>Object.Description</DataPath>
+			<EditMode>EnterOnInput</EditMode>
+			<ContextMenu name="DescriptionContextMenu" id="5"/>
+			<ExtendedTooltip name="DescriptionExtendedTooltip" id="6"/>
+		</InputField>
+		<UsualGroup name="GroupAdminProperty" id="46">
+			<Title>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Властивості нода</v8:content>
+				</v8:item>
+			</Title>
+			<ToolTip>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Group admin property</v8:content>
+				</v8:item>
+			</ToolTip>
+			<Group>Vertical</Group>
+			<Behavior>Collapsible</Behavior>
+			<Collapsed>true</Collapsed>
+			<Representation>StrongSeparation</Representation>
+			<ExtendedTooltip name="GroupAdminPropertyExtendedTooltip" id="47"/>
+			<ChildItems>
+				<LabelDecoration name="WarningNodeProperty" id="48">
+					<TextColor>style:SpecialTextColor</TextColor>
+					<Title formatted="false">
+						<v8:item>
+							<v8:lang>uk</v8:lang>
+							<v8:content>УВАГА! Зміна налаштувань в даному розділі може нанести шкоду цілістності даних бази.</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>УВАГА! Зміна налаштувань в даному розділі може нанести шкоду цілістності даних бази.</v8:content>
+						</v8:item>
+					</Title>
+					<ContextMenu name="WarningNodePropertyContextMenu" id="49"/>
+					<ExtendedTooltip name="WarningNodePropertyExtendedTooltip" id="50"/>
+				</LabelDecoration>
+				<InputField name="NodeType" id="43">
+					<DataPath>Object.NodeType</DataPath>
+					<EditMode>EnterOnInput</EditMode>
+					<ContextMenu name="NodeTypeContextMenu" id="44"/>
+					<ExtendedTooltip name="NodeTypeExtendedTooltip" id="45"/>
+				</InputField>
+				<InputField name="destinationId" id="7">
+					<DataPath>Object.destinationId</DataPath>
+					<EditMode>EnterOnInput</EditMode>
+					<ContextMenu name="destinationIdContextMenu" id="8"/>
+					<ExtendedTooltip name="destinationIdExtendedTooltip" id="9"/>
+				</InputField>
+				<InputField name="NodeName" id="57">
+					<DataPath>Object.Description</DataPath>
+					<Title>
+						<v8:item>
+							<v8:lang>uk</v8:lang>
+							<v8:content>Назва вузла</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Назва вузла</v8:content>
+						</v8:item>
+					</Title>
+					<ContextMenu name="NodeNameContextMenu" id="58"/>
+					<ExtendedTooltip name="NodeNameExtendedTooltip" id="59"/>
+					<Events>
+						<Event name="OnChange">NodeNameOnChange</Event>
+					</Events>
+				</InputField>
+				<UsualGroup name="USAPLoginGroup" id="60">
+					<Title>
+						<v8:item>
+							<v8:lang>uk</v8:lang>
+							<v8:content>Налаштування USAP</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Налаштування USAP</v8:content>
+						</v8:item>
+					</Title>
+					<ToolTip>
+						<v8:item>
+							<v8:lang>uk</v8:lang>
+							<v8:content>USAPLogin group</v8:content>
+						</v8:item>
+					</ToolTip>
+					<Group>Vertical</Group>
+					<BackColor>style:ImportantColor</BackColor>
+					<ExtendedTooltip name="USAPLoginGroupExtendedTooltip" id="61"/>
+					<ChildItems>
+						<InputField name="cid" id="65">
+							<DataPath>cid</DataPath>
+							<AutoMaxWidth>false</AutoMaxWidth>
+							<ContextMenu name="cidContextMenu" id="66"/>
+							<ExtendedTooltip name="cidExtendedTooltip" id="67"/>
+						</InputField>
+						<UsualGroup name="Group2" id="68">
+							<ShowTitle>false</ShowTitle>
+							<ExtendedTooltip name="Group2ExtendedTooltip" id="69"/>
+							<ChildItems>
+								<InputField name="login" id="70">
+									<DataPath>login</DataPath>
+									<ContextMenu name="loginContextMenu" id="71"/>
+									<ExtendedTooltip name="loginExtendedTooltip" id="72"/>
+								</InputField>
+								<InputField name="password" id="73">
+									<DataPath>password</DataPath>
+									<ContextMenu name="passwordContextMenu" id="74"/>
+									<ExtendedTooltip name="passwordExtendedTooltip" id="75"/>
+								</InputField>
+							</ChildItems>
+						</UsualGroup>
+					</ChildItems>
+				</UsualGroup>
+				<InputField name="userDefinedModule" id="22">
+					<DataPath>Object.userDefinedModule</DataPath>
+					<EditMode>EnterOnInput</EditMode>
+					<ContextMenu name="userDefinedModuleContextMenu" id="23"/>
+					<ExtendedTooltip name="userDefinedModuleExtendedTooltip" id="24"/>
+				</InputField>
+				<CheckBoxField name="IsQueryEnable" id="25">
+					<DataPath>Object.IsQueryEnable</DataPath>
+					<EditMode>EnterOnInput</EditMode>
+					<CheckBoxType>Auto</CheckBoxType>
+					<ContextMenu name="IsQueryEnableContextMenu" id="26"/>
+					<ExtendedTooltip name="IsQueryEnableExtendedTooltip" id="27"/>
+				</CheckBoxField>
+				<CheckBoxField name="updateCatalogs" id="19">
+					<DataPath>Object.updateCatalogs</DataPath>
+					<EditMode>EnterOnInput</EditMode>
+					<CheckBoxType>Auto</CheckBoxType>
+					<ContextMenu name="updateCatalogsContextMenu" id="20"/>
+					<ExtendedTooltip name="updateCatalogsExtendedTooltip" id="21"/>
+				</CheckBoxField>
+			</ChildItems>
+		</UsualGroup>
+	</ChildItems>
+	<Attributes>
+		<Attribute name="Object" id="1">
+			<Type>
+				<v8:Type>cfg:CatalogObject.SabatexExchangeNodeConfig</v8:Type>
+			</Type>
+			<MainAttribute>true</MainAttribute>
+			<SavedData>true</SavedData>
+		</Attribute>
+		<Attribute name="cid" id="2">
+			<Title>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Cid</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>xs:string</v8:Type>
+				<v8:StringQualifiers>
+					<v8:Length>0</v8:Length>
+					<v8:AllowedLength>Variable</v8:AllowedLength>
+				</v8:StringQualifiers>
+			</Type>
+		</Attribute>
+		<Attribute name="host" id="3">
+			<Title>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Host</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>xs:string</v8:Type>
+				<v8:StringQualifiers>
+					<v8:Length>0</v8:Length>
+					<v8:AllowedLength>Variable</v8:AllowedLength>
+				</v8:StringQualifiers>
+			</Type>
+		</Attribute>
+		<Attribute name="login" id="4">
+			<Title>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Логін</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Логін</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>xs:string</v8:Type>
+				<v8:StringQualifiers>
+					<v8:Length>0</v8:Length>
+					<v8:AllowedLength>Variable</v8:AllowedLength>
+				</v8:StringQualifiers>
+			</Type>
+		</Attribute>
+		<Attribute name="password" id="5">
+			<Title>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Пароль</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Пароль</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>xs:string</v8:Type>
+				<v8:StringQualifiers>
+					<v8:Length>0</v8:Length>
+					<v8:AllowedLength>Variable</v8:AllowedLength>
+				</v8:StringQualifiers>
+			</Type>
+		</Attribute>
+	</Attributes>
+</Form>

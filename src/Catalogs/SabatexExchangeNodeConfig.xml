@@ -1,34 +1,26 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <MetaDataObject xmlns="http://v8.1c.ru/8.3/MDClasses" xmlns:app="http://v8.1c.ru/8.2/managed-application/core" xmlns:cfg="http://v8.1c.ru/8.1/data/enterprise/current-config" xmlns:cmi="http://v8.1c.ru/8.2/managed-application/cmi" xmlns:ent="http://v8.1c.ru/8.1/data/enterprise" xmlns:lf="http://v8.1c.ru/8.2/managed-application/logform" xmlns:style="http://v8.1c.ru/8.1/data/ui/style" xmlns:sys="http://v8.1c.ru/8.1/data/ui/fonts/system" xmlns:v8="http://v8.1c.ru/8.1/data/core" xmlns:v8ui="http://v8.1c.ru/8.1/data/ui" xmlns:web="http://v8.1c.ru/8.1/data/ui/colors/web" xmlns:win="http://v8.1c.ru/8.1/data/ui/colors/windows" xmlns:xen="http://v8.1c.ru/8.3/xcf/enums" xmlns:xpr="http://v8.1c.ru/8.3/xcf/predef" xmlns:xr="http://v8.1c.ru/8.3/xcf/readable" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="2.12">
-	<InformationRegister uuid="c698a8e8-9fc2-480b-bd3f-96bae0e5279c">
+	<Catalog uuid="71587d2b-dc07-4284-a2f1-ee0f48e88ee8">
 		<InternalInfo>
-			<xr:GeneratedType name="InformationRegisterRecord.SabatexExchangeNodeConfig" category="Record">
-				<xr:TypeId>4c0416e3-8a41-4c51-9b85-e6aba356c79c</xr:TypeId>
-				<xr:ValueId>e72fc310-b442-41f8-91d1-e651cc7b884b</xr:ValueId>
+			<xr:GeneratedType name="CatalogObject.SabatexExchangeNodeConfig" category="Object">
+				<xr:TypeId>4b1cfe9c-b1fc-4dcb-9921-06a8e1ae6bc6</xr:TypeId>
+				<xr:ValueId>ac45b26b-d476-456e-b678-52f4da3bb80e</xr:ValueId>
 			</xr:GeneratedType>
-			<xr:GeneratedType name="InformationRegisterManager.SabatexExchangeNodeConfig" category="Manager">
-				<xr:TypeId>f9edb21a-2fd7-4d35-94a9-1138e376073c</xr:TypeId>
-				<xr:ValueId>72130593-7291-4f91-9a28-4fc1e075ff32</xr:ValueId>
+			<xr:GeneratedType name="CatalogRef.SabatexExchangeNodeConfig" category="Ref">
+				<xr:TypeId>7329c1fd-44ef-46c2-b96e-c04db218cbcf</xr:TypeId>
+				<xr:ValueId>127be762-b73a-429e-a3b5-b553c280de77</xr:ValueId>
 			</xr:GeneratedType>
-			<xr:GeneratedType name="InformationRegisterSelection.SabatexExchangeNodeConfig" category="Selection">
-				<xr:TypeId>8fc7458f-de6e-407d-8f1a-7f3b4bccd72c</xr:TypeId>
-				<xr:ValueId>1e6cf302-4639-4c2d-89a1-5f2cf7cca28d</xr:ValueId>
+			<xr:GeneratedType name="CatalogSelection.SabatexExchangeNodeConfig" category="Selection">
+				<xr:TypeId>d067c5da-f339-42e3-84a2-860d95ad32d9</xr:TypeId>
+				<xr:ValueId>5cf42bd6-b828-4e74-8357-396d9c92d4d7</xr:ValueId>
 			</xr:GeneratedType>
-			<xr:GeneratedType name="InformationRegisterList.SabatexExchangeNodeConfig" category="List">
-				<xr:TypeId>e53b9137-15b6-4bf0-9112-4cc5faa60097</xr:TypeId>
-				<xr:ValueId>bc387be1-4243-4f9f-94c5-1dcac50f4c21</xr:ValueId>
+			<xr:GeneratedType name="CatalogList.SabatexExchangeNodeConfig" category="List">
+				<xr:TypeId>e60473e1-4c67-4407-8c0b-97162a8c0e78</xr:TypeId>
+				<xr:ValueId>257515aa-d5b6-4bfd-abd2-c7be68d478e1</xr:ValueId>
 			</xr:GeneratedType>
-			<xr:GeneratedType name="InformationRegisterRecordSet.SabatexExchangeNodeConfig" category="RecordSet">
-				<xr:TypeId>fffe4dfa-4ed4-41b9-acf5-5605e81453ee</xr:TypeId>
-				<xr:ValueId>bdd89166-f728-4a24-9c6f-2407c758bd9f</xr:ValueId>
-			</xr:GeneratedType>
-			<xr:GeneratedType name="InformationRegisterRecordKey.SabatexExchangeNodeConfig" category="RecordKey">
-				<xr:TypeId>2da5a5e2-0b4d-4b7d-9a8b-c8f97754ffd5</xr:TypeId>
-				<xr:ValueId>02abd34d-14f0-4279-b336-80012c4a6e15</xr:ValueId>
-			</xr:GeneratedType>
-			<xr:GeneratedType name="InformationRegisterRecordManager.SabatexExchangeNodeConfig" category="RecordManager">
-				<xr:TypeId>ab02348b-81a8-469f-ae93-e79f2a26c129</xr:TypeId>
-				<xr:ValueId>a4f2adc2-f88e-4b19-b730-9426cf9f6846</xr:ValueId>
+			<xr:GeneratedType name="CatalogManager.SabatexExchangeNodeConfig" category="Manager">
+				<xr:TypeId>f457019d-7cd4-4602-b4b9-a47222013978</xr:TypeId>
+				<xr:ValueId>f6efd33a-24dd-49fd-ac0d-6c6d46c096b3</xr:ValueId>
 			</xr:GeneratedType>
 		</InternalInfo>
 		<Properties>
@@ -38,143 +30,64 @@
 					<v8:lang>uk</v8:lang>
 					<v8:content>Налаштування нодів обміну</v8:content>
 				</v8:item>
-				<v8:item>
-					<v8:lang>ru</v8:lang>
-					<v8:content>Налаштування нодів обміну</v8:content>
-				</v8:item>
 			</Synonym>
-			<Comment>Configuration for exchange</Comment>
+			<Comment>Налаштування нодів обміну</Comment>
+			<Hierarchical>false</Hierarchical>
+			<HierarchyType>HierarchyFoldersAndItems</HierarchyType>
+			<LimitLevelCount>false</LimitLevelCount>
+			<LevelCount>2</LevelCount>
+			<FoldersOnTop>true</FoldersOnTop>
 			<UseStandardCommands>true</UseStandardCommands>
+			<Owners/>
+			<SubordinationUse>ToItems</SubordinationUse>
+			<CodeLength>9</CodeLength>
+			<DescriptionLength>50</DescriptionLength>
+			<CodeType>String</CodeType>
+			<CodeAllowedLength>Variable</CodeAllowedLength>
+			<CodeSeries>WholeCatalog</CodeSeries>
+			<CheckUnique>true</CheckUnique>
+			<Autonumbering>true</Autonumbering>
+			<DefaultPresentation>AsDescription</DefaultPresentation>
+			<Characteristics/>
+			<PredefinedDataUpdate>Auto</PredefinedDataUpdate>
 			<EditType>InDialog</EditType>
-			<DefaultRecordForm>InformationRegister.SabatexExchangeNodeConfig.Form.RecordForm</DefaultRecordForm>
-			<DefaultListForm>InformationRegister.SabatexExchangeNodeConfig.Form.ListForm</DefaultListForm>
-			<AuxiliaryRecordForm/>
+			<QuickChoice>false</QuickChoice>
+			<ChoiceMode>BothWays</ChoiceMode>
+			<InputByString>
+				<xr:Field>Catalog.SabatexExchangeNodeConfig.StandardAttribute.Description</xr:Field>
+				<xr:Field>Catalog.SabatexExchangeNodeConfig.StandardAttribute.Code</xr:Field>
+			</InputByString>
+			<SearchStringModeOnInputByString>Begin</SearchStringModeOnInputByString>
+			<FullTextSearchOnInputByString>DontUse</FullTextSearchOnInputByString>
+			<ChoiceDataGetModeOnInputByString>Directly</ChoiceDataGetModeOnInputByString>
+			<DefaultObjectForm>Catalog.SabatexExchangeNodeConfig.Form.ItemForm</DefaultObjectForm>
+			<DefaultFolderForm/>
+			<DefaultListForm/>
+			<DefaultChoiceForm/>
+			<DefaultFolderChoiceForm/>
+			<AuxiliaryObjectForm/>
+			<AuxiliaryFolderForm/>
 			<AuxiliaryListForm/>
-			<StandardAttributes>
-				<xr:StandardAttribute name="Active">
-					<xr:LinkByType/>
-					<xr:FillChecking>DontCheck</xr:FillChecking>
-					<xr:MultiLine>false</xr:MultiLine>
-					<xr:FillFromFillingValue>false</xr:FillFromFillingValue>
-					<xr:CreateOnInput>Auto</xr:CreateOnInput>
-					<xr:MaxValue xsi:nil="true"/>
-					<xr:ToolTip/>
-					<xr:ExtendedEdit>false</xr:ExtendedEdit>
-					<xr:Format/>
-					<xr:ChoiceForm/>
-					<xr:QuickChoice>Auto</xr:QuickChoice>
-					<xr:ChoiceHistoryOnInput>Auto</xr:ChoiceHistoryOnInput>
-					<xr:EditFormat/>
-					<xr:PasswordMode>false</xr:PasswordMode>
-					<xr:DataHistory>Use</xr:DataHistory>
-					<xr:MarkNegatives>false</xr:MarkNegatives>
-					<xr:MinValue xsi:nil="true"/>
-					<xr:Synonym/>
-					<xr:Comment/>
-					<xr:FullTextSearch>Use</xr:FullTextSearch>
-					<xr:ChoiceParameterLinks/>
-					<xr:FillValue xsi:nil="true"/>
-					<xr:Mask/>
-					<xr:ChoiceParameters/>
-				</xr:StandardAttribute>
-				<xr:StandardAttribute name="LineNumber">
-					<xr:LinkByType/>
-					<xr:FillChecking>DontCheck</xr:FillChecking>
-					<xr:MultiLine>false</xr:MultiLine>
-					<xr:FillFromFillingValue>false</xr:FillFromFillingValue>
-					<xr:CreateOnInput>Auto</xr:CreateOnInput>
-					<xr:MaxValue xsi:nil="true"/>
-					<xr:ToolTip/>
-					<xr:ExtendedEdit>false</xr:ExtendedEdit>
-					<xr:Format/>
-					<xr:ChoiceForm/>
-					<xr:QuickChoice>Auto</xr:QuickChoice>
-					<xr:ChoiceHistoryOnInput>Auto</xr:ChoiceHistoryOnInput>
-					<xr:EditFormat/>
-					<xr:PasswordMode>false</xr:PasswordMode>
-					<xr:DataHistory>Use</xr:DataHistory>
-					<xr:MarkNegatives>false</xr:MarkNegatives>
-					<xr:MinValue xsi:nil="true"/>
-					<xr:Synonym/>
-					<xr:Comment/>
-					<xr:FullTextSearch>Use</xr:FullTextSearch>
-					<xr:ChoiceParameterLinks/>
-					<xr:FillValue xsi:nil="true"/>
-					<xr:Mask/>
-					<xr:ChoiceParameters/>
-				</xr:StandardAttribute>
-				<xr:StandardAttribute name="Recorder">
-					<xr:LinkByType/>
-					<xr:FillChecking>DontCheck</xr:FillChecking>
-					<xr:MultiLine>false</xr:MultiLine>
-					<xr:FillFromFillingValue>false</xr:FillFromFillingValue>
-					<xr:CreateOnInput>Auto</xr:CreateOnInput>
-					<xr:MaxValue xsi:nil="true"/>
-					<xr:ToolTip/>
-					<xr:ExtendedEdit>false</xr:ExtendedEdit>
-					<xr:Format/>
-					<xr:ChoiceForm/>
-					<xr:QuickChoice>Auto</xr:QuickChoice>
-					<xr:ChoiceHistoryOnInput>Auto</xr:ChoiceHistoryOnInput>
-					<xr:EditFormat/>
-					<xr:PasswordMode>false</xr:PasswordMode>
-					<xr:DataHistory>Use</xr:DataHistory>
-					<xr:MarkNegatives>false</xr:MarkNegatives>
-					<xr:MinValue xsi:nil="true"/>
-					<xr:Synonym/>
-					<xr:Comment/>
-					<xr:FullTextSearch>Use</xr:FullTextSearch>
-					<xr:ChoiceParameterLinks/>
-					<xr:FillValue xsi:nil="true"/>
-					<xr:Mask/>
-					<xr:ChoiceParameters/>
-				</xr:StandardAttribute>
-				<xr:StandardAttribute name="Period">
-					<xr:LinkByType/>
-					<xr:FillChecking>ShowError</xr:FillChecking>
-					<xr:MultiLine>false</xr:MultiLine>
-					<xr:FillFromFillingValue>false</xr:FillFromFillingValue>
-					<xr:CreateOnInput>Auto</xr:CreateOnInput>
-					<xr:MaxValue xsi:nil="true"/>
-					<xr:ToolTip/>
-					<xr:ExtendedEdit>false</xr:ExtendedEdit>
-					<xr:Format/>
-					<xr:ChoiceForm/>
-					<xr:QuickChoice>Auto</xr:QuickChoice>
-					<xr:ChoiceHistoryOnInput>Auto</xr:ChoiceHistoryOnInput>
-					<xr:EditFormat/>
-					<xr:PasswordMode>false</xr:PasswordMode>
-					<xr:DataHistory>Use</xr:DataHistory>
-					<xr:MarkNegatives>false</xr:MarkNegatives>
-					<xr:MinValue xsi:nil="true"/>
-					<xr:Synonym/>
-					<xr:Comment/>
-					<xr:FullTextSearch>Use</xr:FullTextSearch>
-					<xr:ChoiceParameterLinks/>
-					<xr:FillValue xsi:nil="true"/>
-					<xr:Mask/>
-					<xr:ChoiceParameters/>
-				</xr:StandardAttribute>
-			</StandardAttributes>
-			<InformationRegisterPeriodicity>Nonperiodical</InformationRegisterPeriodicity>
-			<WriteMode>Independent</WriteMode>
-			<MainFilterOnPeriod>false</MainFilterOnPeriod>
+			<AuxiliaryChoiceForm/>
+			<AuxiliaryFolderChoiceForm/>
 			<IncludeHelpInContents>false</IncludeHelpInContents>
+			<BasedOn/>
+			<DataLockFields/>
 			<DataLockControlMode>Managed</DataLockControlMode>
-			<FullTextSearch>DontUse</FullTextSearch>
-			<EnableTotalsSliceFirst>false</EnableTotalsSliceFirst>
-			<EnableTotalsSliceLast>false</EnableTotalsSliceLast>
-			<RecordPresentation/>
-			<ExtendedRecordPresentation/>
+			<FullTextSearch>Use</FullTextSearch>
+			<ObjectPresentation/>
+			<ExtendedObjectPresentation/>
 			<ListPresentation/>
 			<ExtendedListPresentation/>
 			<Explanation/>
+			<CreateOnInput>Use</CreateOnInput>
+			<ChoiceHistoryOnInput>Auto</ChoiceHistoryOnInput>
 			<DataHistory>DontUse</DataHistory>
 			<UpdateDataHistoryImmediatelyAfterWrite>false</UpdateDataHistoryImmediatelyAfterWrite>
 			<ExecuteAfterWriteDataHistoryVersionProcessing>false</ExecuteAfterWriteDataHistoryVersionProcessing>
 		</Properties>
 		<ChildObjects>
-			<Resource uuid="498f1b50-c0dc-400d-9fa5-c68980eaa772">
+			<Attribute uuid="3e7b30a5-e324-4203-ae37-b3d74d328e7d">
 				<Properties>
 					<Name>destinationId</Name>
 					<Synonym>
@@ -216,12 +129,13 @@
 					<ChoiceForm/>
 					<LinkByType/>
 					<ChoiceHistoryOnInput>Auto</ChoiceHistoryOnInput>
+					<Use>ForItem</Use>
 					<Indexing>DontIndex</Indexing>
 					<FullTextSearch>Use</FullTextSearch>
 					<DataHistory>Use</DataHistory>
 				</Properties>
-			</Resource>
-			<Resource uuid="f2a4ad1b-0cc4-4cb3-a8f4-2882e24e14d3">
+			</Attribute>
+			<Attribute uuid="f3f1f271-59c2-480a-bdd6-f76186116af7">
 				<Properties>
 					<Name>isActive</Name>
 					<Synonym>
@@ -264,12 +178,13 @@
 					<ChoiceForm/>
 					<LinkByType/>
 					<ChoiceHistoryOnInput>Auto</ChoiceHistoryOnInput>
+					<Use>ForItem</Use>
 					<Indexing>DontIndex</Indexing>
 					<FullTextSearch>Use</FullTextSearch>
 					<DataHistory>Use</DataHistory>
 				</Properties>
-			</Resource>
-			<Resource uuid="4e0916b4-45f8-48d8-8e09-fafa7659d58a">
+			</Attribute>
+			<Attribute uuid="0d1f268a-481d-45ac-9f42-768ed21e6949">
 				<Properties>
 					<Name>Take</Name>
 					<Synonym>
@@ -312,12 +227,13 @@
 					<ChoiceForm/>
 					<LinkByType/>
 					<ChoiceHistoryOnInput>Auto</ChoiceHistoryOnInput>
+					<Use>ForItem</Use>
 					<Indexing>DontIndex</Indexing>
 					<FullTextSearch>Use</FullTextSearch>
 					<DataHistory>Use</DataHistory>
 				</Properties>
-			</Resource>
-			<Resource uuid="c1ad8f66-c3fe-4be6-9250-3080edb8632e">
+			</Attribute>
+			<Attribute uuid="fc8d377d-1474-49df-a9dd-0b74a20d6703">
 				<Properties>
 					<Name>LogLevel</Name>
 					<Synonym>
@@ -360,12 +276,13 @@
 					<ChoiceForm/>
 					<LinkByType/>
 					<ChoiceHistoryOnInput>Auto</ChoiceHistoryOnInput>
+					<Use>ForItem</Use>
 					<Indexing>DontIndex</Indexing>
 					<FullTextSearch>Use</FullTextSearch>
 					<DataHistory>Use</DataHistory>
 				</Properties>
-			</Resource>
-			<Resource uuid="5f534f93-9d50-4286-aed2-881de2310650">
+			</Attribute>
+			<Attribute uuid="781531fa-10d5-4ffb-b974-9de37a5a918b">
 				<Properties>
 					<Name>updateCatalogs</Name>
 					<Synonym>
@@ -403,12 +320,13 @@
 					<ChoiceForm/>
 					<LinkByType/>
 					<ChoiceHistoryOnInput>Auto</ChoiceHistoryOnInput>
+					<Use>ForItem</Use>
 					<Indexing>DontIndex</Indexing>
 					<FullTextSearch>Use</FullTextSearch>
 					<DataHistory>Use</DataHistory>
 				</Properties>
-			</Resource>
-			<Resource uuid="bfc48e56-2ce5-4b48-b947-757f2e74c8e0">
+			</Attribute>
+			<Attribute uuid="399d1325-b22b-49ba-979a-80e19bf7e22b">
 				<Properties>
 					<Name>userDefinedModule</Name>
 					<Synonym>
@@ -450,12 +368,13 @@
 					<ChoiceForm/>
 					<LinkByType/>
 					<ChoiceHistoryOnInput>Auto</ChoiceHistoryOnInput>
+					<Use>ForItem</Use>
 					<Indexing>DontIndex</Indexing>
 					<FullTextSearch>Use</FullTextSearch>
 					<DataHistory>Use</DataHistory>
 				</Properties>
-			</Resource>
-			<Resource uuid="e10b33bd-4a8b-4956-9467-87cb09097a51">
+			</Attribute>
+			<Attribute uuid="d382bcc8-4aa9-4134-9932-d24848352724">
 				<Properties>
 					<Name>IsQueryEnable</Name>
 					<Synonym>
@@ -493,12 +412,13 @@
 					<ChoiceForm/>
 					<LinkByType/>
 					<ChoiceHistoryOnInput>Auto</ChoiceHistoryOnInput>
+					<Use>ForItem</Use>
 					<Indexing>DontIndex</Indexing>
 					<FullTextSearch>Use</FullTextSearch>
 					<DataHistory>Use</DataHistory>
 				</Properties>
-			</Resource>
-			<Resource uuid="e364ded7-b844-4cd0-aae7-61fbfb3adbf9">
+			</Attribute>
+			<Attribute uuid="5aeac076-8e9d-410c-9f17-ad04ff784870">
 				<Properties>
 					<Name>ExchangeMode</Name>
 					<Synonym>
@@ -536,12 +456,13 @@
 					<ChoiceForm/>
 					<LinkByType/>
 					<ChoiceHistoryOnInput>Auto</ChoiceHistoryOnInput>
+					<Use>ForItem</Use>
 					<Indexing>DontIndex</Indexing>
 					<FullTextSearch>Use</FullTextSearch>
 					<DataHistory>Use</DataHistory>
 				</Properties>
-			</Resource>
-			<Resource uuid="edeb6590-dd73-4ddf-aaee-2ddae8c591d6">
+			</Attribute>
+			<Attribute uuid="da838ac6-8b09-4142-82f4-3cf9d6b72302">
 				<Properties>
 					<Name>Send</Name>
 					<Synonym>
@@ -579,12 +500,13 @@
 					<ChoiceForm/>
 					<LinkByType/>
 					<ChoiceHistoryOnInput>Auto</ChoiceHistoryOnInput>
+					<Use>ForItem</Use>
 					<Indexing>DontIndex</Indexing>
 					<FullTextSearch>Use</FullTextSearch>
 					<DataHistory>Use</DataHistory>
 				</Properties>
-			</Resource>
-			<Resource uuid="009b43ab-a64d-4847-9a19-96f6193dd7d2">
+			</Attribute>
+			<Attribute uuid="f44f59eb-10ce-48e7-83a6-e1aad165c2af">
 				<Properties>
 					<Name>Parse</Name>
 					<Synonym>
@@ -622,12 +544,13 @@
 					<ChoiceForm/>
 					<LinkByType/>
 					<ChoiceHistoryOnInput>Auto</ChoiceHistoryOnInput>
+					<Use>ForItem</Use>
 					<Indexing>DontIndex</Indexing>
 					<FullTextSearch>Use</FullTextSearch>
 					<DataHistory>Use</DataHistory>
 				</Properties>
-			</Resource>
-			<Resource uuid="f472da8b-3b26-4a30-b0f4-9cf87bf15495">
+			</Attribute>
+			<Attribute uuid="316af947-0fab-4d0d-9d1f-df9e009bbbd6">
 				<Properties>
 					<Name>TakeOneMessageAtATime</Name>
 					<Synonym>
@@ -670,12 +593,13 @@
 					<ChoiceForm/>
 					<LinkByType/>
 					<ChoiceHistoryOnInput>Auto</ChoiceHistoryOnInput>
+					<Use>ForItem</Use>
 					<Indexing>DontIndex</Indexing>
 					<FullTextSearch>Use</FullTextSearch>
 					<DataHistory>Use</DataHistory>
 				</Properties>
-			</Resource>
-			<Resource uuid="580f76b4-806e-41e7-9b27-e96d19bc5f39">
+			</Attribute>
+			<Attribute uuid="8dfdd62e-e0a6-420c-8130-961f4f54c969">
 				<Properties>
 					<Name>UpdateTransacted</Name>
 					<Synonym>
@@ -718,12 +642,13 @@
 					<ChoiceForm/>
 					<LinkByType/>
 					<ChoiceHistoryOnInput>Auto</ChoiceHistoryOnInput>
+					<Use>ForItem</Use>
 					<Indexing>DontIndex</Indexing>
 					<FullTextSearch>Use</FullTextSearch>
 					<DataHistory>Use</DataHistory>
 				</Properties>
-			</Resource>
-			<Resource uuid="81313878-607a-48b3-ac91-60706a532f6d">
+			</Attribute>
+			<Attribute uuid="9de5ff4a-a470-40ab-9952-4432fff66865">
 				<Properties>
 					<Name>NodeType</Name>
 					<Synonym>
@@ -757,68 +682,13 @@
 					<ChoiceForm/>
 					<LinkByType/>
 					<ChoiceHistoryOnInput>Auto</ChoiceHistoryOnInput>
+					<Use>ForItem</Use>
 					<Indexing>DontIndex</Indexing>
 					<FullTextSearch>Use</FullTextSearch>
 					<DataHistory>Use</DataHistory>
 				</Properties>
-			</Resource>
-			<Dimension uuid="178476bc-4fc6-4f61-9362-732e89c12b00">
-				<Properties>
-					<Name>NodeName</Name>
-					<Synonym>
-						<v8:item>
-							<v8:lang>uk</v8:lang>
-							<v8:content>Назва вузла</v8:content>
-						</v8:item>
-						<v8:item>
-							<v8:lang>ru</v8:lang>
-							<v8:content>Назва вузла</v8:content>
-						</v8:item>
-					</Synonym>
-					<Comment>Назва віддаленого вузла</Comment>
-					<Type>
-						<v8:Type>xs:string</v8:Type>
-						<v8:StringQualifiers>
-							<v8:Length>50</v8:Length>
-							<v8:AllowedLength>Variable</v8:AllowedLength>
-						</v8:StringQualifiers>
-					</Type>
-					<PasswordMode>false</PasswordMode>
-					<Format/>
-					<EditFormat/>
-					<ToolTip>
-						<v8:item>
-							<v8:lang>uk</v8:lang>
-							<v8:content>Інформаційно</v8:content>
-						</v8:item>
-					</ToolTip>
-					<MarkNegatives>false</MarkNegatives>
-					<Mask/>
-					<MultiLine>false</MultiLine>
-					<ExtendedEdit>false</ExtendedEdit>
-					<MinValue xsi:nil="true"/>
-					<MaxValue xsi:nil="true"/>
-					<FillFromFillingValue>false</FillFromFillingValue>
-					<FillValue xsi:type="xs:string"/>
-					<FillChecking>DontCheck</FillChecking>
-					<ChoiceFoldersAndItems>Items</ChoiceFoldersAndItems>
-					<ChoiceParameterLinks/>
-					<ChoiceParameters/>
-					<QuickChoice>Auto</QuickChoice>
-					<CreateOnInput>Auto</CreateOnInput>
-					<ChoiceForm/>
-					<LinkByType/>
-					<ChoiceHistoryOnInput>Auto</ChoiceHistoryOnInput>
-					<Master>false</Master>
-					<MainFilter>true</MainFilter>
-					<DenyIncompleteValues>false</DenyIncompleteValues>
-					<Indexing>DontIndex</Indexing>
-					<FullTextSearch>Use</FullTextSearch>
-					<DataHistory>Use</DataHistory>
-				</Properties>
-			</Dimension>
-			<Form>ListForm</Form>
-			<Form>RecordForm</Form>
+			</Attribute>
+			<Form>ItemForm</Form>
 		</ChildObjects>
-	</InformationRegister>
+	</Catalog>
 </MetaDataObject>

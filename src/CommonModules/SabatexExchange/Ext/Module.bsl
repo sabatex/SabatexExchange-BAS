@@ -550,7 +550,6 @@ endprocedure
 //
 procedure AddUnresolvedObject(conf,item,newObject = true) 
 	reg = InformationRegisters.sabatexExchangeUnresolvedObjects.CreateRecordManager();
-	reg.Id = item["id"];
 	reg.sender = new UUID(item["sender"]);
 	reg.destination = new UUID(item["destination"]);
 	reg.MessageHeader = item["messageHeader"];
@@ -666,15 +665,23 @@ endprocedure
 function ExchangeProcess(exchangeMode) export
 	resultMessage = "";
 	try
-	    destinationNodes = SabatexExchangeConfig.GetDestinationNodes();
+	    activeDestinationNodes = SabatexExchangeConfig.GetActiveDestinationNodes();
 	except	
 		resultMessage = "Помилка зчитування налаштувань обміну:"+ОписаниеОшибки();
 		SabatexExchangeLogged.SystemLogError(resultMessage);
 		return resultMessage;
 	endtry;
 		
-	for each conf in destinationNodes do
+	for each nodeName in activeDestinationNodes do
 		start = CurrentDate();
+		try
+			conf = SabatexExchangeConfig.GetConfigByNodeName(nodeName);
+		except	
+			resultMessage = "Помилка зчитування налаштувань обміну:"+ОписаниеОшибки();
+			SabatexExchangeLogged.SystemLogError(resultMessage);
+			continue;
+		endtry;
+
 		skip = false;
 		if exchangeMode =  conf.ExchangeMode then
 			try
