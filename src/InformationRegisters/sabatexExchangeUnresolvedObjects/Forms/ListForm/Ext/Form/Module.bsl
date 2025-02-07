@@ -4,7 +4,7 @@ Procedure OnCreateAtServer(Cancel, StandardProcessing)
 	Query = New Query;
 	Query.Text = 
 		"SELECT
-		|	COUNT(sabatexExchangeObject.Id) AS CountItems
+		|	COUNT(sabatexExchangeObject.NodeName) AS CountItems
 		|FROM
 		|	InformationRegister.sabatexExchangeUnresolvedObjects AS sabatexExchangeObject";
 	

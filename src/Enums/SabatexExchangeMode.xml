@@ -22,6 +22,10 @@
 					<v8:lang>uk</v8:lang>
 					<v8:content>Режим обміну</v8:content>
 				</v8:item>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Режим обміну</v8:content>
+				</v8:item>
 			</Synonym>
 			<Comment/>
 			<UseStandardCommands>false</UseStandardCommands>
@@ -98,7 +102,11 @@
 					<Synonym>
 						<v8:item>
 							<v8:lang>uk</v8:lang>
-							<v8:content>Auto</v8:content>
+							<v8:content>Автоматичний</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Автоматичний</v8:content>
 						</v8:item>
 					</Synonym>
 					<Comment/>
@@ -110,7 +118,11 @@
 					<Synonym>
 						<v8:item>
 							<v8:lang>uk</v8:lang>
-							<v8:content>Manual</v8:content>
+							<v8:content>Ручний</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Ручний</v8:content>
 						</v8:item>
 					</Synonym>
 					<Comment/>

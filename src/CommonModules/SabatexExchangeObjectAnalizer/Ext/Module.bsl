@@ -124,7 +124,7 @@ endfunction
 
 procedure LevelUpUnresolvedObject(conf,item)
 	reg = InformationRegisters.sabatexExchangeUnresolvedObjects.CreateRecordManager();
-	reg.sender = item.sender;
+	reg.NodeName = conf.NodeName;
 	reg.MessageHeader = item.MessageHeader;
 	reg.Read();
 	reg.levelLive = reg.levelLive +1;
@@ -133,7 +133,7 @@ procedure LevelUpUnresolvedObject(conf,item)
 endprocedure
 procedure DeleteUnresolvedObject(conf,item)
 	reg = InformationRegisters.sabatexExchangeUnresolvedObjects.CreateRecordManager();;
-	reg.sender = item.sender;
+	reg.NodeName = conf.NodeName;
 	reg.MessageHeader = item.MessageHeader;
 	reg.dateStamp = item.dateStamp;
 	reg.Delete();
@@ -837,8 +837,7 @@ procedure AnalizeUnresolvedObjects(conf) export
 		Query = New Query;
 		Query.Text = 
 		"SELECT TOP " + conf.take+"
-		|	sabatexExchangeUnresolvedObjects.sender AS sender,
-		|	sabatexExchangeUnresolvedObjects.destination AS destination,
+		|	sabatexExchangeUnresolvedObjects.NodeName AS nodeName,
 		|	sabatexExchangeUnresolvedObjects.dateStamp AS dateStamp,
 		|	sabatexExchangeUnresolvedObjects.objectAsText AS objectAsText,
 		|	sabatexExchangeUnresolvedObjects.Log AS Log,
@@ -850,13 +849,13 @@ procedure AnalizeUnresolvedObjects(conf) export
 		|FROM
 		|	InformationRegister.sabatexExchangeUnresolvedObjects AS sabatexExchangeUnresolvedObjects
 		|WHERE
-		|	sabatexExchangeUnresolvedObjects.sender = &sender
+		|	sabatexExchangeUnresolvedObjects.NodeName = &sender
 		|
 		|ORDER BY
 		|	levelLive,
 		|	senderDateStamp";
 		
-		Query.SetParameter("sender",new UUID(conf.destinationId));
+		Query.SetParameter("sender",conf.nodeName);
 		QueryResult = Query.Execute();
 		
 		SelectionDetailRecords = QueryResult.Select();

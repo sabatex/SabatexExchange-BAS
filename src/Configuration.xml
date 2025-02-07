@@ -50,7 +50,7 @@
 			</UsePurposes>
 			<ScriptVariant>English</ScriptVariant>
 			<Vendor>sabatex</Vendor>
-			<Version>4.0.11</Version>
+			<Version>4.0.12</Version>
 			<BriefInformation/>
 			<DetailedInformation/>
 			<Copyright>
@@ -87,7 +87,6 @@
 			<CommonModule>SabatexExchangeQuery</CommonModule>
 			<CommonCommand>SabatexCommonStartExchange</CommonCommand>
 			<Catalog>SabatexExchangeObjectSinchro</Catalog>
-			<Catalog>SabatexExchangeNodeConfig</Catalog>
 			<Enum>SabatexExchangeMode</Enum>
 			<Enum>SabatexExchangeIdAttributeType</Enum>
 			<Enum>SabatexExchangeNodeType</Enum>

@@ -476,10 +476,10 @@ procedure AddQueryForExchange(conf,objectType,objectId) export
 		|	InformationRegister.sabatexExchangeUnresolvedObjects AS sabatexExchangeUnresolvedObjects
 		|WHERE
 		|	sabatexExchangeUnresolvedObjects.messageHeader = &query
-		|	AND sabatexExchangeUnresolvedObjects.sender = &sender";
+		|	AND sabatexExchangeUnresolvedObjects.nodeName = &sender";
 	
 	Запрос.УстановитьПараметр("query", query);
-	Запрос.УстановитьПараметр("sender", new UUID(conf.destinationId));
+	Запрос.УстановитьПараметр("sender", conf.NodeName);
 	
 	РезультатЗапроса = Запрос.Выполнить();
 	
@@ -551,7 +551,6 @@ endprocedure
 procedure AddUnresolvedObject(conf,item,newObject = true) 
 	reg = InformationRegisters.sabatexExchangeUnresolvedObjects.CreateRecordManager();
 	reg.sender = new UUID(item["sender"]);
-	reg.destination = new UUID(item["destination"]);
 	reg.MessageHeader = item["messageHeader"];
 
 	reg.dateStamp = CurrentDate();

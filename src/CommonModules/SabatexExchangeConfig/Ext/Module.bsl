@@ -53,7 +53,12 @@ function GetConfig(destinationNode)
 	config.Insert("accessToken",GetAccessToken());
 	config.Insert("Connection",undefined); // current connection to api
 	
-	config.Insert("destinationId",new UUID(destinationNode.destinationId));
+	try
+		config.Insert("destinationId",new UUID(destinationNode.destinationId));
+	except
+		config.Insert("destinationId",Sabatex.GetEmptyUUID());
+	endtry;
+	
 	config.Insert("Take",destinationNode.Take);
 	config.Insert("LogLevel",destinationNode.LogLevel);
 	config.Insert("updateCatalogs",destinationNode.updateCatalogs);

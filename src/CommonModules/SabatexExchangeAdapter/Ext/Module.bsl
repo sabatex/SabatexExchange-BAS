@@ -1,9 +1,9 @@
 ﻿
-#region SabatexExchangeAdapter
+#region SabatexExchangeAdapter4_0_12
 
 // Copyright (c) 2021-2024 by Serhiy Lakas
 // https://sabatex.github.io
-// version 4.0.7
+// version 4.0.12
 
 // Функция - Пошук обьєкта по Id
 //

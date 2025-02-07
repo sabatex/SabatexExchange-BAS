@@ -59,7 +59,7 @@
 							<ExtendedTooltip name="senderExtendedTooltip" id="3"/>
 						</LabelField>
 						<LabelField name="destination" id="31">
-							<DataPath>Record.destination</DataPath>
+							<DataPath>1/0:494c6895-bfcc-438b-8218-34fbffddab8b</DataPath>
 							<ReadOnly>true</ReadOnly>
 							<ContextMenu name="destinationContextMenu" id="32"/>
 							<ExtendedTooltip name="destinationExtendedTooltip" id="33"/>
