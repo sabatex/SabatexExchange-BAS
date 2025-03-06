@@ -550,7 +550,7 @@ endprocedure
 //
 procedure AddUnresolvedObject(conf,item,newObject = true) 
 	reg = InformationRegisters.sabatexExchangeUnresolvedObjects.CreateRecordManager();
-	reg.sender = new UUID(item["sender"]);
+	//reg.sender = new UUID(item["sender"]);
 	reg.MessageHeader = item["messageHeader"];
 
 	reg.dateStamp = CurrentDate();
@@ -593,7 +593,7 @@ procedure PostObjects(conf)
 	// post queries
 	Query = Новый Запрос;
 	Query.Текст = 
-		"SELECT TOP &take
+		"SELECT TOP " + XMLString(conf.take) + "
 		|	sabatexExchangeObject.dateStamp AS dateStamp,
 		|	sabatexExchangeObject.MessageHeader AS MessageHeader,
 		|	sabatexExchangeObject.JSONText AS JSONText
@@ -606,7 +606,6 @@ procedure PostObjects(conf)
 		|	dateStamp";
 	
 	Query.SetParameter("nodeName",conf.nodeName);
-	Query.SetParameter("take",XMLString(conf.take));
 	РезультатЗапроса = Query.Выполнить();
 	
 	items = РезультатЗапроса.Выбрать();
@@ -697,7 +696,7 @@ function ExchangeProcess(exchangeMode) export
 					PostObjects(conf);
 				endif;	
 			except
-				message = string(conf.nodeConfig.clientId) + " - Програмна помилка -" + ErrorDescription();
+				message = string(conf.nodeName) + " - Програмна помилка -" + ErrorDescription();
 				SabatexExchangeLogged.ErrorJournaled(conf,message);
 				resultMessage = resultMessage  + message+ Chars.CR;
 			endtry;

@@ -117,7 +117,7 @@
 					<ExtendedTooltip name="senderDateStampExtendedTooltip" id="60"/>
 				</LabelField>
 				<LabelField name="sender" id="49">
-					<DataPath>List.sender</DataPath>
+					<DataPath>~List.sender</DataPath>
 					<ContextMenu name="senderContextMenu" id="50"/>
 					<ExtendedTooltip name="senderExtendedTooltip" id="51"/>
 				</LabelField>

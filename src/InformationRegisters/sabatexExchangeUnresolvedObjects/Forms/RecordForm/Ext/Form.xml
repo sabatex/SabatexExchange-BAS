@@ -47,13 +47,13 @@
 					<ExtendedTooltip name="MainPageExtendedTooltip" id="41"/>
 					<ChildItems>
 						<InputField name="NodeName" id="45">
-							<DataPath>Record.NodeName</DataPath>
+							<DataPath>1/0:f793f390-8a45-4cfa-b6b9-769b453d6d42</DataPath>
 							<ReadOnly>true</ReadOnly>
 							<ContextMenu name="NodeNameContextMenu" id="46"/>
 							<ExtendedTooltip name="NodeNameExtendedTooltip" id="47"/>
 						</InputField>
 						<LabelField name="sender" id="1">
-							<DataPath>Record.sender</DataPath>
+							<DataPath>1/0:986ef078-c565-41f7-93dd-c706c7a56f9e</DataPath>
 							<ReadOnly>true</ReadOnly>
 							<ContextMenu name="senderContextMenu" id="2"/>
 							<ExtendedTooltip name="senderExtendedTooltip" id="3"/>

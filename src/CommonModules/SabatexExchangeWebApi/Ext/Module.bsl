@@ -10,7 +10,9 @@ function CreateHTTPSConnection(conf)
 
 	return result;
 	
-endfunction	
+endfunction
+
+
 function BuildUrl(url,queries=null)
 	result  = url;
 		if queries <> null then
@@ -31,6 +33,10 @@ endfunction
 // result:
 // bearer accessToken 
 function Login(conf)
+	if conf.NodeType = Enums.SabatexExchangeNodeType.USAP then
+		return LoginUSAP(conf);
+	endif;
+	
 	connection = CreateHTTPSConnection(conf);
 	request = new HTTPRequest(BuildUrl("api/v1/login"));
 	request.Headers.Insert("accept","*/*");
@@ -76,7 +82,7 @@ function LoginUSAP(conf)
 	if not ValueIsFilled(cookie) then 
 		raise "Login error with cookie not found Responce:"+ response.StatusCode;
 	endif;
-    return cookie;
+    return new structure("cookie",cookie);
 endfunction
 
 
@@ -124,6 +130,10 @@ endfunction
 
 // download objects from server bay sender nodeName
 function GetObjectsExchange(conf,first=true) export
+	if conf.NodeType = Enums.SabatexExchangeNodeType.USAP then
+		return GetObjectsUSAP(conf,first);
+	endif;
+	
 	connection = CreateHTTPSConnection(conf); 
 	if conf.TakeOneMessageAtATime then
 		take = 1;
@@ -156,6 +166,63 @@ function GetObjectsExchange(conf,first=true) export
 	endtry;	
 endfunction
 
+// download objects from server bay sender nodeName
+function GetObjectsUSAP(conf,first=true) export
+	connection = CreateHTTPSConnection(conf); 
+	
+	if conf.TakeOneMessageAtATime then
+		take = 1;
+	else
+		take =conf.take;
+	endif;
+	
+	packetInfo = SabatexExchangeConfig.GetStoredValue("USAP_SesionInfo");
+	cookie = packetInfo["cookie"]; 
+	if cookie = undefined then
+		result = LoginUSAP(conf);
+		cookie = result.cookie;
+	    packetInfo["cookie"] = cookie;
+	endif;
+	
+	
+		
+	request = new HTTPRequest(BuildUrl("/externaldb/readdata",new structure("take",take)));
+	request.Headers.Insert("accept","*/*");
+	request.Headers.Insert("cookie",cookie);
+	request.Headers.Insert("Content-Type","application/json; charset=utf-8");
+	
+
+	data = new structure;
+	data.Insert("senderName",conf.nodeConfig.login); //Узел.Пользователь
+	data.Insert("sendVersion",Sabatex.ValueOrDefault(packetInfo["sendVersion"],0));//Узел.НомерОтправленного
+	data.Insert("lastDownload",Sabatex.ValueOrDefault(packetInfo["lastDownload"],Date("19000101")));               //Узел.ДатаПоследнегоПолученогоПакета
+	data.Insert("receiveName",conf.NodeName);//Узел.ИмяПубликации  що ставити ? назва 
+	data.Insert("receiveVersion",Sabatex.ValueOrDefault(packetInfo["receiveVersion"],-1)); //   ?(Узел.НомерПринятого=0,-1,Узел.НомерПринятого));
+	
+	jsonString = SabatexJSON.Serialize(data);
+    request.SetBodyFromString(jsonString,"UTF-8",ИспользованиеByteOrderMark.НеИспользовать);
+
+	
+	
+	try
+		response = connection.Post(request);
+		if response.StatusCode = 401 then
+			if first then
+				if updateToken(conf) then
+					return GetObjectsExchange(conf,false);
+				endif;
+			endif;
+		endif;
+			
+
+		if response.StatusCode <> 200 then
+			raise "GetObjectsExchange error request with StatusCode="+ response.StatusCode;
+		endif;
+		return SabatexJSON.Deserialize(response.GetBodyAsString());	
+	except
+		raise "GetObjectsExchange error request with error:"+ОписаниеОшибки();
+	endtry;	
+endfunction
 
 
 // Процедура - Delete exchange object

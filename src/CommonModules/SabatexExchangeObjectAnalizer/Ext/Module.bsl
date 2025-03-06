@@ -843,7 +843,6 @@ procedure AnalizeUnresolvedObjects(conf) export
 		|	sabatexExchangeUnresolvedObjects.Log AS Log,
 		|	sabatexExchangeUnresolvedObjects.senderDateStamp AS senderDateStamp,
 		|	sabatexExchangeUnresolvedObjects.serverDateStamp AS serverDateStamp,
-		|	sabatexExchangeUnresolvedObjects.Id AS Id,
 		|	sabatexExchangeUnresolvedObjects.levelLive AS levelLive,
 		|	sabatexExchangeUnresolvedObjects.MessageHeader AS MessageHeader
 		|FROM

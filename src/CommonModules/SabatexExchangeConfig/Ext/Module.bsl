@@ -1,5 +1,24 @@
 ﻿// Copyright (c) 2021 by Serhiy Lakas
 // https://sabatex.github.io
+
+
+function GetStoredValue(key) export
+	reg = InformationRegisters.SabatexExchangeConfig.Get(new structure("Key",key));
+		
+	return SabatexJSON.Deserialize(?(reg.Value="","{}",reg.Value));
+endfunction
+	
+procedure SetStoredValue(Key,Value) export
+	reg = InformationRegisters.SabatexExchangeConfig.CreateRecordManager();
+	reg.Key = Key;
+	reg.Value  = SabatexJSON.Serialize(Value);
+	reg.Write(true);
+endprocedure	
+	
+
+
+
+
 // Функция - Get node config
 // 
 // Возвращаемое значение:
