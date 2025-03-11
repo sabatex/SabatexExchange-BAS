@@ -345,7 +345,7 @@ endprocedure
 //  Ignore			 - boolean	 - 
 //  default			 - object	 - 
 //  destinationName	 - string	 - 
-//  procName		 - string	 - 
+//  procName		 - string	 - Назва процедури procedure(conf,source,destination,attr)
 //  postParser		 - string	 - 
 //  ignoredIsMiss	 - boolean	 - 
 //
@@ -358,7 +358,38 @@ function AddAttributeProperty(objectConf,attrName,Ignore=false,default=undefined
 	objectConf.Attributes.Insert(attrName,attr);
 	return attr;
 endfunction
+// Процедура - Add attribute ignored
+//
+// Параметры:
+//  objectDescriptor - structure	 - 
+//  attrName		 - string	 - Назви атрибутів роздвлених комою які будуть ігноровані при імпорті
+//
+procedure AddAttributeIgnored(objectDescriptor,attrName) export
+	for each attr in StrSplit(attrName,",") do
+		AddAttributeProperty(objectDescriptor,attr,true);
+	enddo;
+endprocedure
+// Процедура - Add attribute default
+//
+// Параметры:
+//  objectDescriptor - structure	 - (object or table descriptor)
+//  attrName		 - string	 -  attribute name
+//  default			 - any	 -  any default value
+//
+procedure AddAttributeDefault(objectDescriptor,attrName,default) export
+	AddAttributeProperty(objectDescriptor,attrName,,default);	
+endprocedure
 
+// Процедура - Add attribute proc
+//
+// Параметры:
+//  objectDescriptor - structure	 - (object or table descriptor) 
+//  attrName		 - string	 -  attribute name
+//  procName		 - string	 -  procedure(conf,source,destination,attr)
+//
+procedure AddAttributeProc(objectDescriptor,attrName,procName) export
+	AddAttributeProperty(objectDescriptor,attrName,,,,procName);	
+endprocedure
 
 // Функция - Add table property
 //

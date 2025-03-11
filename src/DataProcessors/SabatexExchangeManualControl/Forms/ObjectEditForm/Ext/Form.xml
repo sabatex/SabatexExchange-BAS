@@ -18,6 +18,12 @@
 		<Event name="OnCreateAtServer">ПриСозданииНаСервере</Event>
 	</Events>
 	<ChildItems>
+		<InputField name="NodeName" id="17">
+			<DataPath>NodeName</DataPath>
+			<ReadOnly>true</ReadOnly>
+			<ContextMenu name="NodeNameContextMenu" id="18"/>
+			<ExtendedTooltip name="NodeNameExtendedTooltip" id="19"/>
+		</InputField>
 		<InputField name="Наименование" id="4">
 			<DataPath>ObjectRef</DataPath>
 			<ReadOnly>true</ReadOnly>
@@ -57,6 +63,21 @@
 				</v8:StringQualifiers>
 			</Type>
 		</Attribute>
+		<Attribute name="NodeName" id="1">
+			<Title>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Node name</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>xs:string</v8:Type>
+				<v8:StringQualifiers>
+					<v8:Length>50</v8:Length>
+					<v8:AllowedLength>Variable</v8:AllowedLength>
+				</v8:StringQualifiers>
+			</Type>
+		</Attribute>
 	</Attributes>
 	<Commands>
 		<Command name="Save" id="1">
@@ -89,6 +110,21 @@
 			</ToolTip>
 			<Action>CleanValue</Action>
 		</Command>
+		<Command name="CheckUUID" id="3">
+			<Title>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Check UUID</v8:content>
+				</v8:item>
+			</Title>
+			<ToolTip>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Check UUID</v8:content>
+				</v8:item>
+			</ToolTip>
+			<Action>CheckUUID</Action>
+		</Command>
 	</Commands>
 	<Parameters>
 		<Parameter name="ObjectRef">
@@ -96,6 +132,15 @@
 				<v8:TypeSet>cfg:CatalogRef</v8:TypeSet>
 			</Type>
 			<KeyParameter>true</KeyParameter>
+		</Parameter>
+		<Parameter name="NodeName">
+			<Type>
+				<v8:Type>xs:string</v8:Type>
+				<v8:StringQualifiers>
+					<v8:Length>50</v8:Length>
+					<v8:AllowedLength>Variable</v8:AllowedLength>
+				</v8:StringQualifiers>
+			</Type>
 		</Parameter>
 	</Parameters>
 </Form>

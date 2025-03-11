@@ -313,6 +313,17 @@ function GetIdAttributeType(objectDescriptor)
 endfunction
 
 
+function GetObjectByExternalId(conf,objectStringRef)
+	pos = StrFind(objectStringRef,"-");
+	if pos=0 then
+		SabatexExchangeLogged.Error(conf,"Помилка отримання типу з посилання - "+ objectStringRef);
+		return undefined;
+	endif;
+	
+
+endfunction	
+
+
 
 // Функция - Get object ref by id
 //
@@ -324,21 +335,51 @@ endfunction
 // Возвращаемое значение:
 //   - посилання на обєкт або пусте посилання
 //
-function GetObjectRefById(objectManager,objectDescriptor,id) export
-// пошук обэкта по UUID або атрибуту SabatexExchangeId
+function GetObjectRefById(conf,objectManager,objectDescriptor,id) export
+	
+	objectId = id;
 	if objectDescriptor.UseIdAttribute then
-		if GetIdAttributeType(objectDescriptor) = Enums.SabatexExchangeIdAttributeType.UUID then
-			return objectManager.FindByAttribute("SabatexExchangeId",new UUID(id)); 
-		else
-			return objectManager.FindByAttribute("SabatexExchangeId",id);
+	
+		Query = New Query;
+		Query.Text = 
+			"SELECT
+			|	SabatexExchangeIds.InternalObjectRef AS InternalObjectRef
+			|FROM
+			|	InformationRegister.SabatexExchangeIds AS SabatexExchangeIds
+			|WHERE
+			|	SabatexExchangeIds.NodeName = &NodeName
+			|	AND SabatexExchangeIds.ObjectType = &ObjectType
+			|	AND SabatexExchangeIds.objectRef = &objectRef";
+	
+		Query.SetParameter("ObjectType", objectDescriptor.NormalizedObjectType);
+		Query.SetParameter("NodeName", Lower(conf.NodeName));
+		Query.SetParameter("objectRef", Lower(String(id)));
+	
+		QueryResult = Query.Execute();
+	
+		SelectionDetailRecords = QueryResult.Select();
+	
+		result = objectManager.EmptyRef();
+		if not SelectionDetailRecords.Next() then
+			return objectManager.EmptyRef();
 		endif;
+		
+		objectId = SelectionDetailRecords.InternalObjectRef;
 	endif;
 	
-	lO = objectManager.GetRef(new UUID(id)).GetObject();
+		
+		//if GetIdAttributeType(objectDescriptor) = Enums.SabatexExchangeIdAttributeType.UUID then
+		//	return objectManager.FindByAttribute("SabatexExchangeId",new UUID(id)); 
+		//else
+		//	return objectManager.FindByAttribute("SabatexExchangeId",id);
+		//endif;
+
+	lO = objectManager.GetRef(new UUID(objectId)).GetObject();
 	if lO <> undefined then
 		return lO.Ref
+	else
+		return objectManager.EmptyRef();	
 	endif;
-	return objectManager.EmptyRef();
 endfunction	
 
 function GetQueryHeader(query)
@@ -408,7 +449,7 @@ function GetObjectRef(conf,val objectType,val objectId,val objectDescriptor=unde
 		return objectManager.EmptyRef();
 	endif;	
 	
-	result = GetObjectRefById(objectManager,objectDescriptor,objectId);
+	result = GetObjectRefById(conf,objectManager,objectDescriptor,objectId);
 
 	if result= objectManager.EmptyRef() or  result.GetObject() = undefined then
 		conf.success = false;
@@ -424,6 +465,10 @@ function GetObjectRef(conf,val objectType,val objectId,val objectDescriptor=unde
 	return result;
 endfunction	
 
+
+
+
+
 #endregion
 
 
@@ -437,7 +482,7 @@ endfunction
 //  messageHeader	 - structure	- заголовок повідомлення, udefined (default) - auto serialize id and type object
 //  object			 - object 		- Object
 //  serializeNow     - boolean      - серіалізувати зразу (для обєктів які помічені до видалення серіалізуються зразу) 
-procedure RegisterMessageForNode(nodeName,messageHeader=undefined,object=undefined,serializeNow=false) export
+procedure RegisterMessageForNode(nodeName,messageHeader=undefined,object=undefined) export
 	if messageHeader = undefined and object = undefined then
     	raise "Параметри messageHeader та object не можуть бути оночасно undefined!";
 	endif;
@@ -453,9 +498,34 @@ procedure RegisterMessageForNode(nodeName,messageHeader=undefined,object=undefin
 	endif;
 	
 	if object <> undefined then
-		if serializeNow or IsDeletionMark(object) then
-	       reg.JSONText = SabatexJSON.Serialize(object);
-	   endif;
+		txt = SabatexJSON.Serialize(object);
+		objectType = lower(object.Ref.Метаданные().FullName()); 
+			
+		Query = New Query;
+		Query.Text = 
+			"SELECT TOP 1
+			|	SabatexExchangeIds.objectRef AS objectRef
+			|FROM
+			|	InformationRegister.SabatexExchangeIds AS SabatexExchangeIds
+			|WHERE
+			|	SabatexExchangeIds.InternalObjectRef = &InternalObjectRef
+			|	AND SabatexExchangeIds.ObjectType = &ObjectType
+			|	AND SabatexExchangeIds.NodeName = &NodeName";
+	
+		Query.SetParameter("InternalObjectRef", object.Ref);
+	    Query.SetParameter("ObjectType", SabatexExchangeConfig.GetNormalizedObjectType(objectType));
+		Query.SetParameter("NodeName", lower(nodeName));
+		QueryResult = Query.Execute();
+	
+		SelectionDetailRecords = QueryResult.Select();
+	    SabatexExchangeId = undefined;
+
+		if SelectionDetailRecords.Next() then
+			txt = Left(txt,StrLen(txt) - 1);
+			reg.JSONText = txt + ",{""SabatexExchangeId"":" +XMLString(SelectionDetailRecords.objectRef)+"}";
+		else
+			reg.JSONText = txt;
+		EndIf;
 	endif;
  	reg.Write(true);
 endprocedure	

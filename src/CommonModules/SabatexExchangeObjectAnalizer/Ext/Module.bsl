@@ -753,7 +753,7 @@ procedure ResolveObject(conf)
 	
 	
 	
-	objectRef = SabatexExchange.GetObjectRefById(objectManager,conf.ObjectDescriptor,conf.objectId);
+	objectRef = SabatexExchange.GetObjectRefById(conf,objectManager,conf.ObjectDescriptor,conf.objectId);
 	
 	
 	// спроба пошуку по користувацьким параметрам

@@ -2,26 +2,43 @@
 &НаСервере
 Процедура ПриСозданииНаСервере(Отказ, СтандартнаяОбработка)
 	ObjectRef = Параметры.ObjectRef;
-	SabatexExchangeId = Параметры.ObjectRef.SabatexExchangeId;
+	NodeName = Parameters.NodeName;
+	
+	Query = New Query;
+	Query.Text = 
+		"SELECT TOP 1
+		|	SabatexExchangeIds.objectRef AS objectRef
+		|FROM
+		|	InformationRegister.SabatexExchangeIds AS SabatexExchangeIds
+		|WHERE
+		|	SabatexExchangeIds.NodeName = &NodeName
+		|	AND SabatexExchangeIds.ObjectType = &ObjectType
+		|	AND SabatexExchangeIds.InternalObjectRef = &InternalObjectRef";
+	
+	Query.SetParameter("InternalObjectRef", Параметры.ObjectRef.UUID());
+	Query.SetParameter("NodeName", Lower(NodeName));
+	Query.SetParameter("ObjectType", SabatexExchangeConfig.GetNormalizedObjectType(Параметры.ObjectRef.Metadata().FullName()));
+	
+	QueryResult = Query.Execute();
+	
+	SelectionDetailRecords = QueryResult.Select();
+	
+	if SelectionDetailRecords.Next() then
+			SabatexExchangeId = SelectionDetailRecords.objectRef;
+	Endif;
+	
 КонецПроцедуры
 
-&НаСервереБезКонтекста
-function SaveНаСервере(sabatex1C77Id,objectRef)
-	obj = objectRef.GetObject(); 
-	try 
-		SabatexExchangeId = new UUID(sabatex1C77Id);	
-		obj.SabatexExchangeId = SabatexExchangeId;
-		obj.write();
-		return undefined;
-	except
-		return ErrorDescription();
-	endtry;
-endfunction
+&НаСервере
+procedure SaveНаСервере()
+	SabatexExchangeExternalObjects.RegisterObject(ObjectRef,NodeName,SabatexExchangeId);
+endprocedure
 
 &НаКлиенте
 Процедура Save(Команда)
-	result = SaveНаСервере(SabatexExchangeId,Параметры.ObjectRef);
-	Close();
+	SaveНаСервере();
+	
+	Close(SabatexExchangeId);
 КонецПроцедуры
 
 &НаСервереБезКонтекста
@@ -44,4 +61,9 @@ Procedure CleanValue(Command)
 	endif;
 	
 	Close();
+EndProcedure
+
+&AtClient
+Procedure CheckUUID(Command)
+		
 EndProcedure

@@ -1,9 +1,8 @@
 ﻿
-#region SabatexExchangeAdapter4_0_12
+#region SabatexExchangeAdapter5_0_0_rc3
 
 // Copyright (c) 2021-2024 by Serhiy Lakas
 // https://sabatex.github.io
-// version 4.0.12
 
 // Функция - Пошук обьєкта по Id
 //
@@ -51,21 +50,6 @@ function GetActiveDestinationNodes()
 endfunction
  
  
-// Процедура - Add attribute property
-//
-// Параметры:
-//  objectConf		 - 	 - 
-//  attrName		 - 	 - 
-//  Ignore			 - 	 - 
-//  default			 - 	 - 
-//  destinationName	 - 	 - 
-//  procName		 - 	 - 
-//  postParser		 - 	 - 
-//  ignoredIsMiss	 - 	 - 
-//
-function AddAttributeProperty(objectConf,attrName,Ignore=false,default=undefined,destinationName=undefined,procName=undefined,postParser=undefined)
-	return SabatexExchangeConfig.AddAttributeProperty(objectConf,attrName,Ignore,default,destinationName,procName,postParser);		
-endfunction
 // Процедура - Add attribute ignored
 //
 // Параметры:
@@ -73,12 +57,11 @@ endfunction
 //  attrName		 - string	 - Назви атрибутів роздвлених комою які будуть ігноровані при імпорті
 //
 procedure AddAttributeIgnored(objectDescriptor,attrName)
-	for each attr in StrSplit(attrName,",") do
-		AddAttributeProperty(objectDescriptor,attr,true);
-	enddo;
+	SabatexExchangeConfig.AddAttributeIgnored(objectDescriptor,attrName);
 endprocedure
+
 procedure AddAttributeDefault(objectDescriptor,attrName,default)
-	AddAttributeProperty(objectDescriptor,attrName,,default);	
+	SabatexExchangeConfig.AddAttributeDefault(objectDescriptor,attrName,default);	
 endprocedure
 // Процедура - Add attribute mapped
 //
@@ -93,7 +76,7 @@ function AddAttributeMapped(objectDescriptor,attrName,destinationName)
 endfunction
 
 procedure AddAttributeProc(objectDescriptor,attrName,procName)
-	AddAttributeProperty(objectDescriptor,attrName,,,,procName);	
+	SabatexExchangeConfig.AddAttributeProc(objectDescriptor,attrName,procName)	
 endprocedure
 
 // Функция - Configured object descriptor
