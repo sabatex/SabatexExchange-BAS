@@ -1,6 +1,6 @@
 ﻿&AtServer
 Procedure OnCreateAtServer(Cancel, StandardProcessing)
-	nodes = SabatexExchangeConfig.GetActiveDestinationNodes();
+	nodes = SabatexExchange.GetActiveDestinationNodes();
 	for each node in nodes do
 		Items.NodeSelector.ChoiceList.Add(node);
 		Items.NodeSelectorForSend.ChoiceList.Add(node);
@@ -25,7 +25,7 @@ EndProcedure
 Procedure NodeSelectorOnChangeAtServer(nodeName)
 	objectsNameList = new Array;
 	try
-		conf = SabatexExchangeConfig.GetConfigByNodeName(nodeName);
+		conf = SabatexExchange.GetConfigByNodeName(nodeName);
 		Execute(conf.userDefinedModule+".ObjectQueriesList(conf,objectsNameList)");
 	except
 		Message("Помилка виконання методу користувача - .ObjectQueriesList(conf,items)");
@@ -42,7 +42,7 @@ EndProcedure
 Procedure NodeSelectorForSendOnChangeAtServer(nodeName)
 	objectsNameList = new Array;
 	try
-		conf = SabatexExchangeConfig.GetConfigByNodeName(nodeName);
+		conf = SabatexExchange.GetConfigByNodeName(nodeName);
 		// The user config must include procedure ObjectPostList(conf,objectsNameList)
 		Execute(conf.userDefinedModule+".ObjectPostList(conf,objectsNameList)");
 	except
@@ -64,7 +64,7 @@ EndProcedure
 
 &AtServer
 Procedure SendQueryAtServer()
-	conf = SabatexExchangeConfig.GetConfigByNodeName(Object.NodeSelector);
+	conf = SabatexExchange.GetConfigByNodeName(Object.NodeSelector);
 	for each node in  ObjectTypes do
 		if node.Checked then
 			SabatexExchange.RegisterQueryObjectsForNode(conf,node.Name,Object.DateQuery);
@@ -128,7 +128,7 @@ EndProcedure
 
 &AtServer
 Procedure SendDataAtServer()
-	conf = SabatexExchangeConfig.GetConfigByNodeName(Object.NodeSelectorForSend);
+	conf = SabatexExchange.GetConfigByNodeName(Object.NodeSelectorForSend);
 	for each objectDescriptor in  ObjectTypesSend do
 		if objectDescriptor.Checked then
 			try
@@ -177,15 +177,22 @@ procedure RefreshNodeObjects()
 	Query.Text = 
 		"SELECT
 		|	"""" AS ExternalId,
-		|	SabatexExchangeObjectSinchro.Ref AS Ref
+		|	Object.Ref AS Ref
 		|FROM
-		|	" + Object.ObjectSelector + " AS SabatexExchangeObjectSinchro";
+		|	" + Object.ObjectSelector + " AS Object";
 	
 	QueryResult = Query.Execute();
 	
 	SelectionDetailRecords = QueryResult.Select();
 	UniversalO.Clear();
 	While SelectionDetailRecords.Next() Do
+		try
+			if SelectionDetailRecords.Ref.IsFolder then
+				continue;
+			endif;
+		except
+		endtry;
+
 		row = UniversalO.Add();
 		row.Ref = SelectionDetailRecords.Ref;
 		
@@ -203,7 +210,7 @@ procedure RefreshNodeObjects()
 	
 			QueryExternals.SetParameter("InternalObjectRef", SelectionDetailRecords.Ref.UUID() );
 			QueryExternals.SetParameter("NodeName", Lower(Object.NodeObjectSelector));
-			QueryExternals.SetParameter("ObjectType",SabatexExchangeConfig.GetNormalizedObjectType(Object.ObjectSelector));
+			QueryExternals.SetParameter("ObjectType",SabatexExchange.GetNormalizedObjectType(Object.ObjectSelector));
 	
 			QueryExternalsResult = QueryExternals.Execute();
 	
@@ -231,7 +238,7 @@ EndProcedure
 
 &AtServer
 Procedure NodeObjectsSelectorOnChangeAtServer(NodeName)
-	conf = SabatexExchangeConfig.GetConfigByNodeName(NodeName);
+	conf = SabatexExchange.GetConfigByNodeName(NodeName);
 	Object.ObjectSelector = "";
 	Items.ObjectSelector.ChoiceList.Clear();
 	for each obj in conf.Objects do
@@ -262,23 +269,28 @@ Procedure MigrationForNodeAtServer()
 		return;
 	endif;
 	
-	conf = SabatexExchangeConfig.GetConfigByNodeName(Object.NodeObjectSelector);
+	conf = SabatexExchange.GetConfigByNodeName(Object.NodeObjectSelector);
 	for each obj in conf.Objects do
 		if obj.Value.UseIdAttribute then
 			Query = New Query;
 			Query.Text = 
 			"SELECT
-			|	SabatexExchangeObjectSinchro.Ref AS Ref,
-			|	SabatexExchangeObjectSinchro.SabatexExchangeId AS SabatexExchangeId
+			|	Object.Ref AS Ref,
+			|	Object.SabatexExchangeId AS SabatexExchangeId
 			|FROM
-			|	" + obj.Value.ObjectType + " AS SabatexExchangeObjectSinchro";
+			|	" + obj.Value.ObjectType + " AS Object
+			|WHERE
+			|	Object.SabatexExchangeId <> &SabatexExchangeId";
+			
+			
+			Query.SetParameter("SabatexExchangeId", SabatexExchange.GetEmptyUUID());
 	
 			QueryResult = Query.Execute();
 	
 			SelectionDetailRecords = QueryResult.Select();
 	
 			While SelectionDetailRecords.Next() Do
-				SabatexExchangeExternalObjects.RegisterObject(SelectionDetailRecords.Ref,Object.NodeObjectSelector,SelectionDetailRecords.SabatexExchangeId);
+				SabatexExchange.RegisterExtrnalId(SelectionDetailRecords.Ref,Object.NodeObjectSelector,SelectionDetailRecords.SabatexExchangeId);
 			EndDo;
 		endif;
 	enddo;

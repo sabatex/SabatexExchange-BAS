@@ -5,7 +5,7 @@ endfunction
 
 function GetValueAsMap(key) export
 	str = GetValue(key);
-	return SabatexJSON.Deserialize(str);
+	return SabatexExchange.Deserialize(str);
 endfunction	
 
 procedure SetValue(Key,Value) export
@@ -19,7 +19,7 @@ endprocedure
 procedure SetValueFromStructure(Key,Value) export
 	reg = InformationRegisters.SabatexExchangeConfig.CreateRecordManager();
 	reg.Key = Key;
-	reg.Value  = SabatexJSON.Serialize(Value);
+	reg.Value  = SabatexExchange.Serialize(Value);
 	reg.Write(true);
 endprocedure	
 

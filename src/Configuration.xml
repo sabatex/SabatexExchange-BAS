@@ -50,7 +50,7 @@
 			</UsePurposes>
 			<ScriptVariant>English</ScriptVariant>
 			<Vendor>sabatex</Vendor>
-			<Version>5.0.0-rc4</Version>
+			<Version>5.0.0-rc5</Version>
 			<BriefInformation/>
 			<DetailedInformation/>
 			<Copyright>
@@ -78,16 +78,7 @@
 			<Subsystem>Администрирование</Subsystem>
 			<CommonModule>SabatexExchange</CommonModule>
 			<CommonModule>SabatexExchangeAdapter</CommonModule>
-			<CommonModule>SabatexJSON</CommonModule>
-			<CommonModule>SabatexExchangeObjectAnalizer</CommonModule>
-			<CommonModule>SabatexExchangeConfig</CommonModule>
-			<CommonModule>Sabatex</CommonModule>
-			<CommonModule>SabatexExchangeLogged</CommonModule>
-			<CommonModule>SabatexExchangeWebApi</CommonModule>
-			<CommonModule>SabatexExchangeQuery</CommonModule>
-			<CommonModule>SabatexExchangeExternalObjects</CommonModule>
 			<CommonCommand>SabatexCommonStartExchange</CommonCommand>
-			<Catalog>SabatexExchangeObjectSinchro</Catalog>
 			<Enum>SabatexExchangeMode</Enum>
 			<Enum>SabatexExchangeIdAttributeType</Enum>
 			<Enum>SabatexExchangeNodeType</Enum>

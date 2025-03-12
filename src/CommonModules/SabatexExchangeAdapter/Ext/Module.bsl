@@ -1,5 +1,5 @@
 ﻿
-#region SabatexExchangeAdapter5_0_0_rc3
+#region SabatexExchangeAdapter5_0_0_rc4
 
 // Copyright (c) 2021-2024 by Serhiy Lakas
 // https://sabatex.github.io
@@ -46,7 +46,7 @@ endprocedure
 //
 
 function GetActiveDestinationNodes()
-	return SabatexExchangeConfig.GetActiveDestinationNodes();
+	return SabatexExchange.GetActiveDestinationNodes();
 endfunction
  
  
@@ -57,11 +57,11 @@ endfunction
 //  attrName		 - string	 - Назви атрибутів роздвлених комою які будуть ігноровані при імпорті
 //
 procedure AddAttributeIgnored(objectDescriptor,attrName)
-	SabatexExchangeConfig.AddAttributeIgnored(objectDescriptor,attrName);
+	SabatexExchange.AddAttributeIgnored(objectDescriptor,attrName);
 endprocedure
 
 procedure AddAttributeDefault(objectDescriptor,attrName,default)
-	SabatexExchangeConfig.AddAttributeDefault(objectDescriptor,attrName,default);	
+	SabatexExchange.AddAttributeDefault(objectDescriptor,attrName,default);	
 endprocedure
 // Процедура - Add attribute mapped
 //
@@ -72,11 +72,11 @@ endprocedure
 //  ignoredIsMiss	 - 	 - 
 //
 function AddAttributeMapped(objectDescriptor,attrName,destinationName)
-	return SabatexExchangeConfig.AddAttributeMapped(objectDescriptor,attrName,destinationName);	
+	return SabatexExchange.AddAttributeMapped(objectDescriptor,attrName,destinationName);	
 endfunction
 
 procedure AddAttributeProc(objectDescriptor,attrName,procName)
-	SabatexExchangeConfig.AddAttributeProc(objectDescriptor,attrName,procName)	
+	SabatexExchange.AddAttributeProc(objectDescriptor,attrName,procName)	
 endprocedure
 
 // Функция - Configured object descriptor
@@ -91,7 +91,7 @@ endprocedure
 //   structure - objectDescriptor
 //
 function CreateObjectDescriptor(Conf,ObjectType,val ExternalObjectType=undefined,val ignore=false) export
-	return SabatexExchangeConfig.CreateObjectDescriptor(Conf,ObjectType,ExternalObjectType,ignore);
+	return SabatexExchange.CreateObjectDescriptor(Conf,ObjectType,ExternalObjectType,ignore);
 endfunction
 
 // Процедура - Configure update startegy
@@ -101,7 +101,7 @@ endfunction
 //  update			 - boolean	 - (необовязково) true/false Оновлювати обэкт. (Обєкт може мінятись клієнтом і мати інші властивості в порівнянні destination)
 //
 procedure ConfigureUpdateStartegy(objectDescriptor,update)
-	SabatexExchangeConfig.ConfigureUpdateStartegy(objectDescriptor,update);	
+	SabatexExchange.ConfigureUpdateStartegy(objectDescriptor,update);	
 endprocedure	
 
 // Процедура - Configure store unresolved startegy
@@ -111,7 +111,7 @@ endprocedure
 //  writeUnresolved	 - 	 - 
 //
 procedure ConfigureStoreUnresolvedStartegy(objectDescriptor,writeUnresolved)
-	SabatexExchangeConfig.ConfigureStoreUnresolvedStartegy(objectDescriptor,writeUnresolved);
+	SabatexExchange.ConfigureStoreUnresolvedStartegy(objectDescriptor,writeUnresolved);
 endprocedure	
 
 // Процедура - Configure inserting object
@@ -121,7 +121,7 @@ endprocedure
 //  uninserted		 - 	 - 
 //
 procedure ConfigureInsertingStartegy(objectDescriptor,uninserted)
-	SabatexExchangeConfig.ConfigureInsertingStartegy(objectDescriptor,uninserted);
+	SabatexExchange.ConfigureInsertingStartegy(objectDescriptor,uninserted);
 endprocedure	
 
 // Процедура - Configure missing data startegy
@@ -131,7 +131,7 @@ endprocedure
 //  ignoreMissedObject	 - 	 - 
 //
 procedure ConfigureMissingDataStartegy(objectDescriptor,ignoreMissedObject)
-	SabatexExchangeConfig.ConfigureMissingDataStartegy(objectDescriptor,ignoreMissedObject);
+	SabatexExchange.ConfigureMissingDataStartegy(objectDescriptor,ignoreMissedObject);
 endprocedure	
 
 // Процедура - Configure transact document startegy
@@ -141,30 +141,30 @@ endprocedure
 //  transact		 - 	 - 
 //
 procedure ConfigureTransactDocumentStartegy(objectDescriptor,transact,updateTransacted=undefined)
-	SabatexExchangeConfig.ConfigureTransactDocumentStartegy(objectDescriptor,transact,updateTransacted);
+	SabatexExchange.ConfigureTransactDocumentStartegy(objectDescriptor,transact,updateTransacted);
 endprocedure	
 
 	
 procedure ConfigureSearchObject(objectDescriptor,UseIdAttribute=false,LookObjectProc=undefined)
-	SabatexExchangeConfig.ConfigureSearchObject(objectDescriptor,UseIdAttribute,LookObjectProc);	
+	SabatexExchange.ConfigureSearchObject(objectDescriptor,UseIdAttribute,LookObjectProc);	
 endprocedure	
 
 
 procedure ConfigureParserActions(conf,objectDescriptor,OnBeforeSave=false,OnAfterSave=undefined) export
- 	SabatexExchangeConfig.ConfigureParserActions(conf,objectDescriptor,OnBeforeSave,OnAfterSave);
+ 	SabatexExchange.ConfigureParserActions(conf,objectDescriptor,OnBeforeSave,OnAfterSave);
 endprocedure	
 
 
 function CreateExternalObjectDescriptor(conf,externalObjectType,parserProc=undefined,internalObjectDescriptor=undefined) export
- 	SabatexExchangeConfig.CreateExternalObjectDescriptor(conf,externalObjectType,parserProc,internalObjectDescriptor);
+ 	SabatexExchange.CreateExternalObjectDescriptor(conf,externalObjectType,parserProc,internalObjectDescriptor);
 endfunction
 
 procedure CreateEnumObjectDescriptor(Conf,EnumName,EnumRelolveProc=undefined)
-	SabatexExchangeConfig.CreateEnumObjectDescriptor(Conf,EnumName,EnumRelolveProc);
+	SabatexExchange.CreateEnumObjectDescriptor(Conf,EnumName,EnumRelolveProc);
 endprocedure	
 
 function AddTableProperty(objectConf,attrName,Ignore=false,destinationName=undefined,procName=undefined,postParser=undefined) export
-	return SabatexExchangeConfig.AddTableProperty(objectConf,attrName,Ignore,destinationName,procName,postParser);	
+	return SabatexExchange.AddTableProperty(objectConf,attrName,Ignore,destinationName,procName,postParser);	
 endfunction
 
 // Procedure - Configure auto query sending.
@@ -184,7 +184,7 @@ endprocedure
 
 #region Logged
 function Error(conf,message,result=undefined)
-	return SabatexExchangeLogged.Error(conf,message,result);
+	return SabatexExchange.Error(conf,message,result);
 endfunction	
 // Процедура - Sabatex log warning
 //
@@ -193,7 +193,7 @@ endfunction
 //  message	 - 	 - 
 //
 procedure Warning(conf,message,isJournalWrite=false)
-	SabatexExchangeLogged.Warning(conf,message,isJournalWrite);		
+	SabatexExchange.Warning(conf,message,isJournalWrite);		
 endprocedure
 // Процедура - Sabatex log information
 //
@@ -202,7 +202,7 @@ endprocedure
 //  message	 - 	 - 
 //
 procedure Information(conf,message,isJournalWrite=false)
-	SabatexExchangeLogged.Information(conf,message,isJournalWrite);		
+	SabatexExchange.Information(conf,message,isJournalWrite);		
 endprocedure
 // Процедура - Sabatex log note
 //
@@ -211,7 +211,7 @@ endprocedure
 //  message	 - 	 - 
 //
 procedure Note(conf,message,isJournalWrite=false)
-	SabatexExchangeLogged.Note(conf,message,isJournalWrite);		
+	SabatexExchange.Note(conf,message,isJournalWrite);		
 endprocedure
 	
 #endregion
@@ -220,7 +220,7 @@ endprocedure
 
  #region functions
  function IsEmptyUUID(value)
-	return Sabatex.IsEmptyUUID(value);
+	return SabatexExchange.IsEmptyUUID(value);
 endfunction	
 
  #endregion

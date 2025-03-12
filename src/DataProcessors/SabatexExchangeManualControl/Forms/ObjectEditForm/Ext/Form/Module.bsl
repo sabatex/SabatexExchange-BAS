@@ -17,7 +17,7 @@
 	
 	Query.SetParameter("InternalObjectRef", Параметры.ObjectRef.UUID());
 	Query.SetParameter("NodeName", Lower(NodeName));
-	Query.SetParameter("ObjectType", SabatexExchangeConfig.GetNormalizedObjectType(Параметры.ObjectRef.Metadata().FullName()));
+	Query.SetParameter("ObjectType", SabatexExchange.GetNormalizedObjectType(Параметры.ObjectRef.Metadata().FullName()));
 	
 	QueryResult = Query.Execute();
 	
@@ -31,7 +31,7 @@
 
 &НаСервере
 procedure SaveНаСервере()
-	SabatexExchangeExternalObjects.RegisterObject(ObjectRef,NodeName,SabatexExchangeId);
+	SabatexExchange.RegisterExtrnalId(ObjectRef,NodeName,SabatexExchangeId);
 endprocedure
 
 &НаКлиенте
@@ -45,7 +45,7 @@ endprocedure
 function CleanValueAtServer(objectRef)
 	obj = objectRef.GetObject(); 
 	try 
-		obj.SabatexExchangeId = Sabatex.GetEmptyUUID();
+		obj.SabatexExchangeId = SabatexExchange.GetEmptyUUID();
 		obj.write();
 		return undefined;
 	except

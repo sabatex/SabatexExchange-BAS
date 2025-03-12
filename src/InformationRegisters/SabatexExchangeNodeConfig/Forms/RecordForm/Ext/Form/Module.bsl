@@ -15,7 +15,7 @@ EndProcedure
 &AtServer
 Procedure OnReadAtServer(CurrentObject)
 	if CurrentObject.NodeType = Enums.SabatexExchangeNodeType.USAP then
-		hostConf = SabatexExchangeConfig.GetHostConfig(Enums.SabatexExchangeNodeType.USAP,CurrentObject.NodeName);
+		hostConf = SabatexExchange.GetHostConfig(Enums.SabatexExchangeNodeType.USAP,CurrentObject.NodeName);
 		host = hostConf.host;
 		login = hostConf.login;
 		password = hostConf.password;
@@ -45,10 +45,10 @@ EndProcedure
 Procedure OnWriteAtServer(Cancel, CurrentObject, WriteParameters)
 	if CurrentObject.NodeType = Enums.SabatexExchangeNodeType.USAP then
 		result = new structure;
-		result.Insert("cid",Sabatex.ValueOrDefault(cid,true));
-		result.Insert("Host",Sabatex.ValueOrDefault(Host,""));
-		result.Insert("login",Sabatex.ValueOrDefault(login,""));
-		result.Insert("password",Sabatex.ValueOrDefault(password,""));
-		SabatexExchangeConfig.SetHostConfig(result,CurrentObject.NodeType,Record.NodeName);
+		result.Insert("cid",SabatexExchange.ValueOrDefault(cid,true));
+		result.Insert("Host",SabatexExchange.ValueOrDefault(Host,""));
+		result.Insert("login",SabatexExchange.ValueOrDefault(login,""));
+		result.Insert("password",SabatexExchange.ValueOrDefault(password,""));
+		SabatexExchange.SetHostConfig(result,CurrentObject.NodeType,Record.NodeName);
 	endif;	
 EndProcedure
