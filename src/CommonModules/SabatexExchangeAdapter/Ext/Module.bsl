@@ -1,5 +1,5 @@
 ﻿
-#region SabatexExchangeAdapter5_0_0_rc4
+#region SabatexExchangeAdapter5_0_0_rc6
 
 // Copyright (c) 2021-2024 by Serhiy Lakas
 // https://sabatex.github.io
@@ -22,6 +22,7 @@ endfunction
 
 
 #region registration_message_for_exchange
+
 procedure RegisterQueryObjectsByDayForNode(nodeName,objectType,date)
 	SabatexExchange.RegisterQueryObjectsForNode(nodeName,objectType,date);
 endprocedure
@@ -31,6 +32,9 @@ procedure RegisterQueryForNode(conf,query)
 endprocedure	
 procedure RegisterObjectForNode(conf,obj)
 	SabatexExchange.RegisterMessageForNode(conf.NodeName,,obj);
+endprocedure
+procedure RegisterMessageForNode(val nodeName,val messageHeader=undefined, val object=undefined)
+	SabatexExchange.RegisterMessageForNode(nodeName,,object);
 endprocedure
 
 
