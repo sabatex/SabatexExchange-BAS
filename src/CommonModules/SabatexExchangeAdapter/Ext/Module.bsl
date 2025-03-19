@@ -1,5 +1,5 @@
 ﻿
-#region SabatexExchangeAdapter5_0_0_rc6
+#region SabatexExchangeAdapter5_0_0_rc8
 
 // Copyright (c) 2021-2024 by Serhiy Lakas
 // https://sabatex.github.io
@@ -34,7 +34,7 @@ procedure RegisterObjectForNode(conf,obj)
 	SabatexExchange.RegisterMessageForNode(conf.NodeName,,obj);
 endprocedure
 procedure RegisterMessageForNode(val nodeName,val messageHeader=undefined, val object=undefined)
-	SabatexExchange.RegisterMessageForNode(nodeName,,object);
+	SabatexExchange.RegisterMessageForNode(nodeName,messageHeader,object);
 endprocedure
 
 
@@ -138,11 +138,12 @@ procedure ConfigureMissingDataStartegy(objectDescriptor,ignoreMissedObject)
 	SabatexExchange.ConfigureMissingDataStartegy(objectDescriptor,ignoreMissedObject);
 endprocedure	
 
-// Процедура - Configure transact document startegy
+// Процедура - Configure transact document startegy (default false)
 //
 // Параметры:
-//  objectDescriptor - 	 - 
-//  transact		 - 	 - 
+//  objectDescriptor - conf	     -  контекст описувача обэкта створеного CreateObjectDescriptor(..)
+//  transact		 - boolean	 - true  Обэкт автоматично проводиься
+//  updateTransacted - Number    - різниця в годинах між поточною датою та датою документа на проміжку якої дозволена модифікація документа
 //
 procedure ConfigureTransactDocumentStartegy(objectDescriptor,transact,updateTransacted=undefined)
 	SabatexExchange.ConfigureTransactDocumentStartegy(objectDescriptor,transact,updateTransacted);
@@ -287,3 +288,15 @@ procedure ObjectPostList(conf,items) export
 	//items.Add(new structure("ObjectType,Filter","Документ.ЧекККМ","Организация.Код = 'ER0000123'");
 	//AddPostObjectDescription(items,"Документ.ЧекККМ","Организация.Код = 'ER0000123'");
 endprocedure	
+
+// Процедура - Дана процедура запускається після імпорту рядка таблиці обєкта і дозволяє додатково заповнити рядок. Назва процедури вказується в AddTableProperty(...,postParser)  
+//
+// Параметры:
+//  conf		 - structure - контекст парсера для поточного нода 
+//  localobject	 - object	 -  поточний обєкт який імпортується
+//  line		 - Map       -  рядок з файла імпорта
+//  row			 - TableRow	 - поточний рядок обєкта який імпортується
+//
+procedure DemoTablePostParser(conf,localobject,line,row)
+endprocedure	
+	

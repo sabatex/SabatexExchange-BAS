@@ -1208,8 +1208,8 @@ endprocedure
 //  attrName		 - 	 - 
 //  Ignore			 - 	 - 
 //  destinationName	 - 	 - 
-//  procName		 - 	 - 
-//  postParser		 - 	 - 
+//  procName		 - string - procedure procName(conf,source,destination,table)
+//  postParser		 - string - procedure postParser(conf,localobject,line,row)
 // 
 // Возвращаемое значение:
 //   - 
@@ -1265,8 +1265,9 @@ endprocedure
 // Процедура - Configure transact document startegy (default false)
 //
 // Параметры:
-//  objectDescriptor - 	 - 
-//  transact		 - boolean	 -   Обэкт автоматично проводиься   
+//  objectDescriptor - conf	     -  контекст описувача обэкта створеного CreateObjectDescriptor(..)
+//  transact		 - boolean	 - true  Обэкт автоматично проводиься
+//  updateTransacted - Number    - різниця в годинах між поточною датою та датою документа на проміжку якої дозволена модифікація документа  
 
 procedure ConfigureTransactDocumentStartegy(objectDescriptor,transact,updateTransacted=undefined) export
 	objectDescriptor.transact = transact;
@@ -2519,30 +2520,37 @@ procedure RegisterMessageForNode(nodeName,messageHeader=undefined,object=undefin
 	
 	if object <> undefined then
 		txt = Serialize(object);
-		objectType = lower(object.Ref.Метаданные().FullName()); 
+		SabatexExchangeId = undefined;
+		try
+			objectType = lower(object.Ref.Метаданные().FullName()); 
 			
-		Query = New Query;
-		Query.Text = 
-			"SELECT TOP 1
-			|	SabatexExchangeIds.objectRef AS objectRef
-			|FROM
-			|	InformationRegister.SabatexExchangeIds AS SabatexExchangeIds
-			|WHERE
-			|	SabatexExchangeIds.InternalObjectRef = &InternalObjectRef
-			|	AND SabatexExchangeIds.ObjectType = &ObjectType
-			|	AND SabatexExchangeIds.NodeName = &NodeName";
+			Query = New Query;
+			Query.Text = 
+				"SELECT TOP 1
+				|	SabatexExchangeIds.objectRef AS objectRef
+				|FROM
+				|	InformationRegister.SabatexExchangeIds AS SabatexExchangeIds
+				|WHERE
+				|	SabatexExchangeIds.InternalObjectRef = &InternalObjectRef
+				|	AND SabatexExchangeIds.ObjectType = &ObjectType
+				|	AND SabatexExchangeIds.NodeName = &NodeName";
 	
-		Query.SetParameter("InternalObjectRef", object.Ref.UUID());
-	    Query.SetParameter("ObjectType", GetNormalizedObjectType(objectType));
-		Query.SetParameter("NodeName", lower(nodeName));
-		QueryResult = Query.Execute();
+			Query.SetParameter("InternalObjectRef", object.Ref.UUID());
+	    	Query.SetParameter("ObjectType", GetNormalizedObjectType(objectType));
+			Query.SetParameter("NodeName", lower(nodeName));
+			QueryResult = Query.Execute();
 	
-		SelectionDetailRecords = QueryResult.Select();
-	    SabatexExchangeId = undefined;
-
-		if SelectionDetailRecords.Next() then
+			SelectionDetailRecords = QueryResult.Select();
+			if SelectionDetailRecords.Next() then
+				SabatexExchangeId = XMLString(SelectionDetailRecords.objectRef);
+			endif;
+		except
+			SabatexExchangeId = undefined;
+		endtry;	
+		
+		if SabatexExchangeId <> undefined then
 			txt = Left(txt,StrLen(txt) - 1);
-			reg.JSONText = txt + ",""SabatexExchangeId"":""" +XMLString(SelectionDetailRecords.objectRef)+"""}";
+			reg.JSONText = txt + ",""SabatexExchangeId"":""" +SabatexExchangeId+"""}";
 		else
 			reg.JSONText = txt;
 		EndIf;

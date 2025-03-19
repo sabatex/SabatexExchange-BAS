@@ -4,10 +4,10 @@
 		<Metadata name="CommonCommand.SabatexCommonStartExchange" id="311ff686-857e-4ec5-8db7-f0aa0f99bb56" configVersion="39a1683b63c4cfe7fb5c281958896a9f6e408ed2"/>
 		<Metadata name="CommonCommand.SabatexCommonStartExchange.CommandModule" id="311ff686-857e-4ec5-8db7-f0aa0f99bb56.2" configVersion="19f83bc2f739a668828563f8ad6a46f25291d539"/>
 		<Metadata name="CommonModule.SabatexExchange" id="eaa5f3c5-7c51-4f83-b3e2-4a065491de85" configVersion="469e39e9d4af07cac19d8bfa9b3ef6fdc3227cca"/>
-		<Metadata name="CommonModule.SabatexExchange.Module" id="eaa5f3c5-7c51-4f83-b3e2-4a065491de85.0" configVersion="917ae6e0399dffafec7585e869797373f9a833d5"/>
+		<Metadata name="CommonModule.SabatexExchange.Module" id="eaa5f3c5-7c51-4f83-b3e2-4a065491de85.0" configVersion="cc6329cbc663923102d6c37a442bdb5326377ea9"/>
 		<Metadata name="CommonModule.SabatexExchangeAdapter" id="f9abaf2a-5a7b-4b9e-92e4-c0438d3e84e6" configVersion="64ef86fd35698f0bd55d1204874c9893f84153de"/>
-		<Metadata name="CommonModule.SabatexExchangeAdapter.Module" id="f9abaf2a-5a7b-4b9e-92e4-c0438d3e84e6.0" configVersion="6eef97dbd9547520f23c011db820e128879c4df6"/>
-		<Metadata name="Configuration.SabatexExchange" id="2a67a443-4d1e-4953-bc8a-967898b9f865" configVersion="eff80366f959b01f25ad721f3a5166c0c13b5f64"/>
+		<Metadata name="CommonModule.SabatexExchangeAdapter.Module" id="f9abaf2a-5a7b-4b9e-92e4-c0438d3e84e6.0" configVersion="a09a098f992275535f277511f91c75b8e2a1d185"/>
+		<Metadata name="Configuration.SabatexExchange" id="2a67a443-4d1e-4953-bc8a-967898b9f865" configVersion="1e38757388a8a5678cf8c7a79035415915861383"/>
 		<Metadata name="Configuration.SabatexExchange.ManagedApplicationModule" id="13685d31-beba-438c-b131-4bb071a2072c.6" configVersion="f4fa774579ce74066e581c9bea23e03525a12934"/>
 		<Metadata name="DataProcessor.SabatexExchangeManualControl" id="85e0d33b-527a-4776-8378-7a37da8c3fe4" configVersion="81fa1ef926f7c8aa65d64a1c3eba6accbc46cc1c">
 			<Metadata name="DataProcessor.SabatexExchangeManualControl.Attribute.ObjectSelector" id="035a2a33-7d80-41d9-a94a-40364ee75821"/>
