@@ -98,6 +98,42 @@ function IsEmptyUUID(value) export
 endfunction	
 
 
+// Функция - Message header from url
+//
+// Параметры:
+//  url	 - string	 -  url  e1cib/data/Справочник.Номенклатура?ref=9fb542010aa6000211ed9f50262b40a8
+// 
+// Возвращаемое значение:
+//  structure - type,id
+//
+function GetMessageHeaderFromUrl(url) export
+	result = new structure("type,id");
+	if StrStartsWith(url,"e1cib/data") then
+		index = StrFind(url,"?ref=");
+		if index <> 0 then
+			result.type = Mid(url,12,index-12);
+			result.id = Mid(url,index+29,8)+"-"+Mid(url,index+25,4)+"-"+Mid(url,index+21,4)+"-"+Mid(url,index+5,4)+"-"+Mid(url,index+9,12);
+		endif;
+	endif;
+	return result
+endfunction
+
+// Функция - Get url from message header
+//
+// Параметры:
+//  messageHeader	 - structure or Map	 - (type string,id string)
+// 
+// Возвращаемое значение:
+// string  -  url  e1cib/data/Справочник.Номенклатура?ref=9fb542010aa6000211ed9f50262b40a8
+//
+
+function GetUrlFromMessageHeader(messageHeader) export
+	id= messageHeader["id"];
+	return "e1cib/data/"+messageHeader["type"]+"?ref="+Mid(id,20,4)+Mid(id,25,12)+Mid(id,15,4)+Mid(id,10,4)+Mid(id,1,8);
+endfunction
+
+
+
 //function StringSplit(value,delimiter=";",includeEmpty=true) export
 //	
 //	if StrLen(delimiter) <> 1 then

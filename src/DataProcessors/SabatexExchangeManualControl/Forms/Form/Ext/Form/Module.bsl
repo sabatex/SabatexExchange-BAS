@@ -302,6 +302,29 @@ Procedure MigrationForNode(Command)
 	MigrationForNodeAtServer();
 EndProcedure
 
+&AtServerNoContext
+function urlOnChangeAtServer(url)
+	return SabatexExchange.Serialize(SabatexExchange.GetMessageHeaderFromUrl(url));
+Endfunction
+
+
+
+&AtClient
+Procedure ConvertFromUrlToMessageHeader(Command)
+	objectId = urlOnChangeAtServer(urlId); 
+ EndProcedure
+
+&AtServerNoContext
+function ConvertFromObjectIdToUrlAtServer(objectId)
+	messageHeader = SabatexExchange.Deserialize(objectId);
+	return SabatexExchange.GetUrlFromMessageHeader(messageHeader);
+EndFunction
+
+&AtClient
+Procedure ConvertFromObjectIdToUrl(Command)
+	urlId = ConvertFromObjectIdToUrlAtServer(objectId);
+EndProcedure
+
 
 
 
