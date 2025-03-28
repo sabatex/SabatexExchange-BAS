@@ -166,25 +166,25 @@ Procedure SendData(Command)
 	SendDataAtServer();
 EndProcedure
 
-&AtServer
-procedure RefreshNodeObjects()
-	UniversalO.Clear();
-	if Object.ObjectSelector = "" then
-		return;
+&AtServerNoContext
+function GetObjectData(ObjectSelector,NodeObjectSelector)
+	result = new array;
+	if ObjectSelector = "" then
+		return result;
 	endif;	
 
 	Query = New Query;
 	Query.Text = 
 		"SELECT
 		|	"""" AS ExternalId,
+		|   """" AS Id,
 		|	Object.Ref AS Ref
 		|FROM
-		|	" + Object.ObjectSelector + " AS Object";
+		|	" + ObjectSelector + " AS Object";
 	
 	QueryResult = Query.Execute();
 	
 	SelectionDetailRecords = QueryResult.Select();
-	UniversalO.Clear();
 	While SelectionDetailRecords.Next() Do
 		try
 			if SelectionDetailRecords.Ref.IsFolder then
@@ -193,9 +193,9 @@ procedure RefreshNodeObjects()
 		except
 		endtry;
 
-		row = UniversalO.Add();
+		row = new structure("Ref,Id,ExternalId");
 		row.Ref = SelectionDetailRecords.Ref;
-		
+		row.Id = SelectionDetailRecords.Ref.UUID();
 	
 		QueryExternals = New Query;
 		QueryExternals.Text = 
@@ -209,8 +209,8 @@ procedure RefreshNodeObjects()
 			|	AND SabatexExchangeIds.InternalObjectRef = &InternalObjectRef";
 	
 			QueryExternals.SetParameter("InternalObjectRef", SelectionDetailRecords.Ref.UUID() );
-			QueryExternals.SetParameter("NodeName", Lower(Object.NodeObjectSelector));
-			QueryExternals.SetParameter("ObjectType",SabatexExchange.GetNormalizedObjectType(Object.ObjectSelector));
+			QueryExternals.SetParameter("NodeName", Lower(NodeObjectSelector));
+			QueryExternals.SetParameter("ObjectType",SabatexExchange.GetNormalizedObjectType(ObjectSelector));
 	
 			QueryExternalsResult = QueryExternals.Execute();
 	
@@ -220,20 +220,33 @@ procedure RefreshNodeObjects()
 				row.ExternalId = ExternalsSelectionDetailRecords.objectRef;
 			else
 				 row.ExternalId = "";
-			endif;
+			 endif;
+		result.Add(row);	 
+	EndDo;
+	
+    return result;
+endfunction
+
+&AtClient
+procedure RefreshNodeObjects()
+	UniversalO.Clear();
+	if Object.ObjectSelector = "" then
+		return;
+	endif;	
+	
+	data = GetObjectData(Object.ObjectSelector,Object.NodeObjectSelector);
+	
+	for each item in data Do
+		row = UniversalO.Add();
+		FillPropertyValues(row,item);
 	EndDo;
 	
 endprocedure	
 
 
-&AtServer
-Procedure ObjectSelectorOnChangeAtServer()
-	RefreshNodeObjects();
-EndProcedure
-
 &AtClient
 Procedure ObjectSelectorOnChange(Item)
-	ObjectSelectorOnChangeAtServer();
+	RefreshNodeObjects();
 EndProcedure
 
 &AtServer
@@ -246,12 +259,12 @@ Procedure NodeObjectsSelectorOnChangeAtServer(NodeName)
 			Items.ObjectSelector.ChoiceList.Add(obj.Value.ObjectType);
 		endif;
 	enddo;
-	RefreshNodeObjects();
 EndProcedure
 
 &AtClient
 Procedure NodeObjectsSelectorOnChange(Item)
 	NodeObjectsSelectorOnChangeAtServer(Object.NodeObjectSelector);
+	RefreshNodeObjects();
 EndProcedure
 
 &AtClient

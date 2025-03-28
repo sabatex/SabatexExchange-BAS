@@ -91,7 +91,13 @@ function IsEmptyUUID(value) export
 	if TypeOf(value) = type("UUID") then
 		return value = GetEmptyUUID();
 	elsif TypeOf(value) = type("string") then
-		return new UUID(value) = GetEmptyUUID();
+		try
+			uuidValue = new UUID(value);
+		except
+			raise "Помилка приведення значення ["+ value+"] до UUID";
+		endtry;
+		
+		return uuidValue = GetEmptyUUID();
 	else
 		raise("Неправильний тип value");
 	endif;	
@@ -235,6 +241,10 @@ function Deserialize(txt,datefields = undefined) export
 	if typeof(result) = type("Map") then
 		objectXDTO = result.Get("#value");
 		if objectXDTO <> undefined then
+			SabatexExchangeId  = result["SabatexExchangeId"];
+			if SabatexExchangeId <> undefined then
+				objectXDTO["SabatexExchangeId"] = SabatexExchangeId;
+			endif;	
 			return objectXDTO;
 		endif;
 	endif;
@@ -463,7 +473,7 @@ function updateToken(conf)
 	// 1. спроба оновити токен за допомогою рефреш токена
 	try
 		token = RefreshToken(conf);
-		InformationRegisters.SabatexExchangeNodeConfig.SetAccessToken(conf,token);
+		SetAccessToken(conf,token);
 		return true;
 	except
 	endtry;	

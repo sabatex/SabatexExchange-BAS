@@ -1,5 +1,5 @@
 ﻿
-#region SabatexExchangeAdapter5_0_0_rc8
+#region SabatexExchangeAdapter5_0_0
 
 // Copyright (c) 2021-2024 by Serhiy Lakas
 // https://sabatex.github.io
