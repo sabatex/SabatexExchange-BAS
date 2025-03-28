@@ -59,16 +59,19 @@
 							<ExtendedTooltip name="senderExtendedTooltip" id="3"/>
 						</LabelField>
 						<LabelField name="destination" id="31">
+							<DataPath>1/0:494c6895-bfcc-438b-8218-34fbffddab8b</DataPath>
 							<ReadOnly>true</ReadOnly>
 							<ContextMenu name="destinationContextMenu" id="32"/>
 							<ExtendedTooltip name="destinationExtendedTooltip" id="33"/>
 						</LabelField>
 						<InputField name="Id" id="4">
+							<DataPath>1/0:87586461-2415-4a7c-bec4-2f1e9b25965f</DataPath>
 							<ReadOnly>true</ReadOnly>
 							<ContextMenu name="IdContextMenu" id="5"/>
 							<ExtendedTooltip name="IdExtendedTooltip" id="6"/>
 						</InputField>
 						<InputField name="MessageHeader" id="42">
+							<DataPath>1/0:7f9f225b-00fd-40cf-bc12-c844b5442876</DataPath>
 							<ContextMenu name="MessageHeaderContextMenu" id="43"/>
 							<ExtendedTooltip name="MessageHeaderExtendedTooltip" id="44"/>
 						</InputField>

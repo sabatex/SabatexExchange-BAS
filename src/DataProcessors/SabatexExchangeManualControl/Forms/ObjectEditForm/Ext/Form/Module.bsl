@@ -1,9 +1,10 @@
 ﻿
 &НаСервере
 Процедура ПриСозданииНаСервере(Отказ, СтандартнаяОбработка)
-	ObjectRef = Параметры.ObjectRef;
+	ObjectId = Parameters.ObjectId;
 	NodeName = Parameters.NodeName;
-	
+	ObjectType = Parameters.ObjectType;
+	ObjectRef = SabatexExchange.GetObjectManager(ObjectType).GetRef(new uuid(ObjectId));
 	Query = New Query;
 	Query.Text = 
 		"SELECT TOP 1
@@ -15,9 +16,9 @@
 		|	AND SabatexExchangeIds.ObjectType = &ObjectType
 		|	AND SabatexExchangeIds.InternalObjectRef = &InternalObjectRef";
 	
-	Query.SetParameter("InternalObjectRef", Параметры.ObjectRef.UUID());
+	Query.SetParameter("InternalObjectRef", ObjectId);
 	Query.SetParameter("NodeName", Lower(NodeName));
-	Query.SetParameter("ObjectType", SabatexExchange.GetNormalizedObjectType(Параметры.ObjectRef.Metadata().FullName()));
+	Query.SetParameter("ObjectType", SabatexExchange.GetNormalizedObjectType(ObjectType));
 	
 	QueryResult = Query.Execute();
 	
@@ -37,8 +38,13 @@ endprocedure
 &НаКлиенте
 Процедура Save(Команда)
 	SaveНаСервере();
-	
-	Close(SabatexExchangeId);
+	object = new Map;
+	object["ObjectId"] = ObjectId;
+	object["ObjectType"] = ObjectType;
+	object["NodeName"] = NodeName;
+	object["SabatexExchangeId"] = SabatexExchangeId; 
+	Notify("SabatexExchangeUpdateSabatexExchangeIds",object);
+	Close();
 КонецПроцедуры
 
 &НаСервереБезКонтекста

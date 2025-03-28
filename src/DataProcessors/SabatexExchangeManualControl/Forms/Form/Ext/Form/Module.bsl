@@ -172,59 +172,54 @@ function GetObjectData(ObjectSelector,NodeObjectSelector)
 	if ObjectSelector = "" then
 		return result;
 	endif;	
-
 	Query = New Query;
-	Query.Text = 
+		Query.Text = 
 		"SELECT
-		|	"""" AS ExternalId,
-		|   """" AS Id,
+		|   Object.Presentation AS Description,
 		|	Object.Ref AS Ref
 		|FROM
 		|	" + ObjectSelector + " AS Object";
 	
-	QueryResult = Query.Execute();
-	
-	SelectionDetailRecords = QueryResult.Select();
-	While SelectionDetailRecords.Next() Do
-		try
-			if SelectionDetailRecords.Ref.IsFolder then
-				continue;
-			endif;
-		except
-		endtry;
+	items = Query.Execute().Unload();
+	items.Columns.Add("Id",new TypeDescription("UUID"));
+	for each item in items do
+		item.Id = item.Ref.UUID();
+	enddo;
 
-		row = new structure("Ref,Id,ExternalId");
-		row.Ref = SelectionDetailRecords.Ref;
-		row.Id = SelectionDetailRecords.Ref.UUID();
+	Query = New Query;
+	Query.TempTablesManager = new TempTablesManager;
+	Query.Text = 
+		"SELECT
+		|   *
+		|	Поместить items
+		|FROM
+		|	&items AS items";
+
+	Query.SetParameter("items",items);
+	Query.Execute();
 	
-		QueryExternals = New Query;
-		QueryExternals.Text = 
-			"SELECT TOP 1
-			|	SabatexExchangeIds.objectRef AS objectRef
-			|FROM
-			|	InformationRegister.SabatexExchangeIds AS SabatexExchangeIds
-			|WHERE
-			|	SabatexExchangeIds.NodeName = &NodeName
-			|	AND SabatexExchangeIds.ObjectType = &ObjectType
-			|	AND SabatexExchangeIds.InternalObjectRef = &InternalObjectRef";
-	
-			QueryExternals.SetParameter("InternalObjectRef", SelectionDetailRecords.Ref.UUID() );
-			QueryExternals.SetParameter("NodeName", Lower(NodeObjectSelector));
-			QueryExternals.SetParameter("ObjectType",SabatexExchange.GetNormalizedObjectType(ObjectSelector));
-	
-			QueryExternalsResult = QueryExternals.Execute();
-	
-			ExternalsSelectionDetailRecords = QueryExternalsResult.Select();
-	
-			if ExternalsSelectionDetailRecords.Next() then
-				row.ExternalId = ExternalsSelectionDetailRecords.objectRef;
-			else
-				 row.ExternalId = "";
-			 endif;
-		result.Add(row);	 
-	EndDo;
-	
-    return result;
+	QueryR = new Query;
+	QueryR.TempTablesManager = Query.TempTablesManager;
+	QueryR.Text = 
+	"SELECT
+	|	items.Id AS Id,
+	|	items.Description AS  Description,	
+	|	SabatexExchangeIds.objectRef AS ExternalId
+	|FROM
+	|	items AS items
+	|		LEFT JOIN InformationRegister.SabatexExchangeIds AS SabatexExchangeIds
+	|		ON items.Id = SabatexExchangeIds.InternalObjectRef  and SabatexExchangeIds.NodeName = &NodeName
+    |               	AND SabatexExchangeIds.ObjectType = &ObjectType";
+	QueryR.SetParameter("NodeName",NodeObjectSelector);
+	QueryR.SetParameter("ObjectType",SabatexExchange.GetNormalizedObjectType(ObjectSelector));
+	q = QueryR.Execute().Select();
+	result = new array;
+	while q.Next() do
+		r = new structure("Id,Description,ExternalId");
+		FillPropertyValues(r,q);
+		result.Add(r);
+	enddo;
+	return result;
 endfunction
 
 &AtClient
@@ -240,7 +235,6 @@ procedure RefreshNodeObjects()
 		row = UniversalO.Add();
 		FillPropertyValues(row,item);
 	EndDo;
-	
 endprocedure	
 
 
@@ -270,10 +264,8 @@ EndProcedure
 &AtClient
 Procedure UniversalOBeforeRowChange(Item, Cancel)
 	obj = Items.UniversalO.CurrentData;
-    obj.ExternalId = OpenFormModal("Обработка.SabatexExchangeManualControl.Форма.ObjectEditForm",new structure("ObjectRef,NodeName",obj.Ref,Object.NodeObjectSelector),ThisForm);
+    OpenForm("Обработка.SabatexExchangeManualControl.Форма.ObjectEditForm",new structure("ObjectType,objectId,NodeName",Object.ObjectSelector,obj.Id,Object.NodeObjectSelector),ThisForm);
 	Cancel=true; 
-	Items.UniversalO.Refresh();
-
 EndProcedure
 
 &AtServer
@@ -336,6 +328,21 @@ EndFunction
 &AtClient
 Procedure ConvertFromObjectIdToUrl(Command)
 	urlId = ConvertFromObjectIdToUrlAtServer(objectId);
+EndProcedure
+
+&AtClient
+Procedure NotificationProcessing(EventName, Parameter, Source)
+	if EventName = "SabatexExchangeUpdateSabatexExchangeIds" then
+		//ObjectId,objectType,NodeName,SabatexExchangeId
+		if Parameter["NodeName"] = Object.NodeObjectSelector then
+			if Parameter["ObjectType"] = Object.ObjectSelector then
+				r = UniversalO.FindRows(new structure("Id",Parameter["ObjectId"]));
+				for each row in r do
+					row.ExternalId = Parameter["SabatexExchangeId"]; 
+				enddo;	
+			endif;
+		endif;
+	endif;	
 EndProcedure
 
 
