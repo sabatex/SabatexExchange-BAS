@@ -501,6 +501,7 @@
 								<ExcludedCommand>Copy</ExcludedCommand>
 								<ExcludedCommand>Delete</ExcludedCommand>
 							</CommandSet>
+							<SearchStringLocation>CommandBar</SearchStringLocation>
 							<RowFilter xsi:nil="true"/>
 							<ContextMenu name="UniversalOContextMenu" id="149"/>
 							<AutoCommandBar name="UniversalOCommandBar" id="150">

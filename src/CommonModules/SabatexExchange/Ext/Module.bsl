@@ -815,28 +815,6 @@ function IsFolder(object)
 		return false;
 	endtry	
 endfunction	
-
-#endregion
-
- #region CheckObjectState
- // methods for check object state
-function IsUnserted(objectDescriptor,val recursiveLevel = 5) export
-	if recursiveLevel <= 0 then
-		raise "Перевищено кількість рекурсивниї звернень.";	
-	endif;
-	
-	if objectDescriptor.Uninserted <> undefined then
-		return  objectDescriptor.Uninserted;
-	endif;
-	
-	if objectDescriptor.Owner = undefined then
-		return true;
-	endif;
-	
-	return IsUnserted(objectDescriptor.Owner,recursiveLevel-1);
-
-endfunction
-
 // Функция - Is deletion mark
 //
 // Параметры:
@@ -853,14 +831,21 @@ function IsDeletionMark(object)
 	endtry;	
 endfunction	
 
+#endregion
 
-
- #endregion
- 
- #region Config_Builder
- #endregion
- 
+  
  #region Config
+
+// Функция - Отримати режим обміну Авто 
+// 
+// Возвращаемое значение:
+//  enum - Enums.SabatexExchangeMode.Auto
+//
+ function GetSabatexExchangeModeAuto() export
+	 return Enums.SabatexExchangeMode.Auto;
+endfunction	 
+ 
+ 
  
 function GetStoredValue(key) export
 	reg = InformationRegisters.SabatexExchangeConfig.Get(new structure("Key",key));
@@ -1313,8 +1298,8 @@ endprocedure
 // Параметры:
 //  objectDescriptor - conf	     -  контекст описувача обэкта створеного CreateObjectDescriptor(..)
 //  transact		 - boolean	 - true  Обэкт автоматично проводиься
-//  updateTransacted - Number    - різниця в годинах між поточною датою та датою документа на проміжку якої дозволена модифікація документа  
-
+//  updateTransacted - Number    - різниця в годинах між поточною датою та датою документа на проміжку якої дозволена модифікація документа,
+//                                 по замовчуванню undefined - без обмежень
 procedure ConfigureTransactDocumentStartegy(objectDescriptor,transact,updateTransacted=undefined) export
 	objectDescriptor.transact = transact;
 	objectDescriptor.UpdateTransacted = updateTransacted; //true - update transacted document
@@ -1464,10 +1449,6 @@ endprocedure
 procedure ConfigureAutoQuerySending(descriptor,enable = undefined) export
 	descriptor.Insert("AutoQuerySending",enable);	
 endprocedure	
-
-
-
-
  #endregion
  
  
@@ -1522,6 +1503,23 @@ endfunction
 function IsAutoQuerySending(objectDescriptor)
 	return GetObjectOption(objectDescriptor,"AutoQuerySending",true);
 endfunction	
+ // methods for check object state
+function IsUnserted(objectDescriptor,val recursiveLevel = 5) export
+	if recursiveLevel <= 0 then
+		raise "Перевищено кількість рекурсивниї звернень.";	
+	endif;
+	
+	if objectDescriptor.Uninserted <> undefined then
+		return  objectDescriptor.Uninserted;
+	endif;
+	
+	if objectDescriptor.Owner = undefined then
+		return true;
+	endif;
+	
+	return IsUnserted(objectDescriptor.Owner,recursiveLevel-1);
+
+endfunction
 
 // Функция - Is use external id
 //
@@ -1535,6 +1533,8 @@ function IsUseExternalId(objectDescriptor)
 	return GetObjectOption(objectDescriptor,"UseIdAttribute",false);	
 endfunction	
 
+
+
 // Функция - Get id attribute type
 //
 // Параметры:
@@ -1547,6 +1547,41 @@ function GetIdAttributeType(objectDescriptor)
 	return GetObjectOption(objectDescriptor,"IdAttributeType",Enums.SabatexExchangeIdAttributeType.UUID);
 endfunction
 
+// Функция - Is updated 
+//
+// Параметры:
+//  conf		 - 	 - 
+//  localObject	 - 	 - 
+// 
+// Возвращаемое значение:
+//   - 
+//
+function IsUpdated(conf,localObject=undefined)
+	if localObject <> undefined then
+		if localObject.isNew() then
+			return true;
+		endif;
+	endif;
+	
+	if IsWriteUnresilved(conf) then
+		return true;
+	endif;
+	if conf.ObjectDescriptor.IsUpdated <> undefined then
+		return conf.ObjectDescriptor.IsUpdated;
+	endif;
+	return conf.IsUpdated;
+endfunction
+
+function IsAcceptWrite(conf)
+	if not IsUnserted(conf.ObjectDescriptor) then
+		if conf.success then
+			return true;
+		endif;
+		Return IsWriteUnresilved(conf);
+	else
+		return false;
+	endif;
+endfunction
 
 
  #endregion
@@ -1603,22 +1638,6 @@ function IsAcceptMissData(object,descriptor,iteraction=5)
 	raise "Помилка в ланцюжку Owner";  
 endfunction	
 
-function IsUpdated(conf,localObject=undefined)
-	if localObject <> undefined then
-		if localObject.isNew() then
-			return true;
-		endif;
-	endif;
-	
-	if IsWriteUnresilved(conf) then
-		return true;
-	endif;
-	if conf.ObjectDescriptor.IsUpdated <> undefined then
-		return conf.ObjectDescriptor.IsUpdated;
-	endif;
-	return conf.IsUpdated;
-endfunction
-
 function IsWriteUnresilved(conf)
 	if conf.LevelLive > 10 then
 		if conf.ObjectDescriptor.WriteUnresolved <> undefined then
@@ -1629,12 +1648,6 @@ function IsWriteUnresilved(conf)
 	return false;
 endfunction	
 
-function IsAcceptWrite(conf)
-	if conf.success then
-		return true;
-	endif;
-	Return IsWriteUnresilved(conf);
-endfunction
 
 function IsUpdateTransacted(conf,object)
 	updateTransacted=conf.updateTransacted;

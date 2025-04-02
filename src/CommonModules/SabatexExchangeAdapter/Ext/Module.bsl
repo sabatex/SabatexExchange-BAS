@@ -1,7 +1,7 @@
 ﻿
-#region SabatexExchangeAdapter5_0_1
+#region SabatexExchangeAdapter5_0_2
 
-// Copyright (c) 2021-2024 by Serhiy Lakas
+// Copyright (c) 2021-2025 by Serhiy Lakas
 // https://sabatex.github.io
 
 // Функция - Пошук обьєкта по Id
@@ -143,8 +143,8 @@ endprocedure
 // Параметры:
 //  objectDescriptor - conf	     -  контекст описувача обэкта створеного CreateObjectDescriptor(..)
 //  transact		 - boolean	 - true  Обэкт автоматично проводиься
-//  updateTransacted - Number    - різниця в годинах між поточною датою та датою документа на проміжку якої дозволена модифікація документа
-//
+//  updateTransacted - Number    - різниця в годинах між поточною датою та датою документа на проміжку якої дозволена модифікація документа,
+//                                 по замовчуванню undefined - без обмежень
 procedure ConfigureTransactDocumentStartegy(objectDescriptor,transact,updateTransacted=undefined)
 	SabatexExchange.ConfigureTransactDocumentStartegy(objectDescriptor,transact,updateTransacted);
 endprocedure	
@@ -234,7 +234,17 @@ endfunction
 	items.Add(new structure("ObjectType,Filter",objectType,filter));	 
 	 
  endprocedure
-#endregion
+
+// Функция - Отримати режим обміну Авто 
+// 
+// Возвращаемое значение:
+//  enum - Enums.SabatexExchangeMode.Auto
+//
+function GetSabatexExchangeModeAuto()
+	return SabatexExchange.GetSabatexExchangeModeAuto();
+endfunction	 
+ 
+ #endregion
 
 
 // Процедура - Викликаэться при ініціалізації обміну (наявність обовязкова)
