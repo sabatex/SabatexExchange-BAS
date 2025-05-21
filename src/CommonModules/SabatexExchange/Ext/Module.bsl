@@ -23,8 +23,6 @@ function ValueOrDefault(value,default) export
 		return ?(value=undefined,default,value);
 	endif;	
 endfunction
-
-
 procedure SetSenderValueIfDestinationEmpty(valueName,sender,destination)
 	var propValue;
 	if sender.Property(valueName,propValue) then
@@ -500,7 +498,7 @@ function GetObjectsExchange(conf,first=true) export
 	else
 		take =conf.take;
 	endif;	
-	request = new HTTPRequest(BuildUrl("api/v1/objects",new structure("take",take)));
+	request = new HTTPRequest(BuildUrl("api/v1/objects",new structure("take",XMLString(take))));
 	request.Headers.Insert("accept","*/*");
 	request.Headers.Insert("clientId",conf.nodeConfig.clientId);
 	request.Headers.Insert("destinationId",conf.destinationId);
@@ -900,7 +898,7 @@ endprocedure
 //  Get config for destination node
 //
 // Параметры:
-//  destinationNode	 - string	 - Node name
+//  destinationNode	 - SelectionDetailRecords - nodeConfigRecord 
 // 
 // Возвращаемое значение:
 //  structure - Config for Node
@@ -963,7 +961,9 @@ function GetConfig(destinationNode)
 	table.Columns.Add("objectType");
 	table.Columns.Add("objectId");
 	config.Insert("queryList",table);
-	
+
+	config.Insert("IsNew",undefined);
+	config.Insert("Object",undefined);
 	config.Insert("objectId","");
 	config.Insert("objectType","");
 	config.Insert("objectDescriptor");
@@ -2255,6 +2255,34 @@ procedure TransactDocement(conf,object)
 	endif;
 endprocedure	
 
+
+// Функция - Отримати дескриптор аналізуємого обєкта
+//
+// Параметры:
+//  conf - structure - контекст нода
+// 
+// Возвращаемое значение:
+//   structure - External descriptor або  raise "Імпорт обєктів даного типу не відтримується."
+//
+function GetExternalObjectConfig(conf)
+	result = undefined; 
+	normalizedName = GetNormalizedObjectType(conf.objectType);
+	if conf.ExternalObjects.Property(GetNormalizedObjectType(conf.objectType),result) then 
+		return result;
+	else
+		if conf.IsIdenticalConfiguration then
+			// For identical configuration automatic create object descriptor
+			extObjectConf = SabatexExchange.CreateObjectDescriptor(conf,conf.objectType);
+			return extObjectConf.ExternalObjectDescriptor;	
+		else	
+			raise "Імпорт обєктів даного типу не відтримується.";
+		endif;
+		
+	endif;	
+endfunction
+
+
+
 // Процедура - Аналіз вхідного обєкта
 //
 // Параметры:
@@ -2266,6 +2294,9 @@ endprocedure
 //
 procedure ResolveObject(conf)
 	var extObjectConf;
+	conf.IsNew = false;
+	conf.Object = undefined;
+	
 	
 	// determine object configuration Description
 	if not conf.ExternalObjects.Property(SabatexExchange.GetNormalizedObjectType(conf.objectType),extObjectConf) then
@@ -2275,7 +2306,6 @@ procedure ResolveObject(conf)
 			extObjectConf = extObjectConf.ExternalObjectDescriptor;	
 		else	
 			raise "Імпорт обєктів даного типу не відтримується.";
-			return;
 		endif;
 	endif;	
 	
@@ -2914,7 +2944,12 @@ function GetObjectRefById(conf,objectManager,objectDescriptor,id) export
 		endif;
 		
 		objectId = SelectionDetailRecords.InternalObjectRef;
+		if IsEmptyUUID(objectId) then
+			return objectManager.EmptyRef();	
+		endif;
+ 
 	endif;
+	
 	lO = objectManager.GetRef(new UUID(objectId)).GetObject();
 	if lO <> undefined then
 		return lO.Ref
@@ -2927,7 +2962,7 @@ function GetQueryHeader(query)
 	return Serialize(new Structure("query",query));
 endfunction
 
-function GetObjectHeader(type,id)
+function GetObjectHeader(type,id) export
 	return Serialize(new structure("type,id",type,id));
 endfunction
 
@@ -3078,6 +3113,23 @@ procedure BeforeSend(conf)
 endprocedure	
 #endregion
 
+procedure ExchangeTaskAsync(nodeName) export
+	conf = GetConfigByNodeName(nodeName);
+	// read  input objects
+	ReciveObjects(conf);
+	// Аналіз поступивших обєктів
+	AnalizeUnresolvedObjects(conf);
+
+    BeforeSend(conf);
+	
+	// Відправка на сервер 
+	if conf.Send then
+		PostObjects(conf);
+	endif;
+endprocedure
+
+
+
 
 // Процедура - процесс обміну
 //
@@ -3088,58 +3140,38 @@ endprocedure
 //  string - Result log 
 //
 function ExchangeProcess(exchangeMode) export
+	Query = New Query;
+	Query.Text = 
+		"SELECT
+		|	SabatexExchangeNodeConfig.NodeName AS NodeName,
+		|	SabatexExchangeNodeConfig.destinationId AS destinationId,
+		|	SabatexExchangeNodeConfig.ExchangeMode AS ExchangeMode,
+		|	SabatexExchangeNodeConfig.isActive AS isActive
+		|FROM
+		|	InformationRegister.SabatexExchangeNodeConfig AS SabatexExchangeNodeConfig
+		|WHERE
+		|	SabatexExchangeNodeConfig.isActive = TRUE
+		|	AND SabatexExchangeNodeConfig.ExchangeMode = &ExchangeMode";
+	
+	Query.SetParameter("ExchangeMode",exchangeMode);
+	
+	QueryResult = Query.Execute();
+	
+	sr = QueryResult.Select();
 	resultMessage = "";
-	try
-	    activeDestinationNodes = GetActiveDestinationNodes();
-	except	
-		resultMessage = "Помилка зчитування налаштувань обміну:"+ОписаниеОшибки();
-		SystemLogError(resultMessage);
-		return resultMessage;
-	endtry;
-		
-	for each nodeName in activeDestinationNodes do
-		start = CurrentDate();
-		try
-			conf = GetConfigByNodeName(nodeName);
-		except	
-			resultMessage = "Помилка зчитування налаштувань обміну:"+ОписаниеОшибки();
-			SystemLogError(resultMessage);
-			continue;
-		endtry;
+	While sr.Next() Do
 
-		skip = false;
-		if exchangeMode =  conf.ExchangeMode then
-			try
-				// read  input objects
-				ReciveObjects(conf);
-				
-				// Аналіз поступивших обєктів
-				AnalizeUnresolvedObjects(conf);
-				
-                BeforeSend(conf);
-				
-				// Відправка на сервер
-				if conf.Send then
-					PostObjects(conf);
-				endif;	
-			except
-				message = string(conf.nodeName) + " - Програмна помилка -" + ErrorDescription();
-				ErrorJournaled(conf,message);
-				resultMessage = resultMessage  + message+ Chars.CR;
-			endtry;
-		else
-			skip = true;	
-		endif;	
-		
-		end = ТекущаяДата();
-		if skip then
-			message = "Обміну  з вузлом "+conf.nodeName + " - пропущено";
-		else	
-			message = "Тривалість обміну  з вузлом "+conf.nodeName + " - " + string(end - start)+ " сек.";
+		filter = new structure("Key,State",XMLString(sr.destinationId),BackgroundJobState.Active);
+		task = BackgroundJobs.GetBackgroundJobs(filter);
+		if task.Count() = 0  then
+			params = new array;
+			params.Add(sr.NodeName);
+			BackgroundJobs.Execute("SabatexExchange.ExchangeTaskAsync",params,XMLString(sr.destinationId),"SabatexExchange "+sr.nodeName);
+			resultMessage = resultMessage + "Запущено завдання обміну  з вузлом "+sr.nodeName+ Chars.CR;
+ 		else
+			resultMessage = resultMessage + "Завдання ббміну  з вузлом "+sr.nodeName + " - пропущено, так як не виконано попереднє"+ Chars.CR;
 		endif;
-		Note(conf,message,true);
-		resultMessage = resultMessage  + message+ Chars.CR;
-	enddo;
+    enddo;
 	return resultMessage;
 endfunction
 

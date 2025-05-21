@@ -15,10 +15,6 @@ Procedure OnCreateAtServer(Cancel, StandardProcessing)
 		NodeSelectorForSendOnChangeAtServer(Object.NodeSelectorForSend);
 	endif;
 	
-	
-	
-	
-	
 EndProcedure
 
 &AtServer
@@ -344,8 +340,5 @@ Procedure NotificationProcessing(EventName, Parameter, Source)
 		endif;
 	endif;	
 EndProcedure
-
-
-
 
 

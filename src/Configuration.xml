@@ -50,7 +50,7 @@
 			</UsePurposes>
 			<ScriptVariant>English</ScriptVariant>
 			<Vendor>sabatex</Vendor>
-			<Version>5.0.2</Version>
+			<Version>5.0.3</Version>
 			<BriefInformation/>
 			<DetailedInformation/>
 			<Copyright>
@@ -79,10 +79,13 @@
 			<CommonModule>SabatexExchange</CommonModule>
 			<CommonModule>SabatexExchangeAdapter</CommonModule>
 			<CommonCommand>SabatexCommonStartExchange</CommonCommand>
+			<Catalog>SabatexCatalog1</Catalog>
 			<Enum>SabatexExchangeMode</Enum>
 			<Enum>SabatexExchangeIdAttributeType</Enum>
 			<Enum>SabatexExchangeNodeType</Enum>
 			<DataProcessor>SabatexExchangeManualControl</DataProcessor>
+			<DataProcessor>SabatexExchangeLoadFromFolder</DataProcessor>
+			<DataProcessor>SabatexExchangeWriteToFolder</DataProcessor>
 			<InformationRegister>sabatexExchangeUnresolvedObjects</InformationRegister>
 			<InformationRegister>sabatexExchangeObject</InformationRegister>
 			<InformationRegister>SabatexExchangeNodeConfig</InformationRegister>

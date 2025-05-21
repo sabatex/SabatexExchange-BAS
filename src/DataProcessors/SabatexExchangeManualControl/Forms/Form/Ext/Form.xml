@@ -238,37 +238,74 @@
 							<ShowTitle>false</ShowTitle>
 							<ExtendedTooltip name="Group2ExtendedTooltip" id="53"/>
 							<ChildItems>
-								<InputField name="NodeSelectorForSend" id="64">
-									<DataPath>Object.NodeSelectorForSend</DataPath>
+								<UsualGroup name="Group7" id="194">
 									<Title>
 										<v8:item>
 											<v8:lang>uk</v8:lang>
-											<v8:content>Нод для відправлення даних </v8:content>
+											<v8:content>Відправка через сервіс</v8:content>
 										</v8:item>
 									</Title>
-									<ListChoiceMode>true</ListChoiceMode>
-									<ContextMenu name="NodeSelectorForSendContextMenu" id="65"/>
-									<ExtendedTooltip name="NodeSelectorForSendExtendedTooltip" id="66"/>
-									<Events>
-										<Event name="OnChange">NodeSelectorForSendOnChange</Event>
-									</Events>
-								</InputField>
-								<InputField name="DateSelect" id="67">
-									<DataPath>Object.DateSelect</DataPath>
+									<ExtendedTooltip name="Group7ExtendedTooltip" id="195"/>
+									<ChildItems>
+										<InputField name="NodeSelectorForSend" id="64">
+											<DataPath>Object.NodeSelectorForSend</DataPath>
+											<Title>
+												<v8:item>
+													<v8:lang>uk</v8:lang>
+													<v8:content>Нод для відправлення даних </v8:content>
+												</v8:item>
+											</Title>
+											<ListChoiceMode>true</ListChoiceMode>
+											<ContextMenu name="NodeSelectorForSendContextMenu" id="65"/>
+											<ExtendedTooltip name="NodeSelectorForSendExtendedTooltip" id="66"/>
+											<Events>
+												<Event name="OnChange">NodeSelectorForSendOnChange</Event>
+											</Events>
+										</InputField>
+										<InputField name="DateSelect" id="67">
+											<DataPath>Object.DateSelect</DataPath>
+											<Title>
+												<v8:item>
+													<v8:lang>uk</v8:lang>
+													<v8:content>Дата</v8:content>
+												</v8:item>
+											</Title>
+											<ContextMenu name="DateSelectContextMenu" id="68"/>
+											<ExtendedTooltip name="DateSelectExtendedTooltip" id="69"/>
+										</InputField>
+										<Button name="SendData" id="62">
+											<Type>UsualButton</Type>
+											<CommandName>Form.Command.SendData</CommandName>
+											<ExtendedTooltip name="SendDataExtendedTooltip" id="63"/>
+										</Button>
+									</ChildItems>
+								</UsualGroup>
+								<UsualGroup name="Group6" id="187">
 									<Title>
 										<v8:item>
 											<v8:lang>uk</v8:lang>
-											<v8:content>Дата</v8:content>
+											<v8:content>Вигрузка в папку</v8:content>
 										</v8:item>
 									</Title>
-									<ContextMenu name="DateSelectContextMenu" id="68"/>
-									<ExtendedTooltip name="DateSelectExtendedTooltip" id="69"/>
-								</InputField>
-								<Button name="SendData" id="62">
-									<Type>UsualButton</Type>
-									<CommandName>Form.Command.SendData</CommandName>
-									<ExtendedTooltip name="SendDataExtendedTooltip" id="63"/>
-								</Button>
+									<ExtendedTooltip name="Group6ExtendedTooltip" id="188"/>
+									<ChildItems>
+										<UsualGroup name="Group8" id="202">
+											<ExtendedTooltip name="Group8ExtendedTooltip" id="203"/>
+											<ChildItems>
+												<InputField name="DateBegin" id="191">
+													<DataPath>DateBegin</DataPath>
+													<ContextMenu name="DateBeginContextMenu" id="192"/>
+													<ExtendedTooltip name="DateBeginExtendedTooltip" id="193"/>
+												</InputField>
+												<InputField name="DateEnd" id="184">
+													<DataPath>DateEnd</DataPath>
+													<ContextMenu name="DateEndContextMenu" id="185"/>
+													<ExtendedTooltip name="DateEndExtendedTooltip" id="186"/>
+												</InputField>
+											</ChildItems>
+										</UsualGroup>
+									</ChildItems>
+								</UsualGroup>
 							</ChildItems>
 						</UsualGroup>
 						<Table name="ObjectTypesSend" id="70">
@@ -782,6 +819,34 @@
 					<v8:Length>0</v8:Length>
 					<v8:AllowedLength>Variable</v8:AllowedLength>
 				</v8:StringQualifiers>
+			</Type>
+		</Attribute>
+		<Attribute name="DateBegin" id="8">
+			<Title>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Date begin</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>xs:dateTime</v8:Type>
+				<v8:DateQualifiers>
+					<v8:DateFractions>Date</v8:DateFractions>
+				</v8:DateQualifiers>
+			</Type>
+		</Attribute>
+		<Attribute name="DateEnd" id="9">
+			<Title>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Date end</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>xs:dateTime</v8:Type>
+				<v8:DateQualifiers>
+					<v8:DateFractions>Date</v8:DateFractions>
+				</v8:DateQualifiers>
 			</Type>
 		</Attribute>
 	</Attributes>
