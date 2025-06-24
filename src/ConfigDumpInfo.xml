@@ -1,21 +1,23 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <ConfigDumpInfo xmlns="http://v8.1c.ru/8.3/xcf/dumpinfo" xmlns:xen="http://v8.1c.ru/8.3/xcf/enums" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" format="Hierarchical" version="2.12">
 	<ConfigVersions>
-		<Metadata name="Catalog.SabatexCatalog1" id="67c5631e-3438-4854-9b38-17b4e84f8448" configVersion="a2f13ad8232332cf48d3fc19d2f6d5773c5afd64"/>
-		<Metadata name="CommonCommand.SabatexCommonStartExchange" id="311ff686-857e-4ec5-8db7-f0aa0f99bb56" configVersion="39a1683b63c4cfe7fb5c281958896a9f6e408ed2"/>
-		<Metadata name="CommonCommand.SabatexCommonStartExchange.CommandModule" id="311ff686-857e-4ec5-8db7-f0aa0f99bb56.2" configVersion="19f83bc2f739a668828563f8ad6a46f25291d539"/>
+		<Metadata name="Catalog.SabatexExchangeNodes" id="67c5631e-3438-4854-9b38-17b4e84f8448" configVersion="538dbaac9b242f17aa812ee0e464679cc953a195"/>
+		<Metadata name="CommonCommand.SabatexCommonStartExchange" id="311ff686-857e-4ec5-8db7-f0aa0f99bb56" configVersion="ddcd90a98d499ca4824120cd8743c06455c66f28"/>
+		<Metadata name="CommonCommand.SabatexCommonStartExchange.CommandModule" id="311ff686-857e-4ec5-8db7-f0aa0f99bb56.2" configVersion="ae374886419bf19e6cd5da553807ec65069d4034"/>
+		<Metadata name="CommonModule.SabatexBackgroundTasks" id="ff97d221-a1d4-4758-9b46-2ee2bd19724f" configVersion="e4577d4d9781eee7bbe894602ac0dc252859d310"/>
+		<Metadata name="CommonModule.SabatexBackgroundTasks.Module" id="ff97d221-a1d4-4758-9b46-2ee2bd19724f.0" configVersion="88a806838c9b681493ef03086fce3393216579c3"/>
 		<Metadata name="CommonModule.SabatexExchange" id="eaa5f3c5-7c51-4f83-b3e2-4a065491de85" configVersion="469e39e9d4af07cac19d8bfa9b3ef6fdc3227cca"/>
-		<Metadata name="CommonModule.SabatexExchange.Module" id="eaa5f3c5-7c51-4f83-b3e2-4a065491de85.0" configVersion="92c3da5b879739df25530fbe0d9d398a9334c521"/>
+		<Metadata name="CommonModule.SabatexExchange.Module" id="eaa5f3c5-7c51-4f83-b3e2-4a065491de85.0" configVersion="95c9526d369fef859df653ebbcdc983f86362179"/>
 		<Metadata name="CommonModule.SabatexExchangeAdapter" id="f9abaf2a-5a7b-4b9e-92e4-c0438d3e84e6" configVersion="64ef86fd35698f0bd55d1204874c9893f84153de"/>
 		<Metadata name="CommonModule.SabatexExchangeAdapter.Module" id="f9abaf2a-5a7b-4b9e-92e4-c0438d3e84e6.0" configVersion="67ed7fc80267ba7a925d570a0e7ba7d909692dc5"/>
-		<Metadata name="Configuration.SabatexExchange" id="2a67a443-4d1e-4953-bc8a-967898b9f865" configVersion="720a0119ebb9834501833cba7cbdb6f113298226"/>
+		<Metadata name="Configuration.SabatexExchange" id="2a67a443-4d1e-4953-bc8a-967898b9f865" configVersion="467abc40fe273a250f2f6bf34ae1739d8ca9b25d"/>
 		<Metadata name="Configuration.SabatexExchange.ManagedApplicationModule" id="13685d31-beba-438c-b131-4bb071a2072c.6" configVersion="f4fa774579ce74066e581c9bea23e03525a12934"/>
-		<Metadata name="DataProcessor.SabatexExchangeLoadFromFolder" id="22c47c88-800a-4a02-a30f-1c1abe31bcc5" configVersion="c76ce6d4d06a612bdc23230fa3569b6378b6fd54">
+		<Metadata name="DataProcessor.SabatexExchangeLoadFromFolder" id="22c47c88-800a-4a02-a30f-1c1abe31bcc5" configVersion="374ca9dd273e4bccb87fa6e0b774163601574123">
 			<Metadata name="DataProcessor.SabatexExchangeLoadFromFolder.Attribute.FolderName" id="3f4fac4a-b97d-47bc-aad9-4d559ad1031d"/>
 			<Metadata name="DataProcessor.SabatexExchangeLoadFromFolder.Attribute.NodeName" id="413ac720-d60d-4407-b81e-ae0d95fd61a4"/>
 		</Metadata>
 		<Metadata name="DataProcessor.SabatexExchangeLoadFromFolder.Form.Form" id="b1f2561a-f391-4691-85e2-a164b21c081a" configVersion="04db9954b51e9c745704194832e91c159e8a32da"/>
-		<Metadata name="DataProcessor.SabatexExchangeLoadFromFolder.Form.Form.Form" id="b1f2561a-f391-4691-85e2-a164b21c081a.0" configVersion="5b323149b4ef3120d1a5f40df5fb4999d9421777"/>
+		<Metadata name="DataProcessor.SabatexExchangeLoadFromFolder.Form.Form.Form" id="b1f2561a-f391-4691-85e2-a164b21c081a.0" configVersion="54741c552d539e4a6f43bf32100bdfcb69e50f15"/>
 		<Metadata name="DataProcessor.SabatexExchangeManualControl" id="85e0d33b-527a-4776-8378-7a37da8c3fe4" configVersion="81fa1ef926f7c8aa65d64a1c3eba6accbc46cc1c">
 			<Metadata name="DataProcessor.SabatexExchangeManualControl.Attribute.ObjectSelector" id="035a2a33-7d80-41d9-a94a-40364ee75821"/>
 			<Metadata name="DataProcessor.SabatexExchangeManualControl.Attribute.DateQuery" id="33d96c60-be6c-40e9-a3e3-b695d441af5a"/>
@@ -28,13 +30,13 @@
 		<Metadata name="DataProcessor.SabatexExchangeManualControl.Form.Form.Form" id="27492fcf-180e-47aa-a73a-dc4246b00271.0" configVersion="f1821635e5c66ca667a58dbf2f04a9fc0eed91aa"/>
 		<Metadata name="DataProcessor.SabatexExchangeManualControl.Form.ObjectEditForm" id="4fade0a5-3c3d-40a5-87db-7c3d2fc030a0" configVersion="82b8723d6e0f9a6851970100d16d30a9b7c327d4"/>
 		<Metadata name="DataProcessor.SabatexExchangeManualControl.Form.ObjectEditForm.Form" id="4fade0a5-3c3d-40a5-87db-7c3d2fc030a0.0" configVersion="c25ea91fbe53c61f6893ea307cb8c7113c9f75c4"/>
-		<Metadata name="DataProcessor.SabatexExchangeWriteToFolder" id="1bdbf80e-179f-4089-952b-9d91e28c399b" configVersion="84335b0e5f5b6a1a64d9bf8931c439cfd043631e">
+		<Metadata name="DataProcessor.SabatexExchangeWriteToFolder" id="1bdbf80e-179f-4089-952b-9d91e28c399b" configVersion="117cae9af1ac7f767c6e7c2001c718efde0da8f5">
 			<Metadata name="DataProcessor.SabatexExchangeWriteToFolder.Attribute.NodeName" id="8f280bd1-335c-4d70-8571-9345e6220422"/>
 			<Metadata name="DataProcessor.SabatexExchangeWriteToFolder.Attribute.ObjectType" id="960a38ca-32ef-4035-8120-c4bca3ad3d34"/>
 			<Metadata name="DataProcessor.SabatexExchangeWriteToFolder.Attribute.FolderName" id="bcca6bce-9e2b-4c17-a049-bebcc5cd391c"/>
 		</Metadata>
 		<Metadata name="DataProcessor.SabatexExchangeWriteToFolder.Form.Form" id="a0cfc0bd-21a8-40b6-8a4f-1ee3a45a146a" configVersion="961d0c945c389bf77ace09c725075892b32948ae"/>
-		<Metadata name="DataProcessor.SabatexExchangeWriteToFolder.Form.Form.Form" id="a0cfc0bd-21a8-40b6-8a4f-1ee3a45a146a.0" configVersion="539204947e525c0bc6459644fd2465be8ae1ce16"/>
+		<Metadata name="DataProcessor.SabatexExchangeWriteToFolder.Form.Form.Form" id="a0cfc0bd-21a8-40b6-8a4f-1ee3a45a146a.0" configVersion="f6453c080f9465d0245354a1112d812027d4be51"/>
 		<Metadata name="Enum.SabatexExchangeIdAttributeType" id="7e18c72d-547e-4780-818e-23bd60680c77" configVersion="54b680da2ac5b0637baf982be7d2217e65522471">
 			<Metadata name="Enum.SabatexExchangeIdAttributeType.EnumValue.String" id="4c2d5a22-d5c6-429f-8e65-c1c398f96d25"/>
 			<Metadata name="Enum.SabatexExchangeIdAttributeType.EnumValue.UUID" id="c47d11f7-bcb8-4813-8af8-a208812474ab"/>
@@ -106,6 +108,6 @@
 		<Metadata name="InformationRegister.sabatexExchangeUnresolvedObjects.ManagerModule" id="a3fff70a-46cc-4e11-a74d-bf613690274a.2" configVersion="dc30354139ad49ad3a67bd9a5d2bdeb3cb470171"/>
 		<Metadata name="Language.Русский" id="b7d95413-5612-4da7-87c0-7c76d034417d" configVersion="e1262b1a7adba5abd5cc11b17902d55e958b723a"/>
 		<Metadata name="Language.Украинский" id="443d43b2-5115-4552-8816-e65ef915c499" configVersion="16002541f686f3edc9224a85013f8f3042552400"/>
-		<Metadata name="Subsystem.Администрирование" id="ba718318-a006-4596-8dc1-22437e5ed01d" configVersion="7bfeff22874877fa9af42436a6a64d5e0b0c0206"/>
+		<Metadata name="Subsystem.Администрирование" id="ba718318-a006-4596-8dc1-22437e5ed01d" configVersion="34dfb480ace585c6d3a15b0de92659a2192cd467"/>
 	</ConfigVersions>
 </ConfigDumpInfo>

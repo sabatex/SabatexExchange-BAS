@@ -12,14 +12,13 @@ EndProcedure
 procedure AddUnresolvedObject(nodeName,objectType,id,json)
 	messageHeader = SabatexExchange.GetObjectHeader(objectType,id);
 	reg = InformationRegisters.sabatexExchangeUnresolvedObjects.CreateRecordManager();
-	//reg.sender = new UUID(item["sender"]);
 	reg.MessageHeader = messageHeader;
-
 	reg.dateStamp = CurrentDate();
 	reg.serverDateStamp= CurrentDate();
 	reg.senderDateStamp =CurrentDate();
 	reg.objectAsText = json;
 	reg.NodeName = nodeName;
+	reg.levelLive = 10;
 	reg.Log = "Завантажено з файла";
 	reg.Write();
 endprocedure

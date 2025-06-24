@@ -1,6 +1,6 @@
 ﻿&AtServer
 function DoExchangeAtServer()
-	return SabatexExchange.ExchangeProcess(Enums.SabatexExchangeMode.Manual);
+	return SabatexExchange.ExchangeProcess(Enums.SabatexExchangeMode.Manual,false);
 EndFunction
 
 &AtClient

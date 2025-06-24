@@ -2,30 +2,35 @@
 <MetaDataObject xmlns="http://v8.1c.ru/8.3/MDClasses" xmlns:app="http://v8.1c.ru/8.2/managed-application/core" xmlns:cfg="http://v8.1c.ru/8.1/data/enterprise/current-config" xmlns:cmi="http://v8.1c.ru/8.2/managed-application/cmi" xmlns:ent="http://v8.1c.ru/8.1/data/enterprise" xmlns:lf="http://v8.1c.ru/8.2/managed-application/logform" xmlns:style="http://v8.1c.ru/8.1/data/ui/style" xmlns:sys="http://v8.1c.ru/8.1/data/ui/fonts/system" xmlns:v8="http://v8.1c.ru/8.1/data/core" xmlns:v8ui="http://v8.1c.ru/8.1/data/ui" xmlns:web="http://v8.1c.ru/8.1/data/ui/colors/web" xmlns:win="http://v8.1c.ru/8.1/data/ui/colors/windows" xmlns:xen="http://v8.1c.ru/8.3/xcf/enums" xmlns:xpr="http://v8.1c.ru/8.3/xcf/predef" xmlns:xr="http://v8.1c.ru/8.3/xcf/readable" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="2.12">
 	<Catalog uuid="67c5631e-3438-4854-9b38-17b4e84f8448">
 		<InternalInfo>
-			<xr:GeneratedType name="CatalogObject.SabatexCatalog1" category="Object">
+			<xr:GeneratedType name="CatalogObject.SabatexExchangeNodes" category="Object">
 				<xr:TypeId>fea47f15-d82e-4ec3-81c6-de9ccb60e74d</xr:TypeId>
 				<xr:ValueId>4dce0acb-7532-448d-a3f5-74b3118615ac</xr:ValueId>
 			</xr:GeneratedType>
-			<xr:GeneratedType name="CatalogRef.SabatexCatalog1" category="Ref">
+			<xr:GeneratedType name="CatalogRef.SabatexExchangeNodes" category="Ref">
 				<xr:TypeId>25fd4cd1-43a9-4708-9daf-5072511b87e5</xr:TypeId>
 				<xr:ValueId>5e7ff40e-e835-47e0-aa01-05e0e4e0c125</xr:ValueId>
 			</xr:GeneratedType>
-			<xr:GeneratedType name="CatalogSelection.SabatexCatalog1" category="Selection">
+			<xr:GeneratedType name="CatalogSelection.SabatexExchangeNodes" category="Selection">
 				<xr:TypeId>37e68237-d025-4ca9-afde-bd28e923ee05</xr:TypeId>
 				<xr:ValueId>328d765a-feef-4b73-857f-8cf1235abfb6</xr:ValueId>
 			</xr:GeneratedType>
-			<xr:GeneratedType name="CatalogList.SabatexCatalog1" category="List">
+			<xr:GeneratedType name="CatalogList.SabatexExchangeNodes" category="List">
 				<xr:TypeId>af38d409-8842-499a-bd29-f7968002df8a</xr:TypeId>
 				<xr:ValueId>8d291a6a-0159-41ad-ae80-e52d9b824ee6</xr:ValueId>
 			</xr:GeneratedType>
-			<xr:GeneratedType name="CatalogManager.SabatexCatalog1" category="Manager">
+			<xr:GeneratedType name="CatalogManager.SabatexExchangeNodes" category="Manager">
 				<xr:TypeId>447e786c-ac0a-47cb-914b-26b213d82e38</xr:TypeId>
 				<xr:ValueId>c428b101-accc-44fa-b444-9c853eb0e2a8</xr:ValueId>
 			</xr:GeneratedType>
 		</InternalInfo>
 		<Properties>
-			<Name>SabatexCatalog1</Name>
-			<Synonym/>
+			<Name>SabatexExchangeNodes</Name>
+			<Synonym>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Sabatex exchange nodes</v8:content>
+				</v8:item>
+			</Synonym>
 			<Comment/>
 			<Hierarchical>false</Hierarchical>
 			<HierarchyType>HierarchyFoldersAndItems</HierarchyType>
@@ -49,8 +54,8 @@
 			<QuickChoice>false</QuickChoice>
 			<ChoiceMode>BothWays</ChoiceMode>
 			<InputByString>
-				<xr:Field>Catalog.SabatexCatalog1.StandardAttribute.Description</xr:Field>
-				<xr:Field>Catalog.SabatexCatalog1.StandardAttribute.Code</xr:Field>
+				<xr:Field>Catalog.SabatexExchangeNodes.StandardAttribute.Description</xr:Field>
+				<xr:Field>Catalog.SabatexExchangeNodes.StandardAttribute.Code</xr:Field>
 			</InputByString>
 			<SearchStringModeOnInputByString>Begin</SearchStringModeOnInputByString>
 			<FullTextSearchOnInputByString>DontUse</FullTextSearchOnInputByString>

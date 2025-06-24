@@ -50,7 +50,7 @@
 			</UsePurposes>
 			<ScriptVariant>English</ScriptVariant>
 			<Vendor>sabatex</Vendor>
-			<Version>5.0.3</Version>
+			<Version>5.0.4</Version>
 			<BriefInformation/>
 			<DetailedInformation/>
 			<Copyright>
@@ -78,8 +78,9 @@
 			<Subsystem>Администрирование</Subsystem>
 			<CommonModule>SabatexExchange</CommonModule>
 			<CommonModule>SabatexExchangeAdapter</CommonModule>
+			<CommonModule>SabatexBackgroundTasks</CommonModule>
 			<CommonCommand>SabatexCommonStartExchange</CommonCommand>
-			<Catalog>SabatexCatalog1</Catalog>
+			<Catalog>SabatexExchangeNodes</Catalog>
 			<Enum>SabatexExchangeMode</Enum>
 			<Enum>SabatexExchangeIdAttributeType</Enum>
 			<Enum>SabatexExchangeNodeType</Enum>

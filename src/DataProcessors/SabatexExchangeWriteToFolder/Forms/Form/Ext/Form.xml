@@ -2,6 +2,7 @@
 <Form xmlns="http://v8.1c.ru/8.3/xcf/logform" xmlns:app="http://v8.1c.ru/8.2/managed-application/core" xmlns:cfg="http://v8.1c.ru/8.1/data/enterprise/current-config" xmlns:dcscor="http://v8.1c.ru/8.1/data-composition-system/core" xmlns:dcsset="http://v8.1c.ru/8.1/data-composition-system/settings" xmlns:ent="http://v8.1c.ru/8.1/data/enterprise" xmlns:lf="http://v8.1c.ru/8.2/managed-application/logform" xmlns:style="http://v8.1c.ru/8.1/data/ui/style" xmlns:sys="http://v8.1c.ru/8.1/data/ui/fonts/system" xmlns:v8="http://v8.1c.ru/8.1/data/core" xmlns:v8ui="http://v8.1c.ru/8.1/data/ui" xmlns:web="http://v8.1c.ru/8.1/data/ui/colors/web" xmlns:win="http://v8.1c.ru/8.1/data/ui/colors/windows" xmlns:xr="http://v8.1c.ru/8.3/xcf/readable" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="2.12">
 	<AutoCommandBar name="FormCommandBar" id="-1"/>
 	<Events>
+		<Event name="OnOpen">OnOpen</Event>
 		<Event name="OnCreateAtServer">OnCreateAtServer</Event>
 	</Events>
 	<ChildItems>
@@ -27,11 +28,39 @@
 				<Event name="OnChange">ObjectTypeOnChange</Event>
 			</Events>
 		</InputField>
-		<Button name="Download" id="26">
-			<Type>UsualButton</Type>
-			<CommandName>Form.Command.Download</CommandName>
-			<ExtendedTooltip name="DownloadExtendedTooltip" id="27"/>
-		</Button>
+		<UsualGroup name="GroupButtons" id="30">
+			<Title>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Group buttons</v8:content>
+				</v8:item>
+			</Title>
+			<ToolTip>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Group buttons</v8:content>
+				</v8:item>
+			</ToolTip>
+			<ShowTitle>false</ShowTitle>
+			<ExtendedTooltip name="GroupButtonsExtendedTooltip" id="31"/>
+			<ChildItems>
+				<Button name="Download" id="26">
+					<Type>UsualButton</Type>
+					<CommandName>Form.Command.Download</CommandName>
+					<ExtendedTooltip name="DownloadExtendedTooltip" id="27"/>
+				</Button>
+				<Button name="UnPosted" id="28">
+					<Type>UsualButton</Type>
+					<CommandName>Form.Command.UnPosted</CommandName>
+					<ExtendedTooltip name="UnPostedExtendedTooltip" id="29"/>
+				</Button>
+				<Button name="UnsafeDelete" id="32">
+					<Type>UsualButton</Type>
+					<CommandName>Form.Command.UnsafeDelete</CommandName>
+					<ExtendedTooltip name="UnsafeDeleteExtendedTooltip" id="33"/>
+				</Button>
+			</ChildItems>
+		</UsualGroup>
 		<Table name="Objects" id="7">
 			<MultipleChoice>true</MultipleChoice>
 			<UseAlternationRowColor>true</UseAlternationRowColor>
@@ -107,10 +136,10 @@
 			<Settings xsi:type="DynamicList">
 				<ManualQuery>true</ManualQuery>
 				<DynamicDataRead>false</DynamicDataRead>
-				<QueryText>SELECT
-	SabatexCatalog1.Ref AS Ref
+				<QueryText>                                                                                                                                                                                                                             SELECT
+	SabatexExchangeNodes.Ref AS Ref
 FROM
-	Catalog.SabatexCatalog1 AS SabatexCatalog1</QueryText>
+	Catalog.SabatexExchangeNodes AS SabatexExchangeNodes</QueryText>
 				<ListSettings>
 					<dcsset:filter>
 						<dcsset:viewMode>Normal</dcsset:viewMode>
@@ -129,6 +158,17 @@ FROM
 				</ListSettings>
 			</Settings>
 		</Attribute>
+		<Attribute name="TaskUUID" id="3">
+			<Title>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Task UUID</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>v8:UUID</v8:Type>
+			</Type>
+		</Attribute>
 	</Attributes>
 	<Commands>
 		<Command name="Download" id="1">
@@ -145,6 +185,40 @@ FROM
 				</v8:item>
 			</ToolTip>
 			<Action>Download</Action>
+		</Command>
+		<Command name="UnPosted" id="2">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Un posted</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Розпровести</v8:content>
+				</v8:item>
+			</Title>
+			<ToolTip>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Un posted</v8:content>
+				</v8:item>
+			</ToolTip>
+			<Action>UnPosted</Action>
+		</Command>
+		<Command name="UnsafeDelete" id="3">
+			<Title>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Unsafe delete</v8:content>
+				</v8:item>
+			</Title>
+			<ToolTip>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Unsafe delete</v8:content>
+				</v8:item>
+			</ToolTip>
+			<Action>UnsafeDelete</Action>
 		</Command>
 	</Commands>
 </Form>

@@ -3139,19 +3139,19 @@ endprocedure
 // Возвращаемое значение:
 //  string - Result log 
 //
-function ExchangeProcess(exchangeMode) export
+function ExchangeProcess(exchangeMode,background=true) export
 	Query = New Query;
 	Query.Text = 
-		"SELECT
-		|	SabatexExchangeNodeConfig.NodeName AS NodeName,
-		|	SabatexExchangeNodeConfig.destinationId AS destinationId,
-		|	SabatexExchangeNodeConfig.ExchangeMode AS ExchangeMode,
-		|	SabatexExchangeNodeConfig.isActive AS isActive
-		|FROM
-		|	InformationRegister.SabatexExchangeNodeConfig AS SabatexExchangeNodeConfig
-		|WHERE
-		|	SabatexExchangeNodeConfig.isActive = TRUE
-		|	AND SabatexExchangeNodeConfig.ExchangeMode = &ExchangeMode";
+	"SELECT
+	|	SabatexExchangeNodeConfig.NodeName AS NodeName,
+	|	SabatexExchangeNodeConfig.destinationId AS destinationId,
+	|	SabatexExchangeNodeConfig.ExchangeMode AS ExchangeMode,
+	|	SabatexExchangeNodeConfig.isActive AS isActive
+	|FROM
+	|	InformationRegister.SabatexExchangeNodeConfig AS SabatexExchangeNodeConfig
+	|WHERE
+	|	SabatexExchangeNodeConfig.isActive = TRUE
+	|	AND SabatexExchangeNodeConfig.ExchangeMode = &ExchangeMode";
 	
 	Query.SetParameter("ExchangeMode",exchangeMode);
 	
@@ -3160,18 +3160,25 @@ function ExchangeProcess(exchangeMode) export
 	sr = QueryResult.Select();
 	resultMessage = "";
 	While sr.Next() Do
-
-		filter = new structure("Key,State",XMLString(sr.destinationId),BackgroundJobState.Active);
-		task = BackgroundJobs.GetBackgroundJobs(filter);
-		if task.Count() = 0  then
-			params = new array;
-			params.Add(sr.NodeName);
-			BackgroundJobs.Execute("SabatexExchange.ExchangeTaskAsync",params,XMLString(sr.destinationId),"SabatexExchange "+sr.nodeName);
-			resultMessage = resultMessage + "Запущено завдання обміну  з вузлом "+sr.nodeName+ Chars.CR;
- 		else
-			resultMessage = resultMessage + "Завдання ббміну  з вузлом "+sr.nodeName + " - пропущено, так як не виконано попереднє"+ Chars.CR;
+		if background then
+			filter = new structure("Key,State",XMLString(sr.destinationId),BackgroundJobState.Active);
+			task = BackgroundJobs.GetBackgroundJobs(filter);
+			if task.Count() = 0  then
+				params = new array;
+				params.Add(sr.NodeName);
+				BackgroundJobs.Execute("SabatexExchange.ExchangeTaskAsync",params,XMLString(sr.destinationId),"SabatexExchange "+sr.nodeName);
+				resultMessage = resultMessage + "Запущено завдання обміну  з вузлом "+sr.nodeName+ Chars.CR;
+			else
+				resultMessage = resultMessage + "Завдання обміну  з вузлом "+sr.nodeName + " - пропущено, так як не виконано попереднє"+ Chars.CR;
+			endif;
+		else
+			try
+				ExchangeTaskAsync(sr.NodeName);
+			except
+				resultMessage = resultMessage + "Помилка: Завдання обміну  з вузлом "+sr.nodeName + " - пропущено, так як не виникла помилка"+  ОписаниеОшибки()+Chars.CR;
+			endtry;	
 		endif;
-    enddo;
+	enddo;
 	return resultMessage;
 endfunction
 
