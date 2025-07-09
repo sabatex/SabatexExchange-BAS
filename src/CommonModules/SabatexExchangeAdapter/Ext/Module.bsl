@@ -1,5 +1,5 @@
 ﻿
-#region SabatexExchangeAdapter5_0_2
+#region SabatexExchangeAdapter5_0_3
 
 // Copyright (c) 2021-2025 by Serhiy Lakas
 // https://sabatex.github.io
@@ -78,7 +78,13 @@ endprocedure
 function AddAttributeMapped(objectDescriptor,attrName,destinationName)
 	return SabatexExchange.AddAttributeMapped(objectDescriptor,attrName,destinationName);	
 endfunction
-
+// Процедура - Add attribute proc
+//
+// Параметры:
+//  objectDescriptor - structure	 - (object or table descriptor) 
+//  attrName		 - string	 -  attribute name
+//  procName		 - string	 -  procedure(structure conf,map source,object destination,string attrName)
+//   
 procedure AddAttributeProc(objectDescriptor,attrName,procName)
 	SabatexExchange.AddAttributeProc(objectDescriptor,attrName,procName)	
 endprocedure

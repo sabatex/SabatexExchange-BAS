@@ -88,6 +88,15 @@ Procedure OnCreateAtServer(Cancel, StandardProcessing)
 		Items.ObjectType.ChoiceList.Add(item.FullName());
 	enddo;	
 	
+	for each item in Metadata.BusinessProcesses do
+		Items.ObjectType.ChoiceList.Add(item.FullName());
+	enddo;	
+	
+	for each item in Metadata.Tasks do
+		Items.ObjectType.ChoiceList.Add(item.FullName());
+	enddo;	
+	
+	
 	Object.ObjectType = Items.ObjectType.ChoiceList[0];
 	
 	Objects.QueryText = 

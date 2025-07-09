@@ -1223,8 +1223,8 @@ endprocedure
 // Параметры:
 //  objectDescriptor - structure	 - (object or table descriptor) 
 //  attrName		 - string	 -  attribute name
-//  procName		 - string	 -  procedure(conf,source,destination,attr)
-//
+//  procName		 - string	 -  procedure(structure conf,map source,object destination,string attrName)
+//   
 procedure AddAttributeProc(objectDescriptor,attrName,procName) export
 	AddAttributeProperty(objectDescriptor,attrName,,,,procName);	
 endprocedure
@@ -1315,6 +1315,14 @@ procedure ConfigureSearchObject(objectDescriptor,UseIdAttribute=false,LookObject
 endprocedure
 
 
+// Процедура - Configure parser actions
+//
+// Параметры:
+//  conf			 - 	 - 
+//  objectDescriptor - 	 - 
+//  OnBeforeSave	 - строка	 - userProc(conf,localObject);
+//  OnAfterSave		 - 	 - 
+//
 procedure ConfigureParserActions(conf,objectDescriptor,OnBeforeSave=false,OnAfterSave=undefined) export
 	objectDescriptor.OnAfterSave = OnAfterSave;
 	objectDescriptor.OnBeforeSave = OnBeforeSave;
@@ -3061,12 +3069,13 @@ procedure AddUnresolvedObject(conf,item,newObject = true)
 	reg = InformationRegisters.sabatexExchangeUnresolvedObjects.CreateRecordManager();
 	//reg.sender = new UUID(item["sender"]);
 	reg.MessageHeader = item["messageHeader"];
-
+    reg.NodeName = conf.NodeName;
+	
+	reg.levelLive = 0;
 	reg.dateStamp = CurrentDate();
 	reg.serverDateStamp= XMLValue(Type("Date"),item["senderDateStamp"]);
 	reg.senderDateStamp =XMLValue(Type("Date"),item["dateStamp"]);
 	reg.objectAsText = item["message"];
-	reg.NodeName = conf.NodeName;
 	reg.Log = ?(newObject,"",conf.Log);
 	reg.Write();
 endprocedure
@@ -3100,7 +3109,7 @@ procedure ReciveObjects(conf)
 endprocedure
 #endregion
 
-#region Actions
+#region User_Defined_Actions
 procedure BeforeSend(conf)
 	if conf.userDefinedModule <> "" then
 		try
