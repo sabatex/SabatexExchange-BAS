@@ -458,7 +458,7 @@
 					<Type>
 						<v8:Type>xs:decimal</v8:Type>
 						<v8:NumberQualifiers>
-							<v8:Digits>3</v8:Digits>
+							<v8:Digits>2</v8:Digits>
 							<v8:FractionDigits>0</v8:FractionDigits>
 							<v8:AllowedSign>Nonnegative</v8:AllowedSign>
 						</v8:NumberQualifiers>
@@ -472,9 +472,9 @@
 					<MultiLine>false</MultiLine>
 					<ExtendedEdit>false</ExtendedEdit>
 					<MinValue xsi:type="xs:string">1</MinValue>
-					<MaxValue xsi:type="xs:string">500</MaxValue>
+					<MaxValue xsi:type="xs:string">99</MaxValue>
 					<FillFromFillingValue>false</FillFromFillingValue>
-					<FillValue xsi:type="xs:decimal">50</FillValue>
+					<FillValue xsi:type="xs:decimal">10</FillValue>
 					<FillChecking>DontCheck</FillChecking>
 					<ChoiceFoldersAndItems>Items</ChoiceFoldersAndItems>
 					<ChoiceParameterLinks/>

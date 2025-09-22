@@ -677,7 +677,7 @@ endfunction
 //   - 
 //
 function IsCatalog(objectType) export
-	return StringStartWith(upper(objectType),"СПРАВОЧНИК");	
+	return StringStartWith(upper(objectType),"СПРАВОЧНИК") or StringStartWith(upper(objectType),"CATALOG");	
 endfunction	
 	
 // Функция - Is document
@@ -689,7 +689,7 @@ endfunction
 //   - 
 //
 function IsDocument(objectType) export
-	return StringStartWith(upper(objectType),"ДОКУМЕНТ");	
+	return StringStartWith(upper(objectType),"ДОКУМЕНТ") or StringStartWith(upper(objectType),"DOCUMENT");	
 endfunction	
 
 // Функция - Is chart of accounts
