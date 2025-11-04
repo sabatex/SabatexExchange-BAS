@@ -1043,6 +1043,32 @@ function GetActiveDestinationNodes() export
 		return Query.Execute().Unload().UnloadColumn("NodeName");
 endfunction
 
+// Функция - Get destination nodes
+// 
+// Возвращаемое значение:
+// array node config  -  масив назв активних нодів
+//
+function GetDestinationNodes(onlyActive=true) export
+		Query = new Query;
+		Query.Text = 
+			"SELECT
+			|	SabatexExchangeNodeConfig.NodeName AS NodeName
+			|FROM
+			|	InformationRegister.SabatexExchangeNodeConfig AS SabatexExchangeNodeConfig
+			|WHERE
+			|	CASE
+			|			WHEN &onlyActive
+			|				THEN SabatexExchangeNodeConfig.isActive = TRUE
+			|			ELSE TRUE
+			|		END";
+		result = new Array;
+		Query.Parameters.Insert("onlyActive",onlyActive);	
+		return Query.Execute().Unload().UnloadColumn("NodeName");
+endfunction
+
+
+
+
 function GetObjectDescription(objectType)
 	pos = Найти(objectType,".");
 	if pos = -1 then
@@ -3149,6 +3175,12 @@ endprocedure
 //  string - Result log 
 //
 function ExchangeProcess(exchangeMode,background=true) export
+	resultMessage = "";
+	
+	if ПараметрыСеанса.РаботаСВнешнимиРесурсамиЗаблокирована then
+		return resultMessage;
+	endif;	
+	
 	Query = New Query;
 	Query.Text = 
 	"SELECT
@@ -3167,7 +3199,7 @@ function ExchangeProcess(exchangeMode,background=true) export
 	QueryResult = Query.Execute();
 	
 	sr = QueryResult.Select();
-	resultMessage = "";
+	
 	While sr.Next() Do
 		if background then
 			filter = new structure("Key,State",XMLString(sr.destinationId),BackgroundJobState.Active);

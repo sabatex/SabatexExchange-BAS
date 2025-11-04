@@ -1,0 +1,991 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<Form xmlns="http://v8.1c.ru/8.3/xcf/logform" xmlns:app="http://v8.1c.ru/8.2/managed-application/core" xmlns:cfg="http://v8.1c.ru/8.1/data/enterprise/current-config" xmlns:dcscor="http://v8.1c.ru/8.1/data-composition-system/core" xmlns:dcsset="http://v8.1c.ru/8.1/data-composition-system/settings" xmlns:ent="http://v8.1c.ru/8.1/data/enterprise" xmlns:lf="http://v8.1c.ru/8.2/managed-application/logform" xmlns:style="http://v8.1c.ru/8.1/data/ui/style" xmlns:sys="http://v8.1c.ru/8.1/data/ui/fonts/system" xmlns:v8="http://v8.1c.ru/8.1/data/core" xmlns:v8ui="http://v8.1c.ru/8.1/data/ui" xmlns:web="http://v8.1c.ru/8.1/data/ui/colors/web" xmlns:win="http://v8.1c.ru/8.1/data/ui/colors/windows" xmlns:xr="http://v8.1c.ru/8.3/xcf/readable" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="2.12">
+	<AutoSaveDataInSettings>Use</AutoSaveDataInSettings>
+	<AutoCommandBar name="ФормаКоманднаяПанель" id="-1"/>
+	<Events>
+		<Event name="OnCreateAtServer">ПриСозданииНаСервере</Event>
+		<Event name="OnClose">ПриЗакрытии</Event>
+	</Events>
+	<ChildItems>
+		<InputField name="NodeName" id="139">
+			<DataPath>NodeName</DataPath>
+			<ListChoiceMode>true</ListChoiceMode>
+			<ContextMenu name="NodeNameКонтекстноеМеню" id="140"/>
+			<ExtendedTooltip name="NodeNameРасширеннаяПодсказка" id="141"/>
+			<Events>
+				<Event name="OnChange">NodeNameПриИзменении</Event>
+			</Events>
+		</InputField>
+		<Pages name="Группа4" id="43">
+			<ExtendedTooltip name="Группа4РасширеннаяПодсказка" id="44"/>
+			<ChildItems>
+				<Page name="UploadDocuments" id="45">
+					<Title>
+						<v8:item>
+							<v8:lang>uk</v8:lang>
+							<v8:content>Upload documents</v8:content>
+						</v8:item>
+					</Title>
+					<ToolTip>
+						<v8:item>
+							<v8:lang>uk</v8:lang>
+							<v8:content>Upload documents</v8:content>
+						</v8:item>
+					</ToolTip>
+					<ExtendedTooltip name="UploadDocumentsРасширеннаяПодсказка" id="46"/>
+					<ChildItems>
+						<UsualGroup name="ВигрузкаЧеків" id="3">
+							<Title>
+								<v8:item>
+									<v8:lang>uk</v8:lang>
+									<v8:content>Вигрузка чеків</v8:content>
+								</v8:item>
+							</Title>
+							<ToolTip>
+								<v8:item>
+									<v8:lang>uk</v8:lang>
+									<v8:content>Вигрузка чеків</v8:content>
+								</v8:item>
+							</ToolTip>
+							<ExtendedTooltip name="ВигрузкаЧеківРасширеннаяПодсказка" id="4"/>
+							<ChildItems>
+								<InputField name="Дата" id="10">
+									<DataPath>Объект.Дата</DataPath>
+									<ContextMenu name="ДатаКонтекстноеМеню" id="11"/>
+									<ExtendedTooltip name="ДатаРасширеннаяПодсказка" id="12"/>
+								</InputField>
+								<Button name="ВигрузкаЧеківЗаДень" id="8">
+									<Type>UsualButton</Type>
+									<CommandName>Form.Command.ВигрузкаДокументівЗаДень</CommandName>
+									<ExtendedTooltip name="ВигрузкаЧеківЗаДеньРасширеннаяПодсказка" id="9"/>
+								</Button>
+							</ChildItems>
+						</UsualGroup>
+						<UsualGroup name="UploadDocumenGroup" id="145">
+							<Title>
+								<v8:item>
+									<v8:lang>uk</v8:lang>
+									<v8:content>Вивантажкення документа</v8:content>
+								</v8:item>
+							</Title>
+							<ToolTip>
+								<v8:item>
+									<v8:lang>uk</v8:lang>
+									<v8:content>Upload documen group</v8:content>
+								</v8:item>
+							</ToolTip>
+							<ExtendedTooltip name="UploadDocumenGroupРасширеннаяПодсказка" id="146"/>
+							<ChildItems>
+								<InputField name="SelectedDoc" id="149">
+									<DataPath>SelectedDoc</DataPath>
+									<ContextMenu name="SelectedDocКонтекстноеМеню" id="150"/>
+									<ExtendedTooltip name="SelectedDocРасширеннаяПодсказка" id="151"/>
+								</InputField>
+								<Button name="UploadDocument" id="147">
+									<Type>UsualButton</Type>
+									<CommandName>Form.Command.UploadDocument</CommandName>
+									<ExtendedTooltip name="UploadDocumentРасширеннаяПодсказка" id="148"/>
+								</Button>
+							</ChildItems>
+						</UsualGroup>
+						<UsualGroup name="Группа2" id="20">
+							<Title>
+								<v8:item>
+									<v8:lang>uk</v8:lang>
+									<v8:content>Вставлення Цін</v8:content>
+								</v8:item>
+							</Title>
+							<ExtendedTooltip name="Группа2РасширеннаяПодсказка" id="21"/>
+							<ChildItems>
+								<InputField name="ВидЦін" id="22">
+									<DataPath>Объект.ВидЦін</DataPath>
+									<ContextMenu name="ВидЦінКонтекстноеМеню" id="23"/>
+									<ExtendedTooltip name="ВидЦінРасширеннаяПодсказка" id="24"/>
+								</InputField>
+								<Button name="SetPrice" id="25">
+									<Type>UsualButton</Type>
+									<CommandName>Form.Command.SetPrice</CommandName>
+									<ExtendedTooltip name="SetPriceРасширеннаяПодсказка" id="26"/>
+								</Button>
+							</ChildItems>
+						</UsualGroup>
+						<UsualGroup name="Group1" id="73">
+							<Title>
+								<v8:item>
+									<v8:lang>uk</v8:lang>
+									<v8:content>Відпраіка запитів до нода</v8:content>
+								</v8:item>
+							</Title>
+							<ExtendedTooltip name="Group1ExtendedTooltip" id="74"/>
+							<ChildItems>
+								<InputField name="NodeSelector" id="75">
+									<Title>
+										<v8:item>
+											<v8:lang>uk</v8:lang>
+											<v8:content>Нод обміну</v8:content>
+										</v8:item>
+									</Title>
+									<EditMode>EnterOnInput</EditMode>
+									<ListChoiceMode>true</ListChoiceMode>
+									<ContextMenu name="NodeSelectorContextMenu" id="76"/>
+									<ExtendedTooltip name="NodeSelectorExtendedTooltip" id="77"/>
+									<Events>
+										<Event name="OnChange">NodeSelectorOnChange</Event>
+									</Events>
+								</InputField>
+								<InputField name="DateQuery" id="78">
+									<Title>
+										<v8:item>
+											<v8:lang>uk</v8:lang>
+											<v8:content>Дата запиту</v8:content>
+										</v8:item>
+									</Title>
+									<ContextMenu name="DateQueryContextMenu" id="79"/>
+									<ExtendedTooltip name="DateQueryExtendedTooltip" id="80"/>
+									<Events>
+										<Event name="OnChange">DateQueryOnChange</Event>
+									</Events>
+								</InputField>
+							</ChildItems>
+						</UsualGroup>
+						<Table name="ObjectTypes" id="83">
+							<Representation>List</Representation>
+							<ChangeRowSet>false</ChangeRowSet>
+							<ChangeRowOrder>false</ChangeRowOrder>
+							<AutoInsertNewRow>true</AutoInsertNewRow>
+							<EnableStartDrag>true</EnableStartDrag>
+							<EnableDrag>true</EnableDrag>
+							<DataPath>ObjectTypes</DataPath>
+							<RowFilter xsi:nil="true"/>
+							<ContextMenu name="ObjectTypesКонтекстноеМеню" id="84"/>
+							<AutoCommandBar name="ObjectTypesКоманднаяПанель" id="85">
+								<ChildItems>
+									<Button name="SelectAll" id="102">
+										<Type>CommandBarButton</Type>
+										<CommandName>Form.Command.ВигрузкаДокументівЗаДень</CommandName>
+										<Title>
+											<v8:item>
+												<v8:lang>uk</v8:lang>
+												<v8:content>Виділити всі</v8:content>
+											</v8:item>
+										</Title>
+										<ExtendedTooltip name="SelectAllExtendedTooltip" id="103"/>
+									</Button>
+								</ChildItems>
+							</AutoCommandBar>
+							<ExtendedTooltip name="ObjectTypesРасширеннаяПодсказка" id="86"/>
+							<SearchStringAddition name="ObjectTypesСтрокаПоиска" id="87">
+								<AdditionSource>
+									<Item>ObjectTypes</Item>
+									<Type>SearchStringRepresentation</Type>
+								</AdditionSource>
+								<ContextMenu name="ObjectTypesСтрокаПоискаКонтекстноеМеню" id="88"/>
+								<ExtendedTooltip name="ObjectTypesСтрокаПоискаРасширеннаяПодсказка" id="89"/>
+							</SearchStringAddition>
+							<ViewStatusAddition name="ObjectTypesСостояниеПросмотра" id="90">
+								<AdditionSource>
+									<Item>ObjectTypes</Item>
+									<Type>ViewStatusRepresentation</Type>
+								</AdditionSource>
+								<ContextMenu name="ObjectTypesСостояниеПросмотраКонтекстноеМеню" id="91"/>
+								<ExtendedTooltip name="ObjectTypesСостояниеПросмотраРасширеннаяПодсказка" id="92"/>
+							</ViewStatusAddition>
+							<SearchControlAddition name="ObjectTypesУправлениеПоиском" id="93">
+								<AdditionSource>
+									<Item>ObjectTypes</Item>
+									<Type>SearchControl</Type>
+								</AdditionSource>
+								<ContextMenu name="ObjectTypesУправлениеПоискомКонтекстноеМеню" id="94"/>
+								<ExtendedTooltip name="ObjectTypesУправлениеПоискомРасширеннаяПодсказка" id="95"/>
+							</SearchControlAddition>
+							<ChildItems>
+								<CheckBoxField name="ObjectTypesChecked" id="106">
+									<DataPath>ObjectTypes.Checked</DataPath>
+									<EditMode>EnterOnInput</EditMode>
+									<CheckBoxType>Auto</CheckBoxType>
+									<ContextMenu name="ObjectTypesCheckedКонтекстноеМеню" id="107"/>
+									<ExtendedTooltip name="ObjectTypesCheckedРасширеннаяПодсказка" id="108"/>
+								</CheckBoxField>
+								<InputField name="ObjectTypesName" id="109">
+									<DataPath>ObjectTypes.Name</DataPath>
+									<EditMode>EnterOnInput</EditMode>
+									<ContextMenu name="ObjectTypesNameКонтекстноеМеню" id="110"/>
+									<ExtendedTooltip name="ObjectTypesNameРасширеннаяПодсказка" id="111"/>
+								</InputField>
+							</ChildItems>
+						</Table>
+					</ChildItems>
+				</Page>
+				<Page name="UploadCatalogs" id="47">
+					<Title>
+						<v8:item>
+							<v8:lang>uk</v8:lang>
+							<v8:content>Upload catalogs</v8:content>
+						</v8:item>
+					</Title>
+					<ToolTip>
+						<v8:item>
+							<v8:lang>uk</v8:lang>
+							<v8:content>Upload catalogs</v8:content>
+						</v8:item>
+					</ToolTip>
+					<ExtendedTooltip name="UploadCatalogsРасширеннаяПодсказка" id="48"/>
+					<ChildItems>
+						<UsualGroup name="Группа5" id="71">
+							<Title>
+								<v8:item>
+									<v8:lang>uk</v8:lang>
+									<v8:content>Весь довідник</v8:content>
+								</v8:item>
+							</Title>
+							<ExtendedTooltip name="Группа5РасширеннаяПодсказка" id="72"/>
+							<ChildItems>
+								<InputField name="CatalogType" id="66">
+									<DataPath>Объект.CatalogType</DataPath>
+									<Title>
+										<v8:item>
+											<v8:lang>uk</v8:lang>
+											<v8:content>Тип довідника</v8:content>
+										</v8:item>
+									</Title>
+									<ListChoiceMode>true</ListChoiceMode>
+									<ContextMenu name="CatalogTypeКонтекстноеМеню" id="67"/>
+									<ExtendedTooltip name="CatalogTypeРасширеннаяПодсказка" id="68"/>
+								</InputField>
+								<Button name="UploadAllCatalog" id="69">
+									<Type>UsualButton</Type>
+									<CommandName>Form.Command.UploadAllCatalog</CommandName>
+									<ExtendedTooltip name="UploadAllCatalogРасширеннаяПодсказка" id="70"/>
+								</Button>
+							</ChildItems>
+						</UsualGroup>
+						<UsualGroup name="Группа3" id="27">
+							<Title>
+								<v8:item>
+									<v8:lang>uk</v8:lang>
+									<v8:content>Довідник (група або елемент)</v8:content>
+								</v8:item>
+							</Title>
+							<ExtendedTooltip name="Группа3РасширеннаяПодсказка" id="28"/>
+							<ChildItems>
+								<UsualGroup name="ГруппаСсылки" id="166">
+									<ToolTip>
+										<v8:item>
+											<v8:lang>ru</v8:lang>
+											<v8:content>Группа ссылки</v8:content>
+										</v8:item>
+									</ToolTip>
+									<Group>AlwaysHorizontal</Group>
+									<Representation>None</Representation>
+									<ShowTitle>false</ShowTitle>
+									<ExtendedTooltip name="ГруппаСсылкиРасширеннаяПодсказка" id="167"/>
+									<ChildItems>
+										<InputField name="_URL" id="171">
+											<DataPath>_URL</DataPath>
+											<TitleTextColor>style:FieldSelectionBackColor</TitleTextColor>
+											<ToolTip>
+												<v8:item>
+													<v8:lang>ru</v8:lang>
+													<v8:content>Навигационная ссылка</v8:content>
+												</v8:item>
+											</ToolTip>
+											<TextColor>style:FieldSelectionBackColor</TextColor>
+											<ContextMenu name="_URLКонтекстноеМеню" id="172"/>
+											<ExtendedTooltip name="_URLРасширеннаяПодсказка" id="173"/>
+											<Events>
+												<Event name="OnChange">_URLПриИзменении</Event>
+											</Events>
+										</InputField>
+										<Button name="НайтиОбъектПоURL" id="174">
+											<Type>UsualButton</Type>
+											<CommandName>Form.Command.НайтиОбъектПоURL</CommandName>
+											<ExtendedTooltip name="НайтиОбъектПоURLРасширеннаяПодсказка" id="175"/>
+										</Button>
+									</ChildItems>
+								</UsualGroup>
+								<InputField name="CatalogItem" id="29">
+									<DataPath>CatalogItem</DataPath>
+									<ChoiceFoldersAndItems>FoldersAndItems</ChoiceFoldersAndItems>
+									<ContextMenu name="CatalogItemКонтекстноеМеню" id="30"/>
+									<ExtendedTooltip name="CatalogItemРасширеннаяПодсказка" id="31"/>
+								</InputField>
+								<Button name="UploadCatalog" id="32">
+									<Type>UsualButton</Type>
+									<CommandName>Form.Command.UploadCatalog</CommandName>
+									<ExtendedTooltip name="UploadCatalogРасширеннаяПодсказка" id="33"/>
+								</Button>
+							</ChildItems>
+						</UsualGroup>
+						<Button name="UploadPredefined" id="56">
+							<Type>UsualButton</Type>
+							<CommandName>Form.Command.UploadPredefined</CommandName>
+							<ExtendedTooltip name="UploadPredefinedРасширеннаяПодсказка" id="57"/>
+						</Button>
+						<Button name="UploadConstants" id="58">
+							<Type>UsualButton</Type>
+							<CommandName>Form.Command.UploadConstants</CommandName>
+							<ExtendedTooltip name="UploadConstantsРасширеннаяПодсказка" id="59"/>
+						</Button>
+					</ChildItems>
+				</Page>
+				<Page name="UploadRegisters" id="49">
+					<Title>
+						<v8:item>
+							<v8:lang>uk</v8:lang>
+							<v8:content>Upload registers</v8:content>
+						</v8:item>
+					</Title>
+					<ToolTip>
+						<v8:item>
+							<v8:lang>uk</v8:lang>
+							<v8:content>Upload registers</v8:content>
+						</v8:item>
+					</ToolTip>
+					<ExtendedTooltip name="UploadRegistersРасширеннаяПодсказка" id="50"/>
+					<ChildItems>
+						<UsualGroup name="Группа1" id="152">
+							<ExtendedTooltip name="Группа1РасширеннаяПодсказка" id="153"/>
+							<ChildItems>
+								<InputField name="NomenckatureFolder" id="51">
+									<DataPath>Объект.NomenckatureFolder</DataPath>
+									<ChoiceFoldersAndItems>Folders</ChoiceFoldersAndItems>
+									<ContextMenu name="NomenckatureFolderКонтекстноеМеню" id="52"/>
+									<ExtendedTooltip name="NomenckatureFolderРасширеннаяПодсказка" id="53"/>
+								</InputField>
+								<Button name="UploadRegisters1" id="54">
+									<Type>UsualButton</Type>
+									<CommandName>Form.Command.UploadRegisters</CommandName>
+									<ExtendedTooltip name="UploadRegisters1РасширеннаяПодсказка" id="55"/>
+								</Button>
+							</ChildItems>
+						</UsualGroup>
+						<Button name="UploadBonus" id="64">
+							<Type>UsualButton</Type>
+							<CommandName>Form.Command.UploadBonus</CommandName>
+							<ExtendedTooltip name="UploadBonusРасширеннаяПодсказка" id="65"/>
+						</Button>
+					</ChildItems>
+				</Page>
+				<Page name="Tools" id="60">
+					<Title>
+						<v8:item>
+							<v8:lang>uk</v8:lang>
+							<v8:content>Tools</v8:content>
+						</v8:item>
+					</Title>
+					<ToolTip>
+						<v8:item>
+							<v8:lang>uk</v8:lang>
+							<v8:content>Tools</v8:content>
+						</v8:item>
+					</ToolTip>
+					<ExtendedTooltip name="ToolsРасширеннаяПодсказка" id="61"/>
+					<ChildItems>
+						<Button name="ClearКлючиДоступаКОбъектам" id="62">
+							<Type>UsualButton</Type>
+							<CommandName>Form.Command.ClearКлючиДоступаКОбъектам</CommandName>
+							<ExtendedTooltip name="ClearКлючиДоступаКОбъектамРасширеннаяПодсказка" id="63"/>
+						</Button>
+						<UsualGroup name="ГруппаЗбиранняРозбирання" id="154">
+							<Title>
+								<v8:item>
+									<v8:lang>uk</v8:lang>
+									<v8:content>Группа збирання розбирання</v8:content>
+								</v8:item>
+							</Title>
+							<ToolTip>
+								<v8:item>
+									<v8:lang>uk</v8:lang>
+									<v8:content>Группа збирання розбирання</v8:content>
+								</v8:item>
+							</ToolTip>
+							<ExtendedTooltip name="ГруппаЗбиранняРозбиранняРасширеннаяПодсказка" id="155"/>
+							<ChildItems>
+								<InputField name="ОтчетОРозничныхПродажах" id="156">
+									<DataPath>ОтчетОРозничныхПродажах</DataPath>
+									<ContextMenu name="ОтчетОРозничныхПродажахКонтекстноеМеню" id="157"/>
+									<ExtendedTooltip name="ОтчетОРозничныхПродажахРасширеннаяПодсказка" id="158"/>
+								</InputField>
+								<Button name="ЗбираееРозбирання" id="159">
+									<Type>UsualButton</Type>
+									<CommandName>Form.Command.ЗбираееРозбирання</CommandName>
+									<ExtendedTooltip name="ЗбираееРозбиранняРасширеннаяПодсказка" id="160"/>
+								</Button>
+							</ChildItems>
+						</UsualGroup>
+					</ChildItems>
+				</Page>
+				<Page name="NodePropertys" id="112">
+					<Title>
+						<v8:item>
+							<v8:lang>uk</v8:lang>
+							<v8:content>Node propertys</v8:content>
+						</v8:item>
+					</Title>
+					<ToolTip>
+						<v8:item>
+							<v8:lang>uk</v8:lang>
+							<v8:content>Node propertys</v8:content>
+						</v8:item>
+					</ToolTip>
+					<ExtendedTooltip name="NodePropertysРасширеннаяПодсказка" id="113"/>
+					<ChildItems>
+						<Table name="UploadObjectFilter" id="114">
+							<Representation>List</Representation>
+							<AutoInsertNewRow>true</AutoInsertNewRow>
+							<EnableStartDrag>true</EnableStartDrag>
+							<EnableDrag>true</EnableDrag>
+							<DataPath>UploadObjectFilter</DataPath>
+							<RowFilter xsi:nil="true"/>
+							<ContextMenu name="UploadObjectFilterКонтекстноеМеню" id="115"/>
+							<AutoCommandBar name="UploadObjectFilterКоманднаяПанель" id="116"/>
+							<ExtendedTooltip name="UploadObjectFilterРасширеннаяПодсказка" id="117"/>
+							<SearchStringAddition name="UploadObjectFilterСтрокаПоиска" id="118">
+								<AdditionSource>
+									<Item>UploadObjectFilter</Item>
+									<Type>SearchStringRepresentation</Type>
+								</AdditionSource>
+								<ContextMenu name="UploadObjectFilterСтрокаПоискаКонтекстноеМеню" id="119"/>
+								<ExtendedTooltip name="UploadObjectFilterСтрокаПоискаРасширеннаяПодсказка" id="120"/>
+							</SearchStringAddition>
+							<ViewStatusAddition name="UploadObjectFilterСостояниеПросмотра" id="121">
+								<AdditionSource>
+									<Item>UploadObjectFilter</Item>
+									<Type>ViewStatusRepresentation</Type>
+								</AdditionSource>
+								<ContextMenu name="UploadObjectFilterСостояниеПросмотраКонтекстноеМеню" id="122"/>
+								<ExtendedTooltip name="UploadObjectFilterСостояниеПросмотраРасширеннаяПодсказка" id="123"/>
+							</ViewStatusAddition>
+							<SearchControlAddition name="UploadObjectFilterУправлениеПоиском" id="124">
+								<AdditionSource>
+									<Item>UploadObjectFilter</Item>
+									<Type>SearchControl</Type>
+								</AdditionSource>
+								<ContextMenu name="UploadObjectFilterУправлениеПоискомКонтекстноеМеню" id="125"/>
+								<ExtendedTooltip name="UploadObjectFilterУправлениеПоискомРасширеннаяПодсказка" id="126"/>
+							</SearchControlAddition>
+							<ChildItems>
+								<InputField name="UploadObjectFilterNodeName" id="127">
+									<DataPath>UploadObjectFilter.NodeName</DataPath>
+									<EditMode>EnterOnInput</EditMode>
+									<ListChoiceMode>true</ListChoiceMode>
+									<ContextMenu name="UploadObjectFilterNodeNameКонтекстноеМеню" id="128"/>
+									<ExtendedTooltip name="UploadObjectFilterNodeNameРасширеннаяПодсказка" id="129"/>
+								</InputField>
+								<InputField name="UploadObjectFilterObjectType" id="130">
+									<DataPath>UploadObjectFilter.ObjectType</DataPath>
+									<EditMode>EnterOnInput</EditMode>
+									<ListChoiceMode>true</ListChoiceMode>
+									<ContextMenu name="UploadObjectFilterObjectTypeКонтекстноеМеню" id="131"/>
+									<ExtendedTooltip name="UploadObjectFilterObjectTypeРасширеннаяПодсказка" id="132"/>
+								</InputField>
+								<InputField name="UploadObjectFilterStore" id="133">
+									<DataPath>UploadObjectFilter.Store</DataPath>
+									<EditMode>EnterOnInput</EditMode>
+									<ContextMenu name="UploadObjectFilterStoreКонтекстноеМеню" id="134"/>
+									<ExtendedTooltip name="UploadObjectFilterStoreРасширеннаяПодсказка" id="135"/>
+								</InputField>
+								<InputField name="UploadObjectFilterКассаККМ" id="136">
+									<DataPath>UploadObjectFilter.КассаККМ</DataPath>
+									<EditMode>EnterOnInput</EditMode>
+									<ContextMenu name="UploadObjectFilterКассаККМКонтекстноеМеню" id="137"/>
+									<ExtendedTooltip name="UploadObjectFilterКассаККМРасширеннаяПодсказка" id="138"/>
+								</InputField>
+								<InputField name="UploadObjectFilterКасса" id="142">
+									<DataPath>UploadObjectFilter.Касса</DataPath>
+									<EditMode>EnterOnInput</EditMode>
+									<ContextMenu name="UploadObjectFilterКассаКонтекстноеМеню" id="143"/>
+									<ExtendedTooltip name="UploadObjectFilterКассаРасширеннаяПодсказка" id="144"/>
+								</InputField>
+							</ChildItems>
+						</Table>
+					</ChildItems>
+				</Page>
+				<Page name="UnresolvedObject" id="161">
+					<Title>
+						<v8:item>
+							<v8:lang>uk</v8:lang>
+							<v8:content>Unresolved object</v8:content>
+						</v8:item>
+					</Title>
+					<ToolTip>
+						<v8:item>
+							<v8:lang>uk</v8:lang>
+							<v8:content>Unresolved object</v8:content>
+						</v8:item>
+					</ToolTip>
+					<ExtendedTooltip name="UnresolvedObjectРасширеннаяПодсказка" id="162"/>
+					<ChildItems>
+						<InputField name="register" id="163">
+							<DataPath>register</DataPath>
+							<ContextMenu name="registerКонтекстноеМеню" id="164"/>
+							<ExtendedTooltip name="registerРасширеннаяПодсказка" id="165"/>
+						</InputField>
+					</ChildItems>
+				</Page>
+			</ChildItems>
+		</Pages>
+	</ChildItems>
+	<Attributes>
+		<Attribute name="Объект" id="1">
+			<Type>
+				<v8:Type>cfg:DataProcessorObject.PrepareDataForERPStoreNode</v8:Type>
+			</Type>
+			<MainAttribute>true</MainAttribute>
+		</Attribute>
+		<Attribute name="CatalogItem" id="2">
+			<Title>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Catalog item</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:TypeSet>cfg:CatalogRef</v8:TypeSet>
+			</Type>
+		</Attribute>
+		<Attribute name="NomenclatureFolder" id="3">
+			<Title>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Nomenclature folder</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>xs:string</v8:Type>
+				<v8:StringQualifiers>
+					<v8:Length>0</v8:Length>
+					<v8:AllowedLength>Variable</v8:AllowedLength>
+				</v8:StringQualifiers>
+			</Type>
+		</Attribute>
+		<Attribute name="ObjectTypes" id="4">
+			<Title>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Типи обьэктів</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>v8:ValueTable</v8:Type>
+			</Type>
+			<Columns>
+				<Column name="Checked" id="1">
+					<Title>
+						<v8:item>
+							<v8:lang>uk</v8:lang>
+							<v8:content>Checked</v8:content>
+						</v8:item>
+					</Title>
+					<Type>
+						<v8:Type>xs:boolean</v8:Type>
+					</Type>
+				</Column>
+				<Column name="Name" id="2">
+					<Title>
+						<v8:item>
+							<v8:lang>uk</v8:lang>
+							<v8:content>Name</v8:content>
+						</v8:item>
+					</Title>
+					<Type>
+						<v8:Type>xs:string</v8:Type>
+						<v8:StringQualifiers>
+							<v8:Length>0</v8:Length>
+							<v8:AllowedLength>Variable</v8:AllowedLength>
+						</v8:StringQualifiers>
+					</Type>
+				</Column>
+			</Columns>
+		</Attribute>
+		<Attribute name="UploadObjectFilter" id="5">
+			<Title>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Upload object filter</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>v8:ValueTable</v8:Type>
+			</Type>
+			<Columns>
+				<Column name="NodeName" id="1">
+					<Title>
+						<v8:item>
+							<v8:lang>uk</v8:lang>
+							<v8:content>Node name</v8:content>
+						</v8:item>
+					</Title>
+					<Type>
+						<v8:Type>xs:string</v8:Type>
+						<v8:StringQualifiers>
+							<v8:Length>50</v8:Length>
+							<v8:AllowedLength>Variable</v8:AllowedLength>
+						</v8:StringQualifiers>
+					</Type>
+				</Column>
+				<Column name="ObjectType" id="2">
+					<Title>
+						<v8:item>
+							<v8:lang>uk</v8:lang>
+							<v8:content>Object type</v8:content>
+						</v8:item>
+					</Title>
+					<Type>
+						<v8:Type>xs:string</v8:Type>
+						<v8:StringQualifiers>
+							<v8:Length>150</v8:Length>
+							<v8:AllowedLength>Variable</v8:AllowedLength>
+						</v8:StringQualifiers>
+					</Type>
+				</Column>
+				<Column name="Store" id="3">
+					<Title>
+						<v8:item>
+							<v8:lang>uk</v8:lang>
+							<v8:content>Store</v8:content>
+						</v8:item>
+					</Title>
+					<Type>
+						<v8:Type>xs:string</v8:Type>
+						<v8:StringQualifiers>
+							<v8:Length>0</v8:Length>
+							<v8:AllowedLength>Variable</v8:AllowedLength>
+						</v8:StringQualifiers>
+					</Type>
+				</Column>
+				<Column name="КассаККМ" id="4">
+					<Title>
+						<v8:item>
+							<v8:lang>uk</v8:lang>
+							<v8:content>Касса ККМ</v8:content>
+						</v8:item>
+					</Title>
+					<Type>
+						<v8:Type>xs:string</v8:Type>
+						<v8:StringQualifiers>
+							<v8:Length>0</v8:Length>
+							<v8:AllowedLength>Variable</v8:AllowedLength>
+						</v8:StringQualifiers>
+					</Type>
+				</Column>
+				<Column name="Касса" id="5">
+					<Title>
+						<v8:item>
+							<v8:lang>uk</v8:lang>
+							<v8:content>Касса</v8:content>
+						</v8:item>
+					</Title>
+					<Type>
+						<v8:Type>xs:string</v8:Type>
+						<v8:StringQualifiers>
+							<v8:Length>0</v8:Length>
+							<v8:AllowedLength>Variable</v8:AllowedLength>
+						</v8:StringQualifiers>
+					</Type>
+				</Column>
+				<Column name="Checked" id="6">
+					<Title>
+						<v8:item>
+							<v8:lang>uk</v8:lang>
+							<v8:content>Checked</v8:content>
+						</v8:item>
+					</Title>
+					<Type>
+						<v8:Type>xs:boolean</v8:Type>
+					</Type>
+				</Column>
+			</Columns>
+		</Attribute>
+		<Attribute name="NodeName" id="6">
+			<Title>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Node name</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>xs:string</v8:Type>
+				<v8:StringQualifiers>
+					<v8:Length>50</v8:Length>
+					<v8:AllowedLength>Variable</v8:AllowedLength>
+				</v8:StringQualifiers>
+			</Type>
+		</Attribute>
+		<Attribute name="SelectedDoc" id="7">
+			<Title>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Selected doc</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:TypeSet>cfg:DocumentRef</v8:TypeSet>
+			</Type>
+		</Attribute>
+		<Attribute name="ОтчетОРозничныхПродажах" id="8">
+			<Title>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Отчет о розничных продажах</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>xs:string</v8:Type>
+				<v8:StringQualifiers>
+					<v8:Length>0</v8:Length>
+					<v8:AllowedLength>Variable</v8:AllowedLength>
+				</v8:StringQualifiers>
+			</Type>
+		</Attribute>
+		<Attribute name="register" id="9">
+			<Title>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Register</v8:content>
+				</v8:item>
+			</Title>
+			<Type/>
+		</Attribute>
+		<Attribute name="_URL" id="10">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>URL</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>URL</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>xs:string</v8:Type>
+				<v8:StringQualifiers>
+					<v8:Length>0</v8:Length>
+					<v8:AllowedLength>Variable</v8:AllowedLength>
+				</v8:StringQualifiers>
+			</Type>
+		</Attribute>
+	</Attributes>
+	<Commands>
+		<Command name="ВигрузкаДокументівЗаДень" id="2">
+			<Title>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Вигрузка документів за день</v8:content>
+				</v8:item>
+			</Title>
+			<ToolTip>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Вигрузка документів за день</v8:content>
+				</v8:item>
+			</ToolTip>
+			<Action>ВигрузкаДокументівЗаДень</Action>
+		</Command>
+		<Command name="SetPrice" id="4">
+			<Title>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Set price</v8:content>
+				</v8:item>
+			</Title>
+			<ToolTip>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Set price</v8:content>
+				</v8:item>
+			</ToolTip>
+			<Action>SetPrice</Action>
+		</Command>
+		<Command name="UploadCatalog" id="5">
+			<Title>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Upload catalog</v8:content>
+				</v8:item>
+			</Title>
+			<ToolTip>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Upload catalog</v8:content>
+				</v8:item>
+			</ToolTip>
+			<Action>UploadCatalog</Action>
+		</Command>
+		<Command name="UploadCasa" id="6">
+			<Title>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Елемент довідника</v8:content>
+				</v8:item>
+			</Title>
+			<ToolTip>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Upload casa</v8:content>
+				</v8:item>
+			</ToolTip>
+			<Action>UploadCasa</Action>
+		</Command>
+		<Command name="UploadRegisters" id="1">
+			<Title>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Upload registers</v8:content>
+				</v8:item>
+			</Title>
+			<ToolTip>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Upload registers</v8:content>
+				</v8:item>
+			</ToolTip>
+			<Action>UploadRegisters</Action>
+		</Command>
+		<Command name="UploadPredefined" id="7">
+			<Title>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Upload predefined</v8:content>
+				</v8:item>
+			</Title>
+			<ToolTip>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Upload predefined</v8:content>
+				</v8:item>
+			</ToolTip>
+			<Action>UploadPredefined</Action>
+		</Command>
+		<Command name="UploadConstants" id="8">
+			<Title>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Upload constants</v8:content>
+				</v8:item>
+			</Title>
+			<ToolTip>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Upload constants</v8:content>
+				</v8:item>
+			</ToolTip>
+			<Action>UploadConstants</Action>
+		</Command>
+		<Command name="ClearКлючиДоступаКОбъектам" id="9">
+			<Title>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Clear ключи доступа к объектам</v8:content>
+				</v8:item>
+			</Title>
+			<ToolTip>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Clear ключи доступа к объектам</v8:content>
+				</v8:item>
+			</ToolTip>
+			<Action>ClearКлючиДоступаКОбъектам</Action>
+		</Command>
+		<Command name="UploadBonus" id="10">
+			<Title>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Upload bonus</v8:content>
+				</v8:item>
+			</Title>
+			<ToolTip>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Upload bonus</v8:content>
+				</v8:item>
+			</ToolTip>
+			<Action>UploadBonus</Action>
+		</Command>
+		<Command name="UploadAllCatalog" id="11">
+			<Title>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Upload all catalog</v8:content>
+				</v8:item>
+			</Title>
+			<ToolTip>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Upload all catalog</v8:content>
+				</v8:item>
+			</ToolTip>
+			<Action>UploadAllCatalog</Action>
+		</Command>
+		<Command name="SaveState" id="12">
+			<Title>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Save state</v8:content>
+				</v8:item>
+			</Title>
+			<ToolTip>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Save state</v8:content>
+				</v8:item>
+			</ToolTip>
+			<Action>SaveState</Action>
+		</Command>
+		<Command name="UploadDocument" id="3">
+			<Title>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Upload document</v8:content>
+				</v8:item>
+			</Title>
+			<ToolTip>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Upload document</v8:content>
+				</v8:item>
+			</ToolTip>
+			<Action>UploadDocument</Action>
+		</Command>
+		<Command name="ЗбираееРозбирання" id="13">
+			<Title>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Збираее розбирання</v8:content>
+				</v8:item>
+			</Title>
+			<ToolTip>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Збираее розбирання</v8:content>
+				</v8:item>
+			</ToolTip>
+			<Action>ЗбираееРозбирання</Action>
+		</Command>
+		<Command name="НайтиОбъектПоURL" id="14">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Найти объект по URL</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Знайти об'єкт по URL</v8:content>
+				</v8:item>
+			</Title>
+			<ToolTip>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Найти объект по навигационной ссылке</v8:content>
+				</v8:item>
+			</ToolTip>
+			<Picture>
+				<xr:Ref>StdPicture.GotoURL</xr:Ref>
+				<xr:LoadTransparent>true</xr:LoadTransparent>
+			</Picture>
+			<Action>НайтиОбъектПоURL</Action>
+			<Representation>TextPicture</Representation>
+		</Command>
+	</Commands>
+</Form>

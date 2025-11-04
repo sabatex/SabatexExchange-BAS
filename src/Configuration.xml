@@ -50,7 +50,7 @@
 			</UsePurposes>
 			<ScriptVariant>English</ScriptVariant>
 			<Vendor>sabatex</Vendor>
-			<Version>5.0.6</Version>
+			<Version>5.0.8</Version>
 			<BriefInformation/>
 			<DetailedInformation/>
 			<Copyright>
@@ -76,6 +76,7 @@
 			<Language>Украинский</Language>
 			<Language>Русский</Language>
 			<Subsystem>Администрирование</Subsystem>
+			<SessionParameter>РаботаСВнешнимиРесурсамиЗаблокирована</SessionParameter>
 			<CommonModule>SabatexExchange</CommonModule>
 			<CommonModule>SabatexExchangeAdapter</CommonModule>
 			<CommonModule>SabatexBackgroundTasks</CommonModule>
@@ -87,6 +88,7 @@
 			<DataProcessor>SabatexExchangeManualControl</DataProcessor>
 			<DataProcessor>SabatexExchangeLoadFromFolder</DataProcessor>
 			<DataProcessor>SabatexExchangeWriteToFolder</DataProcessor>
+			<DataProcessor>PrepareDataForERPStoreNode</DataProcessor>
 			<InformationRegister>sabatexExchangeUnresolvedObjects</InformationRegister>
 			<InformationRegister>sabatexExchangeObject</InformationRegister>
 			<InformationRegister>SabatexExchangeNodeConfig</InformationRegister>
