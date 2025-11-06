@@ -10,19 +10,8 @@
 		<Metadata name="CommonModule.SabatexExchange.Module" id="eaa5f3c5-7c51-4f83-b3e2-4a065491de85.0" configVersion="5a0e20e53ac944d949d5f8a4fac47e7070385b6e"/>
 		<Metadata name="CommonModule.SabatexExchangeAdapter" id="f9abaf2a-5a7b-4b9e-92e4-c0438d3e84e6" configVersion="64ef86fd35698f0bd55d1204874c9893f84153de"/>
 		<Metadata name="CommonModule.SabatexExchangeAdapter.Module" id="f9abaf2a-5a7b-4b9e-92e4-c0438d3e84e6.0" configVersion="04c353d6f214aa61b3c2eccf26f897c5102c0b9f"/>
-		<Metadata name="Configuration.SabatexExchange" id="2a67a443-4d1e-4953-bc8a-967898b9f865" configVersion="2aaaa3f32b82a9f6becf7b965293b0dac8b6e19b"/>
+		<Metadata name="Configuration.SabatexExchange" id="2a67a443-4d1e-4953-bc8a-967898b9f865" configVersion="b5631677aef28d8e18feeee7e362d966800279c7"/>
 		<Metadata name="Configuration.SabatexExchange.ManagedApplicationModule" id="13685d31-beba-438c-b131-4bb071a2072c.6" configVersion="f4fa774579ce74066e581c9bea23e03525a12934"/>
-		<Metadata name="DataProcessor.PrepareDataForERPStoreNode" id="2b5e4a78-e58a-488d-b284-f072ba1633ab" configVersion="df63a37562948a1eff84acb21210553723144d5b">
-			<Metadata name="DataProcessor.PrepareDataForERPStoreNode.Attribute.ВидЦін" id="05d383ed-7862-42bc-9c46-e756480efb58"/>
-			<Metadata name="DataProcessor.PrepareDataForERPStoreNode.Attribute.Склад" id="70ca4243-37cd-4c8b-a97a-0689d6b58cfa"/>
-			<Metadata name="DataProcessor.PrepareDataForERPStoreNode.Attribute.CatalogType" id="9db22d5c-8eb6-4e51-a576-7bfec0d5ecc2"/>
-			<Metadata name="DataProcessor.PrepareDataForERPStoreNode.Attribute.Дата" id="d62df8e0-2e3c-4a61-97f4-be13611ee90e"/>
-			<Metadata name="DataProcessor.PrepareDataForERPStoreNode.Attribute.NomenckatureFolder" id="ddeba33d-dcab-4b1c-963f-a19ca8292811"/>
-			<Metadata name="DataProcessor.PrepareDataForERPStoreNode.Attribute.Каса" id="f57fa397-e46c-49c8-9c5c-a5e1cd93b210"/>
-			<Metadata name="DataProcessor.PrepareDataForERPStoreNode.Attribute.КасаККМ" id="fda0581e-878e-49b9-9aaa-3c9259fbf0db"/>
-		</Metadata>
-		<Metadata name="DataProcessor.PrepareDataForERPStoreNode.Form.Форма" id="23409e88-77c5-47fa-85b1-e2adf5ce2e5e" configVersion="e91f5881896dcbaa1e4bd708b79834b6fa66ac0f"/>
-		<Metadata name="DataProcessor.PrepareDataForERPStoreNode.Form.Форма.Form" id="23409e88-77c5-47fa-85b1-e2adf5ce2e5e.0" configVersion="aec99167f6c6556875b2543e668ea215792c6c3e"/>
 		<Metadata name="DataProcessor.SabatexExchangeLoadFromFolder" id="22c47c88-800a-4a02-a30f-1c1abe31bcc5" configVersion="374ca9dd273e4bccb87fa6e0b774163601574123">
 			<Metadata name="DataProcessor.SabatexExchangeLoadFromFolder.Attribute.FolderName" id="3f4fac4a-b97d-47bc-aad9-4d559ad1031d"/>
 			<Metadata name="DataProcessor.SabatexExchangeLoadFromFolder.Attribute.NodeName" id="413ac720-d60d-4407-b81e-ae0d95fd61a4"/>
@@ -119,7 +108,7 @@
 		<Metadata name="InformationRegister.sabatexExchangeUnresolvedObjects.ManagerModule" id="a3fff70a-46cc-4e11-a74d-bf613690274a.2" configVersion="dc30354139ad49ad3a67bd9a5d2bdeb3cb470171"/>
 		<Metadata name="Language.Русский" id="b7d95413-5612-4da7-87c0-7c76d034417d" configVersion="c57bb173a505107a2f30ddac975c5bb772dcf986"/>
 		<Metadata name="Language.Украинский" id="443d43b2-5115-4552-8816-e65ef915c499" configVersion="16002541f686f3edc9224a85013f8f3042552400"/>
-		<Metadata name="SessionParameter.РаботаСВнешнимиРесурсамиЗаблокирована" id="9f3fe8b0-8ad5-4b75-8c0d-b5121f8f9f9e" configVersion="cfc8d521e127d89349710c9a4d8be0246f3fdff4"/>
+		<Metadata name="SessionParameter.РаботаСВнешнимиРесурсамиЗаблокирована" id="9f3fe8b0-8ad5-4b75-8c0d-b5121f8f9f9e" configVersion="6e94ef5fd6a29d38b5786a87b5582fc21e5e6944"/>
 		<Metadata name="Subsystem.Администрирование" id="ba718318-a006-4596-8dc1-22437e5ed01d" configVersion="34dfb480ace585c6d3a15b0de92659a2192cd467"/>
 	</ConfigVersions>
 </ConfigDumpInfo>

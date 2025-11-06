@@ -50,7 +50,7 @@
 			</UsePurposes>
 			<ScriptVariant>English</ScriptVariant>
 			<Vendor>sabatex</Vendor>
-			<Version>5.0.8</Version>
+			<Version>5.0.9</Version>
 			<BriefInformation/>
 			<DetailedInformation/>
 			<Copyright>
@@ -88,7 +88,6 @@
 			<DataProcessor>SabatexExchangeManualControl</DataProcessor>
 			<DataProcessor>SabatexExchangeLoadFromFolder</DataProcessor>
 			<DataProcessor>SabatexExchangeWriteToFolder</DataProcessor>
-			<DataProcessor>PrepareDataForERPStoreNode</DataProcessor>
 			<InformationRegister>sabatexExchangeUnresolvedObjects</InformationRegister>
 			<InformationRegister>sabatexExchangeObject</InformationRegister>
 			<InformationRegister>SabatexExchangeNodeConfig</InformationRegister>
